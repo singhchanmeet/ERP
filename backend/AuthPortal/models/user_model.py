@@ -59,13 +59,13 @@ class User(AbstractUser):
     USERNAME_FIELD = 'user_id'  
 
     # without these fields, a User object can't be created:
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'name']
 
     # for overriding default create_user and create_superuser method because we have extra arguements to be dealt with
     objects = CustomUserManager()  
 
     def __str__(self):
-        return self.name
+        return self.user_id
     
     class Meta:
         db_table = 'users'  # This sets the table name to 'users'

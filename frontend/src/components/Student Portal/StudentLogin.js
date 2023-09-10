@@ -8,7 +8,7 @@ function StudentLogin() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/auth/student/login/', {
+            const response = await axios.post('http://localhost:8000/authenticate/student/login/', {
                 user_id,
                 password,
             });

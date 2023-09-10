@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+# For MS Teams authentication
+from ms_identity_web.configuration import AADConfig
+from ms_identity_web import IdentityWebPython
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,6 +59,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# MS teams configuration
+AAD_CONFIG = AADConfig.parse_json(file_path='aad.config.json')
+MS_IDENTITY_WEB = IdentityWebPython(AAD_CONFIG)
+ERROR_TEMPLATE = 'auth/401.html' # for rendering 401 or other errors from msal_middleware
+MIDDLEWARE.append('ms_identity_web.django.middleware.MsalMiddleware')
 
 ROOT_URLCONF = 'core.urls'
 

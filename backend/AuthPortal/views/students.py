@@ -2,12 +2,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from ..models.user_model import User
 from ..serializers.student_serializer import StudentSerializer
 from ..serializers.user_serializer import UserSerializer
 from django.contrib.auth import authenticate, login, logout
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 
 
 class StudentRegister(APIView):
@@ -73,3 +71,4 @@ class StudentLogout(APIView):
         # Perform the logout
         logout(request)
         return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
+    
