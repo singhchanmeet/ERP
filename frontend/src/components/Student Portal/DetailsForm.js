@@ -2,43 +2,32 @@ import React, { useState, useEffect } from 'react';
 
 const DetailsForm = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-  });
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  // Simulate loading existing student details from the database
   useEffect(() => {
-    // Replace with actual API call to fetch student details
-    const fetchStudentDetails = async () => {
-      try {
-        const response = await fetch('/api/student-details'); // Replace with your backend API endpoint
-        if (response.ok) {
-          const data = await response.json();
-          setFormData(data);
-        }
-      } catch (error) {
-        console.error('Error fetching student details:', error);
-      }
-    };
+    // Fetch data for the current step from the backend when the component mounts
+    fetchFormData();
+  }, [step]);
 
-    fetchStudentDetails();
-  }, []);
-
-  const handleNext = () => {
-    setStep(step + 1);
-  };
-
-  const handlePrevious = () => {
-    setStep(step - 1);
-  };
-
-  const handleSubmit = async () => {
-    // Send the formData to the backend for saving
+  const fetchFormData = async () => {
     try {
-      const response = await fetch('/api/save-student-details', {
+      const response = await fetch(`/api/form-data/${step}`); // Replace with your backend API endpoint
+      if (response.ok) {
+        const data = await response.json();
+        setFormData(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching form data:', error);
+      setLoading(false);
+    }
+  };
+
+  const handleNext = async () => {
+    // Send the formData to the backend for saving before moving to the next step
+    try {
+      const response = await fetch(`/api/save-form-data/${step}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,16 +36,18 @@ const DetailsForm = () => {
       });
 
       if (response.ok) {
-        // Handle success
-        console.log('Student details saved successfully!');
+        // Successfully saved data, proceed to the next step
+        setStep(step + 1);
       } else {
         // Handle errors
-        console.error('Error saving student details:', response.statusText);
+        console.error('Error saving form data:', response.statusText);
       }
     } catch (error) {
-      console.error('Error saving student details:', error);
+      console.error('Error saving form data:', error);
     }
   };
+
+  // Render your form fields based on the step and formData
 
   return (
     <div className="bg-gray-100 min-h-screen flex justify-center items-center">
