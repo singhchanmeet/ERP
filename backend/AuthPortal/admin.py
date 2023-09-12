@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from .models.user_model import User
 from .models.student_model import Student
 from .models.employee_model import Employee
