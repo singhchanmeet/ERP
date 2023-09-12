@@ -49,6 +49,33 @@ const DetailsForm = () => {
 
   // Render your form fields based on the step and formData
 
+  const handlePrevious = () => {
+    setStep(step - 1);
+  };
+
+  const handleSubmit = async () => {
+    // Send the formData to the backend for saving
+    try {
+      const response = await fetch('/api/save-student-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Handle success
+        console.log('Student details saved successfully!');
+      } else {
+        // Handle errors
+        console.error('Error saving student details:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving student details:', error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen flex justify-center items-center">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
