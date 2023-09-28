@@ -22,6 +22,7 @@ function StudentRegistration() {
 
             // Assuming the server returns a success message upon registration
             console.log('Registration successful:', response.data.message);
+            alert('registration successful')
         } catch (error) {
             console.error('Registration error:', error);
             // Handle error and show appropriate message to the user

@@ -54,7 +54,7 @@ class User(AbstractUser):
     user_id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=50, choices=Role.choices)
-
+    password = models.CharField(max_length=1000,blank = True , null= True )
     # user_id will be used for authentication
     USERNAME_FIELD = 'user_id'  
 

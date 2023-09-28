@@ -473,3 +473,28 @@ You're accessing the development server over HTTPS, but it only supports HTTP.
 You're accessing the development server over HTTPS, but it only supports HTTP.
 You're accessing the development server over HTTPS, but it only supports HTTP.
 You're accessing the development server over HTTPS, but it only supports HTTP.
+Internal Server Error: /auth/redirect
+Traceback (most recent call last):
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
+    return self.ms_identity_web.process_auth_redirect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
+    raise ase
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
+    self._verify_state(req_params)
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
+    raise AuthSecurityError("Failed to match request state with session state")
+ms_identity_web.errors.AuthSecurityError: Failed to match request state with session state
+"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWAEU.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P_60oOmx1t-fgmjB9ObGQr2C0mBZQYxXF2IrTCmpkuQdbxLU5Z7lUvHiosu4wxdf-csCfY58KzBx-VxhIDYDD7wAj5EZdEC69P3GZeubprqRW8qqqoz71quNsNh2LvH4tGNbWQNjcUbUNCUjJXNgGwm5TiYdexzmZnnIA3Vbsb28Gp4AI2LZ-xVx6x5_ZB9mtv0KOaKuPWoyscBDBPudhWbu2xHWaezfonBlxgYOC9Vuup4ZrJU4NOwQQhotVspRx1ax_TcHmgZwfsMZzNg6B6zr1g-1DmDLR1iu0zmMoVpn4N4z183oAEQkeu1jw3diqQP0m4RDvbUMC_eRmdGPZKGAFfqgW3YCK3U9sYCbFUv7Ci3MNeQmLRzbZmH7FlUCXeWAJ8LfIlpVlO2HeGpwdMYG_ktdwFefe1YjPv8T5CSqe-XqlGg3v9ceDgs_Y7H2yqUivQmFTvghJ9_VWypyivZ_eKbCF46v04lgk5S3WftEVLjQy3hNvhvavQ8rrs56ERQBUSA3FJjFIo2Xm3oUrL_8ev5NniNKvFvFLiI4AFcVCXYVPTZu-kA6aPFqdIopX3hohbNCogYZlXNhk2SE4KuUOGgxso2SlUOq41jXwGIdiQ2_S-nu7VlwVUAWOqGLOaQHK6XFV1dZDbPNqwaHwlfD9VWZurSd_WU1zliu6yroWuScLJII0S2aw&state=3a9f4330-d1a4-496d-920e-68ea330ef91a&session_state=1ae309cc-a825-4c2a-87b7-fb90142bd26c HTTP/1.1" 500 101502
