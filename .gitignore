@@ -51,4 +51,4 @@ dist/
 .DS_Store
 
 # error log file
-**/*.log
+backend/error.log
