@@ -50,5 +50,4 @@ dist/
 # .DS_Store files (macOS)
 .DS_Store
 
-# error log file
-backend/error.log
+/backend-old
