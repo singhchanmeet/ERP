@@ -38,7 +38,7 @@ const AuthState = (props) => {
 
 
   //register user
-
+  
 
   
   // Include the auth state

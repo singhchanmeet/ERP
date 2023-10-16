@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const TournamentContext = createContext();
+const AuthContext = createContext();
 
-export default TournamentContext; 
+export default AuthContext; 
