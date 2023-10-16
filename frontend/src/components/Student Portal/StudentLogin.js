@@ -8,15 +8,16 @@ function StudentLogin() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/authenticate/student/login/', {
+            const response = await axios.post('http://localhost:8000/student/login/', {
                 user_id,
                 password,
             });
 
             // Assuming the server returns a token upon successful login
-            const token = response.data.access_token;
+            const token = response.data;
             // Save the token to localStorage or a global state for further use
-            console.log('Logged in with token:', token);
+            console.log('Logged in with token:', token.access);
+            console.log('Logged in with token:', token.refresh);
         } catch (error) {
             console.error('Login error:', error);
             // Handle error and show appropriate message to the user

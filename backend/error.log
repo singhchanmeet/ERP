@@ -1,500 +1,159 @@
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /auth/redirect
+Internal Server Error: /index/
 Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
-    return self.ms_identity_web.process_auth_redirect(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
-    return f(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
-    raise ase
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
-    self._verify_state(req_params)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
-    return f(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
-    raise AuthSecurityError("Failed to match request state with session state")
-ms_identity_web.errors.AuthSecurityError: Failed to match request state with session state
-"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWADk.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P-DcZJG3UHxz2LiX5rhK7gNAGjU0YkHzPz__ZlKaVaUBKE1LKjqeb0JwYbrEyx7YPf1L77UlpaJlczCUnISX1YAejYixTgJpeUYyeOSmRkg2b9cJxhD041jF0SvvkZAYu-uaXIPiEMxm4DigaRbnha6sKRbFUy2NAwYfkOVRK8Bn8fP-FCY7fRSJxy1KFFCkNaktzrlcDGyF5Avkcr27Oz27hrI0t2QVyVL_gbz7QmD7xC2WbrktM2SAe5OSpfUsu3mrGJsEgyVt4Uc_3N2wWfjoHDbuz99r77hPwCoFfyMELr6a5eHKKyfKS2UM7b0auFzXjc-X15PAEsY019C7DkWW1Wkj6zXZtrHrYUznShJNUE5aFp7vuY-8M9vUp5-e5XVIPUX13ktBcmDD38gJrXqDxxqgNC93TIOLyfcydwg-TT8BrF3sJJeURlTPtgbAUtAPdGHBKrmrjG_CMOcSyH8GYjalrwKJWRNsbrzTR5T_RbhnCw6LHx4anGbY95Pl_2ESy_fybSEVJX8vuEmo4zmJjNGpJmKPnIuP-2jtHiBk6dlWU4BEe7Ja_aCDlSyc7gZulSEl9nSx5XmhFMKIGHhKMrE9j3t6bhF26dmnPaZalrmVXk-OCGzV84y9DD5F9F7Jmj3bui3J6V7iCZXVPCRvamHdIRChaf18lezMcxp6Vh50DSRoQdlIG2VmeYLg0WhoFSPLq30-gvmKQU19Q&state=36e31542-a94e-4b16-8858-10e014753250&session_state=0b76cbbe-2441-4c5e-bea2-e3c8212a57c1 HTTP/1.1" 500 103294
-Internal Server Error: /auth/redirect
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\authentication\views.py", line 44, in index
+    return StudentLogin.msteams(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: StudentLogin.msteams() missing 1 required positional argument: 'request'
+"GET /index/ HTTP/1.1" 500 73979
+Internal Server Error: /index/
 Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
-    return self.ms_identity_web.process_auth_redirect(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
-    return f(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
-    raise ase
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
-    self._verify_state(req_params)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
-    return f(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
-    raise AuthSecurityError("Failed to match request state with session state")
-ms_identity_web.errors.AuthSecurityError: Failed to match request state with session state
-"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWADk.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P8uel5auRjlnrhnwd2ev7O9QfdW28NZQ49RxDoO1vep_pX-BUXJFmFj4Ux-dztDy5cT9R6IaG6TxYd1o9-4BmNiVxRf-VuN68Ko88SJonxTkW4w7z_yfr31QHtluY73iT9NdvNbqlqrkaHaX8ZSRxEz1_ZP1fiXsE7KIEwttPjH7d7Wd3G2djNRbdZn5hin-UqDouF-aIr5U27FM2_nXrN8pnURtHPhFSTvbXKE5c99G5YpPd6Wxj576EzovHJN4kz1V2sZQeunumrdkKYj1gMeWUC3mxDilyGAF1iOq8BowovFkApYoQChtEjX2UpplRn2DO-pRGbmNJdPChkrknwhQW_ddlOxRtJVZfeogz_qLitEpKchzPZQhGFaJLy4Q8QOenB8FPHP-kz66O6W6Qf9RRri_pulUxfVyjcfoZnmJ2PUD40GrNsNGLamPp41eWc5qCMe75MOzOmQfwy_hlgs1r5ksHVTJEHsjkbvrI7lh52K8gpuDWrH0yd_vWxGWfYtZH_n3irQc3SgEQxVTSP5Lb6gDmSY4M2wiNR9qEfvWXzeC9mXXgZHQJI9epOiRDU0eoReE42QCKOsDXlqDAKIdebbsk9DLkDunH3jOqc1p7n3BQQpd9ha8CuZF9C_XSKC7ktJvsQJXTxk-2wfpQeIeGWxis7dwgZwtiNr5cvJfbZpgmO63GDktKtPtmYZFBSbmQfoqqvpPHHDfEMyxg&state=36e31542-a94e-4b16-8858-10e014753250&session_state=0b76cbbe-2441-4c5e-bea2-e3c8212a57c1 HTTP/1.1" 500 103294
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\authentication\views.py", line 44, in index
+    return StudentLogin().msteams(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\student\views.py", line 139, in msteams
+    token = self.get_tokens_for_user(user)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: StudentLogin.get_tokens_for_user() takes 1 positional argument but 2 were given
+"GET /index/ HTTP/1.1" 500 79068
+Internal Server Error: /index/
 Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode('request.identity_context_data._access_token',None,None)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 147, in decode_complete
-    raise DecodeError(
-jwt.exceptions.DecodeError: It is required that you pass in a value for the "algorithms" argument when calling decode().
-"GET / HTTP/1.1" 500 78661
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\authentication\views.py", line 44, in index
+    return StudentLogin().msteams(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\student\views.py", line 143, in msteams
+    return Response(token.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'data'
+"GET /index/ HTTP/1.1" 500 79361
+Internal Server Error: /index/
 Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 268, in _load
-    header = json.loads(header_data)
-             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 341, in loads
-    s = s.decode(detect_encoding(s), 'surrogatepass')
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode('request.identity_context_data._access_token',None,'RS256')
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 270, in _load
-    raise DecodeError(f"Invalid header string: {e}") from e
-jwt.exceptions.DecodeError: Invalid header string: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-"GET / HTTP/1.1" 500 98276
-Internal Server Error: /
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\response.py", line 55, in rendered_content
+    assert renderer, ".accepted_renderer not set on Response"
+AssertionError: .accepted_renderer not set on Response
+"GET /index/ HTTP/1.1" 500 78192
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+Internal Server Error: /index/
 Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 268, in _load
-    header = json.loads(header_data)
-             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 341, in loads
-    s = s.decode(detect_encoding(s), 'surrogatepass')
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode('request.identity_context_data._access_token',None,algorithms=["RS256"])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 270, in _load
-    raise DecodeError(f"Invalid header string: {e}") from e
-jwt.exceptions.DecodeError: Invalid header string: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-"GET / HTTP/1.1" 500 99058
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 268, in _load
-    header = json.loads(header_data)
-             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 341, in loads
-    s = s.decode(detect_encoding(s), 'surrogatepass')
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode('request.identity_context_data._access_token',None,algorithms=["HS256"])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 270, in _load
-    raise DecodeError(f"Invalid header string: {e}") from e
-jwt.exceptions.DecodeError: Invalid header string: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-"GET / HTTP/1.1" 500 99058
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 268, in _load
-    header = json.loads(header_data)
-             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 341, in loads
-    s = s.decode(detect_encoding(s), 'surrogatepass')
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode('request.identity_context_data._access_token',None,algorithms=["HS256"])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 270, in _load
-    raise DecodeError(f"Invalid header string: {e}") from e
-jwt.exceptions.DecodeError: Invalid header string: 'utf-8' codec can't decode byte 0xad in position 0: invalid start byte
-"GET / HTTP/1.1" 500 98308
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode(request.identity_context_data._access_token,None,algorithms=["HS256"])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 209, in decode_complete
-    self._verify_signature(signing_input, header, signature, key, algorithms)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 301, in _verify_signature
-    raise InvalidAlgorithmError("The specified alg value is not allowed")
-jwt.exceptions.InvalidAlgorithmError: The specified alg value is not allowed
-"GET / HTTP/1.1" 500 103139
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode(request.identity_context_data._access_token,None,None)
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 147, in decode_complete
-    raise DecodeError(
-jwt.exceptions.DecodeError: It is required that you pass in a value for the "algorithms" argument when calling decode().
-"GET / HTTP/1.1" 500 78053
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 86, in index
-    decodedPayload = jwt.decode(request.identity_context_data._access_token,None,algorithms=['RS256'])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 209, in decode_complete
-    self._verify_signature(signing_input, header, signature, key, algorithms)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 307, in _verify_signature
-    prepared_key = alg_obj.prepare_key(key)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\algorithms.py", line 341, in prepare_key
-    raise TypeError("Expecting a PEM-formatted key.")
-TypeError: Expecting a PEM-formatted key.
-"GET / HTTP/1.1" 500 107141
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 87, in index
-    decodedPayload = jwt.decode(request.identity_context_data._access_token,key=settings.SECRET_KEY,algorithms=['RS256'])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 254, in _load
-    raise DecodeError(f"Invalid token type. Token must be a {bytes}")
-jwt.exceptions.DecodeError: Invalid token type. Token must be a <class 'bytes'>
-"GET / HTTP/1.1" 500 87227
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\algorithms.py", line 350, in prepare_key
-    RSAPrivateKey, load_pem_private_key(key_bytes, password=None)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\primitives\serialization\base.py", line 25, in load_pem_private_key
-    return ossl.load_pem_private_key(
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\backends\openssl\backend.py", line 747, in load_pem_private_key
-    return self._load_key(
-           ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\backends\openssl\backend.py", line 929, in _load_key
-    self._handle_key_loading_error()
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\backends\openssl\backend.py", line 984, in _handle_key_loading_error
-    raise ValueError(
-ValueError: ('Could not deserialize key data. The data may be in an incorrect format, it may be encrypted with an unsupported algorithm, or it may be an unsupported key type (e.g. EC curves with explicit parameters).', [<OpenSSLError(code=503841036, lib=60, reason=524556, reason_text=unsupported)>])
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 87, in index
-    decodedPayload = jwt.decode(str(request.identity_context_data._access_token),key=settings.SECRET_KEY,algorithms=['RS256'])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 209, in decode_complete
-    self._verify_signature(signing_input, header, signature, key, algorithms)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 307, in _verify_signature
-    prepared_key = alg_obj.prepare_key(key)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\algorithms.py", line 353, in prepare_key
-    return cast(RSAPublicKey, load_pem_public_key(key_bytes))
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\primitives\serialization\base.py", line 35, in load_pem_public_key
-    return ossl.load_pem_public_key(data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\backends\openssl\backend.py", line 794, in load_pem_public_key
-    self._handle_key_loading_error()
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\cryptography\hazmat\backends\openssl\backend.py", line 984, in _handle_key_loading_error
-    raise ValueError(
-ValueError: ('Could not deserialize key data. The data may be in an incorrect format, it may be encrypted with an unsupported algorithm, or it may be an unsupported key type (e.g. EC curves with explicit parameters).', [<OpenSSLError(code=75497580, lib=9, reason=108, reason_text=no start line)>])
-"GET / HTTP/1.1" 500 144921
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 257, in _load
-    signing_input, crypto_segment = jwt.rsplit(b".", 1)
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: not enough values to unpack (expected 2, got 1)
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\student_views.py", line 87, in index
-    decodedPayload = jwt.decode(str(request.identity_context_data._access_token),key=settings.SECRET_KEY,algorithms=['HS256'])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 198, in decode_complete
-    payload, signing_input, header, signature = self._load(jwt)
-                                                ^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 260, in _load
-    raise DecodeError("Not enough segments") from err
-jwt.exceptions.DecodeError: Not enough segments
-"GET / HTTP/1.1" 500 91259
-Internal Server Error: /authentication/index
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\ms_azure.py", line 15, in index
-    decodedPayload = jwt.decode(str(request.identity_context_data._access_token),key=settings.SECRET_KEY,algorithms=['HS256'])
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 210, in decode
-    decoded = self.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jwt.py", line 151, in decode_complete
-    decoded = api_jws.decode_complete(
-              ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 209, in decode_complete
-    self._verify_signature(signing_input, header, signature, key, algorithms)
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\jwt\api_jws.py", line 301, in _verify_signature
-    raise InvalidAlgorithmError("The specified alg value is not allowed")
-jwt.exceptions.InvalidAlgorithmError: The specified alg value is not allowed
-"GET /authentication/index HTTP/1.1" 500 103603
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-Internal Server Error: /authentication/index
-Traceback (most recent call last):
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\AuthPortal\views\ms_azure.py", line 8, in index
-    print (request.identity_context_data.email)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'IdentityContextData' object has no attribute 'email'
-"GET /authentication/index HTTP/1.1" 500 68706
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
-You're accessing the development server over HTTPS, but it only supports HTTP.
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\authentication\views.py", line 42, in index
+    user = User.objects.get(user_id=request.identity_context_data.username)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+authentication.models.User.DoesNotExist: User matching query does not exist.
+"GET /index/ HTTP/1.1" 500 114062
 Internal Server Error: /auth/redirect
 Traceback (most recent call last):
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
     response = get_response(request)
                ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
     return self.ms_identity_web.process_auth_redirect(
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
     return f(self, *args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
     raise ase
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
     self._verify_state(req_params)
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
     return f(self, *args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dell\AppData\Local\Programs\Python\Python311\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
     raise AuthSecurityError("Failed to match request state with session state")
 ms_identity_web.errors.AuthSecurityError: Failed to match request state with session state
-"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWAEU.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P_60oOmx1t-fgmjB9ObGQr2C0mBZQYxXF2IrTCmpkuQdbxLU5Z7lUvHiosu4wxdf-csCfY58KzBx-VxhIDYDD7wAj5EZdEC69P3GZeubprqRW8qqqoz71quNsNh2LvH4tGNbWQNjcUbUNCUjJXNgGwm5TiYdexzmZnnIA3Vbsb28Gp4AI2LZ-xVx6x5_ZB9mtv0KOaKuPWoyscBDBPudhWbu2xHWaezfonBlxgYOC9Vuup4ZrJU4NOwQQhotVspRx1ax_TcHmgZwfsMZzNg6B6zr1g-1DmDLR1iu0zmMoVpn4N4z183oAEQkeu1jw3diqQP0m4RDvbUMC_eRmdGPZKGAFfqgW3YCK3U9sYCbFUv7Ci3MNeQmLRzbZmH7FlUCXeWAJ8LfIlpVlO2HeGpwdMYG_ktdwFefe1YjPv8T5CSqe-XqlGg3v9ceDgs_Y7H2yqUivQmFTvghJ9_VWypyivZ_eKbCF46v04lgk5S3WftEVLjQy3hNvhvavQ8rrs56ERQBUSA3FJjFIo2Xm3oUrL_8ev5NniNKvFvFLiI4AFcVCXYVPTZu-kA6aPFqdIopX3hohbNCogYZlXNhk2SE4KuUOGgxso2SlUOq41jXwGIdiQ2_S-nu7VlwVUAWOqGLOaQHK6XFV1dZDbPNqwaHwlfD9VWZurSd_WU1zliu6yroWuScLJII0S2aw&state=3a9f4330-d1a4-496d-920e-68ea330ef91a&session_state=1ae309cc-a825-4c2a-87b7-fb90142bd26c HTTP/1.1" 500 101502
+"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWADk.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P86srWkRR2UMrByZSv5_khn1b_kgcrhDCka29uo1xuCXpyEEKoHTjbljIujW_jDadNmMMCx29yRjSAHz78-dkqf1fWQd2OPatvX0qNedmTkUeWTdGRhwLjYK65ztjpZvInDQb63ccKOsxUEXfwpjm1kUUk4A65j6OoxAnZUZckL3_eeB7bB0wpUXwezMGMNgEyBp2CxBZ5dFYv9sisoA7Za2ba6Fe-JL3jiD6y6u_VhKGxUzeQkon5cnBIkUe_TsKLdaTmLjy0eeUXRwjjtjoqdwiTx4JNbmLT-KC0V05vIMRlppqmRT1A36Zwf1-XZNgdeWaaXE--sdBc0aGo0IP4X8Rd2VjqXPqtaiX2f91HYS-w86ADLHWsbp9fdacD5bigYn1Anb_6JnEOEi1jtSoxtOmjpNK5z37aobXcHslqvNVfgBmnxgaBrm0sJw-lC1qxEfiSY-lh2wnBpbUViZsDPfqhyJj3lgWmV88EMjOy-EA6MRmZGs4bkD89j1ZotrbhOK_5IsY_RIFDHK8z_C2RCugjA0vs_h9V9Ssm0VSd1tmxH4wgqZB66NWefKUk2S6AmfjzHIkwEKrUyjgWzeAQA5Aj9x_R2AM72ZeqUS4fSpG_la6medHQH5TqCOjej99olX6AKKS4wSC7KoRSDL7ZXY2HQq7zQR8hbwwkFS3zkMHo_UxET_tCUl__pgsNbTW8GHgap5-QMN9D-zNGMhNzZ&state=3b10fa84-a75c-4f2a-8f2e-dadef31c6952&session_state=0eac7896-4461-41e8-91b1-c462ff48fba0 HTTP/1.1" 500 109212
+Internal Server Error: /auth/redirect
+Traceback (most recent call last):
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\django\msal_views_and_urls.py", line 39, in aad_redirect
+    return self.ms_identity_web.process_auth_redirect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 127, in process_auth_redirect
+    raise ase
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 105, in process_auth_redirect
+    self._verify_state(req_params)
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 40, in assert_adapter
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chanm\OneDrive\Desktop\ERP\backend\env\Lib\site-packages\ms_identity_web\__init__.py", line 259, in _verify_state
+    raise AuthSecurityError("Failed to match request state with session state")
+ms_identity_web.errors.AuthSecurityError: Failed to match request state with session state
+"GET /auth/redirect?code=0.AVYArapOG4e4z0iEB-mUIO2i-4ZbxlBpakVBorwhRfMbcAxWADk.AgABAAIAAAAtyolDObpQQ5VtlI4uGjEPAgDs_wUA9P-zEhHdIjTj93LHX52a8OVmiiAHO-dOykZLOb7eka8A7EEa4yujpsfOHEQnhwwgTPse_iIcM1ODrjTRDghU-dagg77TtZ0rtWN3ZAaPa_f6fV3fzIEyYwVl70aFpaiYveBbMGHdNR7zmeHoWfK0SM5YhOb2r9nW5EPnj_C-aod54231yZ9b5832LbUIXOz_lPfyfMNjlwVm3RiWdZZi1psCOErmNZnVOQBoeYjtWMVAzOLv7j2uhCUY0O3fPGQfer4vrxUpxb0Tho9uJmjbJFQ1VUH9ooE9V1xRh6uVWUeagAMfCfErU0GivMKWnDVz4as-tLTIKuumkGdSgKd00wTSZhEHGv5qPQ8MCEJy_9NoiVAbXfp0uzerKA4oQWQXNjC96a8igWLj9l_yxKRbR5PXP4Ffxln3i0mnrIL4HoOJVqaxuZVgPKLvdNDiU7YkjnHytJTayqj3nMWzOdmHASbgFsgM2SbE0TIQ6GkC06-tHDSA-61Db0GquAyvHDvoWra_vBfgTqkrSYpFeZFzKe8R4vn1_XvkDy1Fs2NNVPUFcUAintxJWRFCcoxzYP3_eDxbdWd9aN9TtJsm8to1VxXsdAzKFzLCAsnU-_EeHfCR0V8UYCV6QwCYzsFm-ms3kIeLdGJIsHNI5bjYinYWQ82EcdgL6_ESmjrQXOD0KyQmpLCdlh7_RoH-dcDZ7MyxA1wjYRxt8sx0yQmkYFFZXY4&state=3b10fa84-a75c-4f2a-8f2e-dadef31c6952&session_state=0eac7896-4461-41e8-91b1-c462ff48fba0 HTTP/1.1" 500 109201
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.
+You're accessing the development server over HTTPS, but it only supports HTTP.

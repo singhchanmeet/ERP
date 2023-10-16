@@ -11,7 +11,7 @@ function StudentRegistration() {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/authenticate/student/register/', {
+            const response = await axios.post('http://localhost:8000/student/register/', {
                 user_id,
                 name,
                 email,
