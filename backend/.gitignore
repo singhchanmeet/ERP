@@ -5,3 +5,12 @@ env/
 error.log/
 error.log
 /error.log
+
+authentication/__pycache__/
+authentication/migrations/__pycache__/
+
+student/__pycache__/
+student/migrations/__pycache__/
+
+employee/__pycache__/
+employee/migrations/__pycache__/
