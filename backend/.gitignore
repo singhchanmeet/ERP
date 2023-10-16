@@ -1,3 +1,3 @@
 aad.config.json*
 env/
-error.log*
+.log*
