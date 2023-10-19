@@ -1,57 +1,34 @@
-// src/components/StudentLogin.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import mslogo from "../../assets/ms_logo.png";
+import { useNavigate } from 'react-router-dom';
 
 function StudentLogin() {
-    const [user_id, setStudentId] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+  // Function to initiate the Microsoft login
+  const handleLogin = () => {
+    // Define the Microsoft login URL
+    const microsoftLoginUrl = 'http://localhost:8000/auth/sign_in'; // Replace with the actual Microsoft login URL
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post('http://localhost:8000/student/login/', {
-                user_id,
-                password,
-            });
+    // Redirect the user to the Microsoft login page
+    window.location.href = microsoftLoginUrl;
+  };
 
-            // Assuming the server returns a token upon successful login
-            const token = response.data;
-            // Save the token to localStorage or a global state for further use
-            console.log('Logged in with token:', token.access);
-            console.log('Logged in with token:', token.refresh);
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle error and show appropriate message to the user
-        }
-    };
+ 
 
-    return (
-        <div className="container mx-auto mt-8">
-            <h2 className="text-xl font-semibold mb-4">Student Login</h2>
-            <form className="grid grid-cols-1 gap-4">
-                <input
-                    type="text"
-                    placeholder="Student ID"
-                    className="p-2 border rounded"
-                    value={user_id}
-                    onChange={(e) => setStudentId(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="p-2 border rounded"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                    type="button"
-                    className="bg-green-500 hover:bg-green-600 text-white p-2 rounded"
-                    onClick={handleLogin}
-                >
-                    Login
-                </button>
-            </form>
+  return (
+    <div className="container mx-auto mt-8 px-10">
+      <h2 className="text-xl font-semibold mb-4">Student Login</h2>
+      <button
+        onClick={handleLogin}
+        className="hover:bg-zinc-200 font-semibold py-2 px-4 border-[1px] border-black my-2"
+      >
+        <div className='flex items-center'>
+          <img src={mslogo} className='w-8' alt="" />
+          <p>Sign In with Microsoft</p>
         </div>
-    );
+      </button>
+    </div>
+  );
 }
 
 export default StudentLogin;

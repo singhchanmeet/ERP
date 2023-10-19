@@ -11,8 +11,10 @@ export { default as StudentLogin } from './Student Portal/StudentLogin';
 export { default as StudentRegistration } from './Student Portal/StudentRegistration';
 export { default as StudentAdmission } from './Student Portal/StudentAdmission';
 export { default as StudentPortal } from './Student Portal/StudentPortal';
+export { default as DetailsForm } from './Student Portal/DetailsForm';
 
 //Export Standard Components
+export { default as Home } from './standard/Home';
 export { default as Dashboard } from './standard/Dashboard';
 export { default as Navbar} from './standard/Navbar';
 export {default as Footer} from './standard/Footer';

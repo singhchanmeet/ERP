@@ -5,20 +5,19 @@ function StudentPortal() {
     return (
         <div className="container mx-auto mt-8">
             <h2 className="text-xl font-semibold mb-4">Student Portal</h2>
-            <a href="http://localhost:8000/auth/sign_in">Sign In</a>
-            <a href="http://localhost:8000/auth/sign_out">Sign Out</a>
+            
             <div className="grid grid-cols-3 gap-4">
                 <Link to="/student/login" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg shadow">
                     <h3 className="text-lg font-semibold mb-2">Login</h3>
-                    <p>Existing student login</p>
+                    <p>Existing student login 3rd-8th Semester</p>
                 </Link>
                 <Link to="/student/register" className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-lg shadow">
                     <h3 className="text-lg font-semibold mb-2">Register</h3>
-                    <p>Create a student account</p>
+                    <p>Registration for 1st Semester Students(Coming soon)</p>
                 </Link>
                 <Link to="/student/admission" className="bg-yellow-500 hover:bg-yellow-600 text-white p-4 rounded-lg shadow">
                     <h3 className="text-lg font-semibold mb-2">Admission</h3>
-                    <p>Apply for admission</p>
+                    <p>Apply for admission (Not Available right Now)</p>
                 </Link>
             </div>
         </div>

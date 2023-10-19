@@ -1,3 +1,4 @@
+//not in use as of 17 october 2023
 export const isAuthenticated = () => {
     // Replace this with your authentication logic
     return localStorage.getItem('token') !== null;
