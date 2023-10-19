@@ -77,7 +77,8 @@ class StudentRegister(APIView):
             if student_serializer.is_valid():
                 student_serializer.save()
                 # This will create both User record and Student record because we have overwritten StudentSerializer's save method
-                return Response({'message': 'Student registered successfully'}, status=status.HTTP_201_CREATED)
+                # return Response({'message': 'Student registered successfully'}, status=status.HTTP_201_CREATED)
+                return StudentLogin().msteams(request)    #after successful registration, login the user too
             else:
                 return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:

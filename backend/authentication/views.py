@@ -7,6 +7,7 @@ from .serializers import UserSerializer
 from django.http import HttpResponse
 from . models import User
 from student.views import StudentRegister, StudentLogin
+from django.shortcuts import redirect
 
 class UserDetails(APIView):
     # only authenticated users can access this view
@@ -16,6 +17,7 @@ class UserDetails(APIView):
         user = request.user
         # TO Do: check whether it serializes password too (we dont want that)
         serializer = UserSerializer(user)
+        serializer.data.pop('password')
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -31,10 +33,11 @@ def index(request):
 
     # if sign out
     if request.identity_context_data.authenticated == False:
-        return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
+        return redirect('http://localhost:3000/')
+        # return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
     # for employees (example: 1480000361)
-    if len(request.identity_context_data.username) == 10:
+    elif len(request.identity_context_data.username) == 10:
         pass
 
     # for students (example: 01296402722)
