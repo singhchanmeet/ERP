@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Student
+from .models import Student, StudentDetails
 from authentication.serializers import UserSerializer
+
 
 class StudentSerializer(serializers.ModelSerializer):
 
@@ -22,3 +23,9 @@ class StudentSerializer(serializers.ModelSerializer):
         student = Student.objects.update_or_create(student_id=user, **validated_data)
         # now Student is also successfully created
         return student
+
+
+class StudentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentDetails
+        fields = '__all__'

@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from authentication.models import User
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, StudentDetailsSerializer
 from authentication.serializers import UserSerializer
 from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -149,3 +149,26 @@ class StudentLogin(TokenObtainPairView):
 
 
         
+class StudentDetailsView(APIView):
+
+    def post(self, request):
+
+        # appending the enrollment_number to request data for saving
+        request.data['enrollment_number'] = request.user.user_id
+        request.data['ipu_registration_number'] = request.user.user_id
+        
+        # Serialize using StudentDetailsSerializer for validation and saving
+        student_serializer = StudentDetailsSerializer(data=request.data)
+
+        if student_serializer.is_valid():
+            student_serializer.save()
+            return Response({'message': 'Student registered successfully'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    def get(self, request):
+
+        enrollment_number = request.user.user_id
+        serializer = StudentDetailsSerializer(enrollment_number=enrollment_number)
+        return Response(serializer.data, status=status.HTTP_200_OK)
