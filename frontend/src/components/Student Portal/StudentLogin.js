@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import mslogo from "../../assets/ms_logo.png";
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 
 function StudentLogin() {
     const navigate = useNavigate();
   // Function to initiate the Microsoft login
-  const handleLogin = () => {
-    // Define the Microsoft login URL
-    const microsoftLoginUrl = 'http://localhost:8000/auth/sign_in'; // Replace with the actual Microsoft login URL
-
-    // Redirect the user to the Microsoft login page
-    window.location.href = microsoftLoginUrl;
-  };
-
+  const context = useContext(AuthContext);
+  const {handleLogin} = context; 
  
 
   return (

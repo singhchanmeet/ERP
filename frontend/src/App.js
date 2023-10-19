@@ -5,13 +5,14 @@ import { DetailsForm, Home, Dashboard, EmployeeApply, EmployeeLogin, EmployeePor
 import ComingSoon from './components/ComingSoon';
 import MicrosoftLoginCallback from './components/standard/MicrosoftLoginCallback';
 import AuthContext from './context/auth/authContext';
+import AuthState from './context/auth/authState';
 
 
 
 function App() {
     return (
         <Router>
-            <AuthContext.Provider>
+            <AuthState>
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -21,7 +22,7 @@ function App() {
                     <Route path="/employee/register" element={<ComingSoon />} />
                     <Route path="/employee/apply" element={<EmployeeApply />} />
                     <Route path="/student" element={<StudentPortal />} />
-                    <Route path="/student/login" element={<StudentLogin />} />
+                    <Route path="/login" element={<StudentLogin />} />
                     <Route path="/student/register" element={<ComingSoon />} />
                     <Route path="/student/admission" element={<ComingSoon />} />
                     <Route path="/form" element={<DetailsForm />} />
@@ -29,7 +30,7 @@ function App() {
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />
-            </AuthContext.Provider>
+            </AuthState>
         </Router>
     );
 }

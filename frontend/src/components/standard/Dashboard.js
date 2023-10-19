@@ -5,7 +5,7 @@ import EmployeeDashboard from '../Employee Portal/EmployeeDashboard';
 import ErrorPage from './ErrorPage';
 const Dashboard = ({loggedin , handleLogout}) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem('accessToken');
   // let [authToken, setAuthToken] = useState(()=> localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : null)
 
@@ -20,17 +20,15 @@ const Dashboard = ({loggedin , handleLogout}) => {
       .then((response) => {
         // Assuming the API response contains user data
         setUser(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching user data:', error);
-        setLoading(false);
       });
   }, []);
 
-  if (loading) {
-    return <p>Loading... Please wait</p>
-  }
+  // if (loading) {
+  //   return <p>Loading... Please wait</p>
+  // }
 
   if (!user) {
     return <ErrorPage/>
