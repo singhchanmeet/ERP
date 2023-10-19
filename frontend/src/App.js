@@ -9,35 +9,6 @@ import AuthContext from './context/auth/authContext';
 
 
 function App() {
-    const refreshAccessToken = async () => {
-        try {
-            const refreshToken = localStorage.getItem('refreshToken');
-            if (!refreshToken) {
-                return null; // No refresh token available, cannot refresh the access token
-            }
-
-            const response = await fetch('/token/refresh/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Include any necessary headers (e.g., authorization header) for the token refresh request.
-                },
-                body: JSON.stringify({
-                    refresh_token: refreshToken,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.access_token;
-            }
-
-            return null; // Token refresh failed
-        } catch (error) {
-            console.error('Error during token refresh:', error);
-            return null; // Token refresh failed
-        }
-    };
     return (
         <Router>
             <AuthContext.Provider>
