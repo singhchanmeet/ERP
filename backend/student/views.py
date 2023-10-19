@@ -7,7 +7,7 @@ from authentication.serializers import UserSerializer
 from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.shortcuts import redirect
 
 
 class StudentRegister(APIView):
@@ -142,8 +142,9 @@ class StudentLogin(TokenObtainPairView):
             token = self.get_tokens_for_user(user)    
             # since the parent class's post method takes both user_id and password so we can't use that method here
             # so instead we are using our own get_tokens_for_user method
-
-            return Response(token, status=status.HTTP_200_OK)
+            
+            redirect_url = f"http://localhost:3000/call_back/?status=success&&access_token={token['access']}&&refresh_token={token['refresh']}"
+            return redirect(redirect_url)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
