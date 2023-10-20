@@ -7,7 +7,7 @@ function StudentPortal() {
             <h2 className="text-xl font-semibold mb-4">Student Portal</h2>
             
             <div className="grid grid-cols-3 gap-4">
-                <Link to="/student/login" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg shadow">
+                <Link to="/login" className="bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg shadow">
                     <h3 className="text-lg font-semibold mb-2">Login</h3>
                     <p>Existing student login 3rd-8th Semester</p>
                 </Link>
