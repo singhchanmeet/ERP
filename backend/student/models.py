@@ -31,7 +31,7 @@ class StudentDetails(models.Model):
 
     #candidate details
     name = models.CharField(max_length=75, blank=True)
-    dob = models.DateField()
+    dob = models.DateField(blank=True)
     full_address = models.CharField(max_length=150, blank=True)
     email = models.EmailField(max_length=50, blank=True, unique=False)
     mobile_number = models.CharField(max_length=10, blank=True)
@@ -96,5 +96,5 @@ class StudentDetails(models.Model):
         return mark_safe(f'<img src = "{self.passport_photograph.url}" width = "100"/>')
 
     class Meta:
-        verbose_name_plural = "Student Personal Details"    
+        verbose_name_plural = "Personal Details"    
         db_table = "student_personal_details"             
