@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from authentication.models import User
+from rest_framework.permissions import IsAuthenticated
 from .serializers import StudentSerializer, StudentDetailsSerializer
 from authentication.serializers import UserSerializer
 from django.contrib.auth import authenticate, login
@@ -157,7 +158,8 @@ class StudentLogin(TokenObtainPairView):
 
         
 class StudentDetailsView(APIView):
-
+# only authenticated users can access this view
+    permission_classes = (IsAuthenticated,)
     # For submitting personal details of student
     def post(self, request):
 

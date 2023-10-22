@@ -1,30 +1,221 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import ErrorPage from '../standard/ErrorPage';
+import bgForm from "../../assets/bg_forms.jpg";
+import { useNavigate } from 'react-router-dom';
 
 const DetailsForm = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const accessToken = localStorage.getItem('accessToken');
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [studentDetails, setStudentDetails] = useState({
+    enrollment_number: '',
+    ipu_registration_number: '',
     name: '',
-    rollNumber: '',
-    department: '',
+    dob: '',
+    full_address: '',
+    email: '',
+    mobile_number: '',
+    gender: '',
+    category: '',
+    region: '',
+    father_name: '',
+    mother_name: '',
+    father_qualification: '',
+    mother_qualification: '',
+    father_occupation: '',
+    mother_occupation: '',
+    father_job_designation: '',
+    mother_job_designation: '',
+    father_business_type: '',
+    mother_business_type: '',
+    father_mobile_number: '',
+    mother_mobile_number: '',
+    father_office_address: '',
+    mother_office_address: '',
+    guardian_name: '',
+    board_12th: '',
+    year_of_12th: null,
+    rollno_12th: null,
+    school_12th: '',
+    aggregate_12th: null,
+    board_10th: '',
+    year_of_10th: null,
+    rollno_10th: null,
+    school_10th: '',
+    aggregate_10th: null,
+    jee_rank: null,
+    jee_percentile: null,
+    jee_rollno: '',
+    special_achievements: '',
+    passport_photograph: null, // For file/image upload, use 'null' or initialize with a default value as needed.
+    marksheet_10th: null,
+    marksheet_12th: null,
+    aadhar: null,
+    pancard: null,
   });
+  
   const [formErrors, setFormErrors] = useState({
-    username: '',
-    rollNumber: '',
-    department: '',
+    enrollment_number: '',
+    ipu_registration_number: '',
+    name: '',
+    dob: '',
+    full_address: '',
+    email: '',
+    mobile_number: '',
+    gender: '',
+    category: '',
+    region: '',
+    father_name: '',
+    mother_name: '',
+    father_qualification: '',
+    mother_qualification: '',
+    father_occupation: '',
+    mother_occupation: '',
+    father_job_designation: '',
+    mother_job_designation: '',
+    father_business_type: '',
+    mother_business_type: '',
+    father_mobile_number: '',
+    mother_mobile_number: '',
+    father_office_address: '',
+    mother_office_address: '',
+    guardian_name: '',
+    board_12th: '',
+    year_of_12th: '',
+    rollno_12th: '',
+    school_12th: '',
+    aggregate_12th: '',
+    board_10th: '',
+    year_of_10th: '',
+    rollno_10th: '',
+    school_10th: '',
+    aggregate_10th: '',
+    jee_rank: '',
+    jee_percentile: '',
+    jee_rollno: '',
+    special_achievements: '',
+    passport_photograph: '',
+    marksheet_10th: '',
+    marksheet_12th: '',
+    aadhar: '',
+    pancard: '',
   });
+  
+  useEffect(() => {
+    // Fetch the user details from your API
+    axios.get('http://localhost:8000/user-details/', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
+        'Content-Type': 'application/json', // Adjust headers as needed
+      }
+    })
+      .then((response) => {
+        // Assuming the API response contains user data
+        setUser(response.data);
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+        setLoading(false)
+      });
+  }, [accessToken]);
 
+  useEffect(() => {
+    axios.get('http://localhost:8000/student/personal-details/', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        setStudentDetails(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [accessToken]);
+
+
+  if (loading) {
+    return <p>Loading... Please wait</p>
+  }
+
+  if (!user) {
+    return <ErrorPage />
+  }
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (studentDetails.name.length < 6) {
       setFormErrors({
         username: 'Name must be at least 6 characters long.',
+        // Set other form errors as needed...
       });
     } else {
-      // Handle the form submission here
-      alert('Form submitted!');
-      setFormErrors({
-        username: '',
-      });
+      // Handle the form submission using Axios POST
+      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((response) => {
+          // Handle the response, e.g., display a success message.
+          setFormErrors({
+            enrollment_number: '',
+            ipu_registration_number: '',
+            name: '',
+            dob: '',
+            full_address: '',
+            email: '',
+            mobile_number: '',
+            gender: '',
+            category: '',
+            region: '',
+            father_name: '',
+            mother_name: '',
+            father_qualification: '',
+            mother_qualification: '',
+            father_occupation: '',
+            mother_occupation: '',
+            father_job_designation: '',
+            mother_job_designation: '',
+            father_business_type: '',
+            mother_business_type: '',
+            father_mobile_number: '',
+            mother_mobile_number: '',
+            father_office_address: '',
+            mother_office_address: '',
+            guardian_name: '',
+            board_12th: '',
+            year_of_12th: '',
+            rollno_12th: '',
+            school_12th: '',
+            aggregate_12th: '',
+            board_10th: '',
+            year_of_10th: '',
+            rollno_10th: '',
+            school_10th: '',
+            aggregate_10th: '',
+            jee_rank: '',
+            jee_percentile: '',
+            jee_rollno: '',
+            special_achievements: '',
+            passport_photograph: '',
+            marksheet_10th: '',
+            marksheet_12th: '',
+            aadhar: '',
+            pancard: '',
+          });
+          
+        })
+        .catch((error) => {
+          // Handle errors, e.g., display an error message.
+          console.error('Error submitting form:', error);
+        });
     }
   };
 
@@ -44,9 +235,9 @@ const DetailsForm = () => {
   };
   const nextStep = (e) => {
     e.preventDefault();
-    if (studentDetails.name === "hello") {
+    if (studentDetails.name.length < 2 ) {
       setFormErrors({
-        username: 'Name must be at least 6 characters long.',
+        username: 'Name must be at least 2 characters long.',
       });
     } else {
       setStep(step + 1);
@@ -77,6 +268,7 @@ const DetailsForm = () => {
                   className="w-full p-2 mb-2 rounded border border-gray-300"
                 />
               </div>
+              {formErrors.username && <p className="error text-red-600">{formErrors.username}</p>}
               <div>
                 <input
                   type="date"
@@ -148,7 +340,7 @@ const DetailsForm = () => {
                 />
               </div>
               <div className="flex justify-between">
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button onClick={handleFormSubmit} type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                   Next
                 </button>
               </div>
@@ -936,10 +1128,13 @@ const DetailsForm = () => {
   };
 
   return (
-    <div className="w-1/2 mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">Student Details Form</h1>
-      {renderStep()}
+    <div className="bg-cover bg-center" style={{ backgroundImage: `url(${bgForm})` }}>
+      <div className="w-1/2 p-4 mx-auto bg-green-100">
+        <h1 className="text-3xl font-bold text-indigo-900 mb-4">Student Details Form</h1>
+        {renderStep()}
+      </div>
     </div>
+
   );
 };
 

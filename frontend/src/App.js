@@ -10,7 +10,7 @@ function App() {
     return (
         <Router>
             <AuthState>
-                <Navbar />
+                <Navbar/>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/dashboard" element={<Dashboard />} />
@@ -22,7 +22,7 @@ function App() {
                     <Route path="/login" element={<StudentLogin />} />
                     <Route path="/student/register" element={<ComingSoon />} />
                     <Route path="/student/admission" element={<ComingSoon />} />
-                    <Route path="/form" element={<DetailsForm />} />
+                    <Route path="/student-details-form" element={<DetailsForm />} />
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
                     {/* Add more routes as needed */}
                 </Routes>

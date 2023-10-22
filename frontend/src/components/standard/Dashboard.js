@@ -3,6 +3,7 @@ import axios from 'axios';
 import StudentDashboard from '../Student Portal/StudentDashboard';
 import EmployeeDashboard from '../Employee Portal/EmployeeDashboard';
 import ErrorPage from './ErrorPage';
+import Navbar from './Navbar';
 const Dashboard = ({loggedin , handleLogout}) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
