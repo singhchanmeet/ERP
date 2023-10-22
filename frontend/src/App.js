@@ -4,10 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { DetailsForm, Home, Dashboard, EmployeeApply, EmployeeLogin, EmployeePortal, EmployeeRegistration, Footer, Navbar, StudentAdmission, StudentLogin, StudentPortal, StudentRegistration } from './components/bundle';
 import ComingSoon from './components/ComingSoon';
 import MicrosoftLoginCallback from './components/standard/MicrosoftLoginCallback';
-import AuthContext from './context/auth/authContext';
 import AuthState from './context/auth/authState';
-
-
 
 function App() {
     return (
