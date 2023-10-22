@@ -9,16 +9,21 @@ from . models import User
 from student.views import StudentRegister, StudentLogin
 from django.shortcuts import redirect
 
+
+
 class UserDetails(APIView):
+
     # only authenticated users can access this view
     permission_classes = (IsAuthenticated,)
 
+    # For fetching details of the logged in user, whether student or employee or admin
     def get(self, request):
+
         user = request.user
-        # TO Do: check whether it serializes password too (we dont want that)
-        serializer = UserSerializer(user)
-        serializer.data.pop('password')
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer_data = UserSerializer(user).data
+        serializer_data.pop('password')  # Remove the password from the serialized data
+        return Response(serializer_data, status=status.HTTP_200_OK)
+
 
 
 """
@@ -34,14 +39,13 @@ def index(request):
     # if sign out
     if request.identity_context_data.authenticated == False:
         return redirect('http://localhost:3000/')
-        # return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
     # for employees (example: 1480000361)
-    elif len(request.identity_context_data.username) == 10:
+    if len(request.identity_context_data.username) == 10:
         pass
 
     # for students (example: 01296402722)
-    elif len(request.identity_context_data.username) == 11:
+    if len(request.identity_context_data.username) == 11:
         user = User.objects.filter(user_id=request.identity_context_data.username).first()
         # already existing record, redirect to login
         if user:
@@ -51,5 +55,4 @@ def index(request):
             return StudentRegister().msteams(request)
             
     #some error  
-    else:
-        return Response({'error': 'Unexpected User ID'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Unexpected User ID'}, status=status.HTTP_400_BAD_REQUEST)

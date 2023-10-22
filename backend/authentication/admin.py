@@ -9,3 +9,7 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 
+
+admin.site.site_header = "MAIT - ERP"
+admin.site.index_title = "MAIT - ERP"
+admin.site.site_title = "Admin"

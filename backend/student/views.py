@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import redirect
+import jwt
 
 
 class StudentRegister(APIView):
@@ -51,9 +52,13 @@ class StudentRegister(APIView):
     #To register a student with MS teams, we will call this function because a post request can't be sent
     def msteams(self, request):
 
+        token = request.identity_context_data._access_token
+        decoded_token = jwt.decode(token , options={"verify_signature": False})
+        full_name = f"{decoded_token['given_name']} {decoded_token['family_name']}"
+
         student_id = {
             "user_id": request.identity_context_data.username,
-            "name": request.identity_context_data.username,
+            "name": full_name,
             "email": request.identity_context_data._id_token_claims['preferred_username'],
             "role": "STUDENT",
             "is_teams_user": True
@@ -66,7 +71,7 @@ class StudentRegister(APIView):
             
             student_data = {
                 'student_id': student_id,   #foreign key
-                'name': request.identity_context_data.username,
+                'name': full_name,
                 'email': request.identity_context_data._id_token_claims['preferred_username'],
                 'ip_address': request.META.get('REMOTE_ADDR')
             }
@@ -153,6 +158,7 @@ class StudentLogin(TokenObtainPairView):
         
 class StudentDetailsView(APIView):
 
+    # For submitting personal details of student
     def post(self, request):
 
         # appending the enrollment_number to request data for saving
@@ -169,6 +175,7 @@ class StudentDetailsView(APIView):
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
+    # For fetching personal details of student
     def get(self, request):
 
         enrollment_number = request.user.user_id

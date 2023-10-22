@@ -20,12 +20,24 @@ class StudentSerializer(serializers.ModelSerializer):
         # This will call UserSerializer which will create User record
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         # now User is created so we can proceed to Student
-        student = Student.objects.update_or_create(student_id=user, **validated_data)
+        student = Student.objects.create(student_id=user, **validated_data)
         # now Student is also successfully created
         return student
 
 
 class StudentDetailsSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = StudentDetails
         fields = '__all__'
+
+    def create(self, validated_data):
+
+        # Use enrollment_number to search for existing record
+        # If exists, update fields with the validated_data. If doesn't exist, create record with the validated_data
+        instance, created = StudentDetails.objects.update_or_create(
+            enrollment_number=validated_data['enrollment_number'],
+            defaults=validated_data 
+        )
+
+        return instance
