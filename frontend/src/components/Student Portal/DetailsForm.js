@@ -56,7 +56,7 @@ const DetailsForm = () => {
     aadhar: null,
     pancard: null,
   });
-  
+
   const [formErrors, setFormErrors] = useState({
     enrollment_number: '',
     ipu_registration_number: '',
@@ -103,7 +103,7 @@ const DetailsForm = () => {
     aadhar: '',
     pancard: '',
   });
-  
+
   useEffect(() => {
     // Fetch the user details from your API
     axios.get('http://localhost:8000/user-details/', {
@@ -146,76 +146,88 @@ const DetailsForm = () => {
   if (!user) {
     return <ErrorPage />
   }
-  
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (studentDetails.name.length < 6) {
+    if (studentDetails.name.length < 2) {
       setFormErrors({
-        username: 'Name must be at least 6 characters long.',
+        username: 'Name must be at least 2 characters long.',
         // Set other form errors as needed...
       });
     } else {
-      // Handle the form submission using Axios POST
-      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => {
-          // Handle the response, e.g., display a success message.
-          setFormErrors({
-            enrollment_number: '',
-            ipu_registration_number: '',
-            name: '',
-            dob: '',
-            full_address: '',
-            email: '',
-            mobile_number: '',
-            gender: '',
-            category: '',
-            region: '',
-            father_name: '',
-            mother_name: '',
-            father_qualification: '',
-            mother_qualification: '',
-            father_occupation: '',
-            mother_occupation: '',
-            father_job_designation: '',
-            mother_job_designation: '',
-            father_business_type: '',
-            mother_business_type: '',
-            father_mobile_number: '',
-            mother_mobile_number: '',
-            father_office_address: '',
-            mother_office_address: '',
-            guardian_name: '',
-            board_12th: '',
-            year_of_12th: '',
-            rollno_12th: '',
-            school_12th: '',
-            aggregate_12th: '',
-            board_10th: '',
-            year_of_10th: '',
-            rollno_10th: '',
-            school_10th: '',
-            aggregate_10th: '',
-            jee_rank: '',
-            jee_percentile: '',
-            jee_rollno: '',
-            special_achievements: '',
-            passport_photograph: '',
-            marksheet_10th: '',
-            marksheet_12th: '',
-            aadhar: '',
-            pancard: '',
-          });
-          
-        })
-        .catch((error) => {
-          // Handle errors, e.g., display an error message.
-          console.error('Error submitting form:', error);
+      if (studentDetails.name.length < 2) {
+        setFormErrors({
+          username: 'Name must be at least 2 characters long.',
         });
+      } else {
+        setStep(step + 1);
+        setFormErrors({
+          username: '',
+        });
+        // Handle the form submission using Axios POST
+        axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          }
+        })
+          .then((response) => {
+            // Handle the response, e.g., display a success message.
+            setFormErrors({
+              enrollment_number: '',
+              ipu_registration_number: '',
+              name: '',
+              dob: '',
+              full_address: '',
+              email: '',
+              mobile_number: '',
+              gender: '',
+              category: '',
+              region: '',
+              father_name: '',
+              mother_name: '',
+              father_qualification: '',
+              mother_qualification: '',
+              father_occupation: '',
+              mother_occupation: '',
+              father_job_designation: '',
+              mother_job_designation: '',
+              father_business_type: '',
+              mother_business_type: '',
+              father_mobile_number: '',
+              mother_mobile_number: '',
+              father_office_address: '',
+              mother_office_address: '',
+              guardian_name: '',
+              board_12th: '',
+              year_of_12th: '',
+              rollno_12th: '',
+              school_12th: '',
+              aggregate_12th: '',
+              board_10th: '',
+              year_of_10th: '',
+              rollno_10th: '',
+              school_10th: '',
+              aggregate_10th: '',
+              jee_rank: '',
+              jee_percentile: '',
+              jee_rollno: '',
+              special_achievements: '',
+              passport_photograph: '',
+              marksheet_10th: '',
+              marksheet_12th: '',
+              aadhar: '',
+              pancard: '',
+            });
+
+
+          })
+          .catch((error) => {
+            // Handle errors, e.g., display an error message.
+            console.error('Error submitting form:', error);
+          });
+      }
+
     }
   };
 
@@ -235,7 +247,7 @@ const DetailsForm = () => {
   };
   const nextStep = (e) => {
     e.preventDefault();
-    if (studentDetails.name.length < 2 ) {
+    if (studentDetails.name.length < 2) {
       setFormErrors({
         username: 'Name must be at least 2 characters long.',
       });
