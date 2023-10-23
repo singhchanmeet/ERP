@@ -31,13 +31,9 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
         model = StudentDetails
         fields = '__all__'
 
-    def create(self, validated_data):
-
-        # Use enrollment_number to search for existing record
-        # If exists, update fields with the validated_data. If doesn't exist, create record with the validated_data
-        instance, created = StudentDetails.objects.update_or_create(
-            enrollment_number=validated_data['enrollment_number'],
-            defaults=validated_data 
-        )
-
-        return instance
+    
+    # def update(self, instance, validated_data):
+    #     print("update called")
+    #     return super().update(instance, validated_data)
+    
+    

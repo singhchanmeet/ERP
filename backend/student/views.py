@@ -10,6 +10,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import redirect
 import jwt
+from . models import StudentDetails
 
 
 class StudentRegister(APIView):
@@ -163,12 +164,23 @@ class StudentDetailsView(APIView):
     # For submitting personal details of student
     def post(self, request):
 
+        student_instance = StudentDetails.objects.filter(enrollment_number=request.user.user_id).first()
+
         # appending the enrollment_number to request data for saving
         request.data['enrollment_number'] = request.user.user_id
         request.data['ipu_registration_number'] = request.user.user_id
         
+        # print(request.data)
         # Serialize using StudentDetailsSerializer for validation and saving
-        student_serializer = StudentDetailsSerializer(data=request.data)
+
+        if student_instance:
+            # If the record exists, update it with the new data
+            student_serializer = StudentDetailsSerializer(student_instance, data=request.data)
+        else:
+            # If the record doesn't exist, create a new record
+            student_serializer = StudentDetailsSerializer(data=request.data)
+
+        # print(student_serializer.errors)
 
         if student_serializer.is_valid():
             student_serializer.save()
@@ -181,5 +193,6 @@ class StudentDetailsView(APIView):
     def get(self, request):
 
         enrollment_number = request.user.user_id
-        serializer = StudentDetailsSerializer(enrollment_number=enrollment_number)
+        serializer = StudentDetailsSerializer(StudentDetails.objects.get(enrollment_number=enrollment_number))
+        # print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
