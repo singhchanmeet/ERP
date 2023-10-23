@@ -172,7 +172,7 @@ class StudentDetailsView(APIView):
 
         if student_serializer.is_valid():
             student_serializer.save()
-            return Response({'message': 'Student registered successfully'}, status=status.HTTP_201_CREATED)
+            return Response({'message': 'Details Submitted Successfully'}, status=status.HTTP_200_OK)
         else:
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

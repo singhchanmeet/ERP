@@ -24,6 +24,27 @@ class Student(models.Model):
 # Model for all personal details of student (common for all sems)
 class StudentDetails(models.Model):
 
+    # first arguement is stored in database, second is its human readable form that will be displayed in dropdowns
+    class Gender(models.TextChoices):
+        MALE = "MALE" , 'Male'
+        FEMALE = "FEMALE" , 'Female'
+        OTHERS = "OTHERS" , 'Others'
+
+    class Category(models.TextChoices):
+        SC = "SC" , "SC"
+        ST = "ST" , "ST"
+        OBC = "OBC" , "OBC"
+        GEN ="UR/Gen" , "UR/Gen"
+        EWS = "EWS" , "EWS"
+        PH = "PH" , "PH (Physically Handicapped/Person with Disability)"
+        DEFENCE = "DEFENCE" , "Defence"
+        J_AND_K_MIGRANT = "J_AND_K_MIGRANT" , "J & K Migrant"
+
+    class Region(models.TextChoices):
+        DELHI = "DELHI" , "Delhi"
+        OUTSIDE_DELHI = "OUTSIDE_DELHI" , "Outside Delhi"
+
+
     # Enrollment Number
     enrollment_number = models.CharField(max_length=11, unique=True, db_index=True)   #db_index is for faster queries
     #GGSIPU registration number
@@ -31,13 +52,13 @@ class StudentDetails(models.Model):
 
     #candidate details
     name = models.CharField(max_length=75, blank=True)
-    dob = models.DateField(blank=True)
+    dob = models.DateField(blank=True, null=True)
     full_address = models.CharField(max_length=150, blank=True)
     email = models.EmailField(max_length=50, blank=True, unique=False)
     mobile_number = models.CharField(max_length=10, blank=True)
-    gender = models.CharField(max_length=6, blank=True)
-    category = models.CharField(max_length=30, blank=True)
-    region = models.CharField(max_length=15, blank=True)
+    gender = models.CharField(max_length=6, choices=Gender.choices, blank=True)
+    category = models.CharField(max_length=15, choices=Category.choices, blank=True)
+    region = models.CharField(max_length=13, choices=Region.choices, blank=True)
 
     #parent details
     father_name = models.CharField(max_length=75, blank=True)
@@ -79,11 +100,11 @@ class StudentDetails(models.Model):
     special_achievements = models.CharField(max_length=200, blank=True)
 
     #images and files
-    passport_photograph = models.ImageField(upload_to=utils.passport_photograph_rename, blank=True)
-    marksheet_10th = models.FileField(upload_to=utils.marksheet_10th_rename, blank=True)
-    marksheet_12th = models.FileField(upload_to=utils.marksheet_12th_rename, blank=True)
-    aadhar = models.FileField(upload_to=utils.aadhar_rename, blank=True)
-    pancard = models.FileField(upload_to=utils.pancard_rename, blank=True)
+    passport_photograph = models.ImageField(upload_to=utils.passport_photograph_rename, blank=True, null=True)
+    marksheet_10th = models.FileField(upload_to=utils.marksheet_10th_rename, blank=True, null=True)
+    marksheet_12th = models.FileField(upload_to=utils.marksheet_12th_rename, blank=True, null=True)
+    aadhar = models.FileField(upload_to=utils.aadhar_rename, blank=True, null=True)
+    pancard = models.FileField(upload_to=utils.pancard_rename, blank=True, null=True)
 
     # To track IP address and other information of users
     ip_address = models. GenericIPAddressField(blank=True, null=True)
