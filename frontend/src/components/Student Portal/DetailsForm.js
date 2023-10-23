@@ -160,7 +160,7 @@ const DetailsForm = () => {
           username: 'Name must be at least 2 characters long.',
         });
       } else {
-        setStep(step + 1);
+        
         setFormErrors({
           username: '',
         });
@@ -219,7 +219,7 @@ const DetailsForm = () => {
               aadhar: '',
               pancard: '',
             });
-
+            setStep(step + 1);
 
           })
           .catch((error) => {
