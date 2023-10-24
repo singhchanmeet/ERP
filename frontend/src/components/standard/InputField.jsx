@@ -11,6 +11,7 @@ const InputField = ({ name, value, onChange, placeholder }) => {
           type="text"
           name={name}
           id={name}
+          required
           value={value}
           onChange={onChange}
           placeholder={placeholder}

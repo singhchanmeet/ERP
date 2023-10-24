@@ -356,7 +356,7 @@ const DetailsForm = () => {
                         value={studentDetails.name}
                         onChange={handleInputChange}
                         autoComplete="given-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
                     </div>
                     {formErrors.name && <p className="error text-red-600 text-sm font-semibold">{formErrors.name}</p>}
@@ -374,6 +374,7 @@ const DetailsForm = () => {
                         value={studentDetails.dob}
                         onChange={handleInputChange}
                         id="dob"
+                        required
                         autoComplete="family-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -528,7 +529,7 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">Parent Details</h2>
-            <form onSubmit={handleFormSubmit} className='' encType="multipart/form-data">
+            <form onSubmit={handleFormSubmit}  encType="multipart/form-data">
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>Father Details</h1>
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
@@ -876,6 +877,7 @@ const DetailsForm = () => {
                   accept="image/*"
                   id="passport_photograph"
                   name="passport_photograph"
+                  required
                   onChange={(e) => handleFileInputChange(e, 'passport_photograph')}
                   className="w-full p-2 mb-2 rounded border border-gray-300"
                 />
@@ -887,6 +889,7 @@ const DetailsForm = () => {
                   id="marksheet_10th"
                   accept='application/pdf'
                   name="marksheet_10th"
+                  required
                   onChange={(e) => handleFileInputChange(e, 'marksheet_10th')}
                   className="w-full p-2 mb-2 rounded border border-gray-300"
                 />
@@ -897,6 +900,7 @@ const DetailsForm = () => {
                   type="file"
                   accept='application/pdf'
                   id="marksheet_12th"
+                  required
                   name="marksheet_12th"
                   onChange={(e) => handleFileInputChange(e, 'marksheet_12th')}
                   className="w-full p-2 mb-2 rounded border border-gray-300"
@@ -908,6 +912,7 @@ const DetailsForm = () => {
                   type="file"
                   accept='application/pdf'
                   id="aadhar"
+                  required
                   name="aadhar"
                   onChange={(e) => handleFileInputChange(e, 'aadhar')}
                   className="w-full p-2 mb-2 rounded border border-gray-300"
@@ -917,6 +922,7 @@ const DetailsForm = () => {
                 <label htmlFor="pancard">PAN Card:</label>
                 <input
                   type="file"
+                  required
                   accept='application/pdf'
                   id="pancard"
                   name="pancard"
