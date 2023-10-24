@@ -30,10 +30,5 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
         fields = '__all__'
-
-    
-    # def update(self, instance, validated_data):
-    #     print("update called")
-    #     return super().update(instance, validated_data)
     
     
