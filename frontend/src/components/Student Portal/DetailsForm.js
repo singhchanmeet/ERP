@@ -1,11 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ErrorPage from '../standard/ErrorPage';
-import bgForm from "../../assets/bg_forms.jpg";
 import { useNavigate } from 'react-router-dom';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import InputField from '../standard/InputField';
-import FileUpload from '../standard/FileUpload';
 const DetailsForm = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
