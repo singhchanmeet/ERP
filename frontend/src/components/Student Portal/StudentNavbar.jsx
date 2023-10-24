@@ -14,7 +14,7 @@ const StudentNavbar = ({ user }) => {
   };
 
   return (
-    <nav className="bg-gray-900 p-2 shadow-md">
+    <nav className="bg-gray-900 p-2 shadow-md px-10  ">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white text-xl font-bold mr-4">MAIT</Link>
