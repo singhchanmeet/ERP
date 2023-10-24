@@ -38,6 +38,9 @@ const StudentNavbar = ({ user }) => {
               <div className="bg-gray-900 text-white absolute  top-0 right-0 w-48 rounded-md shadow-lg">
                 <ul className="p-4 space-y-2">
                   <li>
+                    <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+                  </li>
+                  <li>
                     <Link to="/timetable" className="hover:underline">Timetable</Link>
                   </li>
                   <li>
