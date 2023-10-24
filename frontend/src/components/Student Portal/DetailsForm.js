@@ -1077,39 +1077,51 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="marksheet_12th" className="text-lg font-semibold">12th Marksheet:</label>
                   <input
-                    type="text"
+                    type="file"
                     id="marksheet_12th"
                     name="marksheet_12th"
-                    placeholder="12th Marksheet"
-                    value={studentDetails.marksheet_12th ? studentDetails.marksheet_12th.name : 'Not uploaded'}
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
+                  {studentDetails.marksheet_12th ? (
+                    <p>Uploaded File: {studentDetails.marksheet_12th.name}</p>
+                  ) : (
+                    <p>Not uploaded</p>
+                  )}
                 </div>
+
                 <div>
                   <label htmlFor="aadhar" className="text-lg font-semibold">Aadhar Card:</label>
                   <input
-                    type="text"
+                    type="file"
                     id="aadhar"
                     name="aadhar"
-                    placeholder="Aadhar Card"
-                    value={studentDetails.aadhar ? studentDetails.aadhar.name : 'Not uploaded'}
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
+                  {studentDetails.aadhar ? (
+                    <p>Uploaded File: {studentDetails.aadhar.name}</p>
+                  ) : (
+                    <p>Not uploaded</p>
+                  )}
                 </div>
+
                 <div>
                   <label htmlFor="pancard" className="text-lg font-semibold">PAN Card:</label>
                   <input
-                    type="text"
+                    type="file"
                     id="pancard"
                     name="pancard"
-                    placeholder="PAN Card"
-                    value={studentDetails.pancard ? studentDetails.pancard.name : 'Not uploaded'}
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
+                  {studentDetails.pancard ? (
+                    <p>Uploaded File: {studentDetails.pancard.name}</p>
+                  ) : (
+                    <p>Not uploaded</p>
+                  )}
                 </div>
+
 
                 {/* Add more fields here... */}
 
@@ -1118,9 +1130,9 @@ const DetailsForm = () => {
                     Previous
                   </button>
                   <button type="submit" onClick={(e) => {
-                      handleFormSubmit(e);
-                      finalSubmit();
-                    }}
+                    handleFormSubmit(e);
+                    finalSubmit();
+                  }}
                     className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                   >
                     Submit

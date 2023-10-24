@@ -167,8 +167,10 @@ class StudentDetailsView(APIView):
         student_instance = StudentDetails.objects.filter(enrollment_number=request.user.user_id).first()
 
         # appending the enrollment_number to request data for saving
+        request.data._mutable = True
         request.data['enrollment_number'] = request.user.user_id
         request.data['ipu_registration_number'] = request.user.user_id
+        request.data._mutable = False
         
         # print(request.data)
         # Serialize using StudentDetailsSerializer for validation and saving
