@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import StudentNavbar from './StudentNavbar';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const StudentDashboard = ({ user }) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const [formFilled, setFormFilled] = useState(false);
+  useEffect(() => {
+    axios.get('http://localhost:8000/student/personal-details/', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          // If status is 204, set formFilled to false
+          setFormFilled(false);
+        } else if (response.data.pancard !== null) {
+          // If response.data.pancard is not null, set formFilled to true
+          setFormFilled(true);
+        } else {
+          // In all other cases, set formFilled to false
+          setFormFilled(false);
+        }
+        // Now you can use the formFilled value as needed
+        // For example, you can log it or use it in your application logic
+        console.log('formFilled:', formFilled);
+      })
+
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [accessToken , formFilled]);
   return (
     <div className="p-5 bg-slate-300">
       <div className="mb-8">
@@ -27,11 +57,15 @@ const StudentDashboard = ({ user }) => {
           To proceed further and fill the form, please share your details.
         </h1>
       </div>
-      <Link to={'/student-details-form'}>
+      {formFilled ? (
+      <p>You have already filled the details form. Please wait until further notice.</p>
+    ) : (
+      <Link to="/student-details-form">
         <button className="border-2 p-1 border-indigo-700 font-mono shadow rounded my-2 text-lg">
           Click Here
         </button>
       </Link>
+    )}
 
       {/* You can add more student details and components as needed */}
     </div>
