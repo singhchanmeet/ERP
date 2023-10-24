@@ -1,11 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ErrorPage from '../standard/ErrorPage';
-import bgForm from "../../assets/bg_forms.jpg";
 import { useNavigate } from 'react-router-dom';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import InputField from '../standard/InputField';
-import FileUpload from '../standard/FileUpload';
 const DetailsForm = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -161,7 +158,7 @@ const DetailsForm = () => {
     // Define a function to validate fields for the current step
     const validateStepFields = (stepFields) => {
       Object.keys(stepFields).forEach((key) => {
-        if (typeof stepFields[key] === 'string' && stepFields[key].trim() === '') {
+        if (typeof stepFields[key] === 'string' && stepFields[key].trim() === '' && stepFields[key] === null ) {
           newFormErrors[key] = 'This field is required';
           isStepValid = false;
         }
@@ -172,8 +169,6 @@ const DetailsForm = () => {
     switch (step) {
       case 1:
         validateStepFields({
-          enrollment_number: studentDetails.enrollment_number,
-          ipu_registration_number: studentDetails.ipu_registration_number,
           name: studentDetails.name,
           dob: studentDetails.dob,
           full_address: studentDetails.full_address,
@@ -236,14 +231,6 @@ const DetailsForm = () => {
         break;
       default:
         break;
-    }
-
-
-    if (studentDetails.name.length < 2) {
-      setFormErrors({
-        name: 'Name must be at least 2 characters long.',
-        // Set other form errors as needed...
-      });
     }
     if (!isStepValid) {
       console.log('Validation errors:', newFormErrors);
@@ -351,7 +338,7 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">Personal Details</h2>
-            <form onSubmit={nextStep} encType='multipart/form-data'>
+            <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
               <div className="border-b border-gray-900/10 pb-12">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">Please double check and make sure your information is correct</p>
@@ -376,7 +363,7 @@ const DetailsForm = () => {
                   </div>
 
                   <div className="sm:col-span-3">
-                    <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="dob" className="block text-sm font-medium leading-6 text-gray-900">
                       Date of Birth
                     </label>
                     <div className="mt-2">
@@ -386,7 +373,7 @@ const DetailsForm = () => {
                         placeholder="Date of Birth"
                         value={studentDetails.dob}
                         onChange={handleInputChange}
-                        id="date"
+                        id="dob"
                         autoComplete="family-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
@@ -414,7 +401,7 @@ const DetailsForm = () => {
                   </div>
 
                   <div className="col-span-full">
-                    <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="full_address" className="block text-sm font-medium leading-6 text-gray-900">
                       Full Adress
                     </label>
                     <div className="mt-2">
@@ -424,7 +411,7 @@ const DetailsForm = () => {
                         placeholder="Full Address"
                         value={studentDetails.full_address}
                         onChange={handleInputChange}
-                        id="street-address"
+                        id="full_address"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
                     </div>
@@ -484,6 +471,7 @@ const DetailsForm = () => {
                         name="category"
                         placeholder="Category"
                         value={studentDetails.category}
+                        id='category'
                         onChange={handleInputChange}
                         autoComplete="category"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -502,7 +490,7 @@ const DetailsForm = () => {
                     {formErrors.category && <p className="error text-red-600 text-sm ">{formErrors.category}</p>}
                   </div>
                   <div className="sm:col-span-3">
-                    <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
                       Region
                     </label>
                     <div className="mt-2">
@@ -511,6 +499,7 @@ const DetailsForm = () => {
                         name="region"
                         placeholder="Region"
                         value={studentDetails.region}
+                        id='region'
                         onChange={handleInputChange}
                         autoComplete="country-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -527,7 +516,7 @@ const DetailsForm = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <button onClick={handleFormSubmit} type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button  type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -539,13 +528,13 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">Parent Details</h2>
-            <form onSubmit={nextStep} className='' encType="multipart/form-data">
+            <form onSubmit={handleFormSubmit} className='' encType="multipart/form-data">
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>Father Details</h1>
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
                 <div>
 
-                  <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange} placeholder="Father's name" />
+                  <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange}  placeholder="Father's name" />
                   {formErrors.father_name && <p className="error text-red-600 text-sm ">{formErrors.father_name}</p>}
                 </div>
 
@@ -688,7 +677,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit" onClick={handleFormSubmit} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -700,7 +689,7 @@ const DetailsForm = () => {
         return (
           <div className="p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 "> Academic Results</h2>
-            <form onSubmit={nextStep} encType="multipart/form-data">
+            <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               {/* 12th Class Details */}
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>10th class Details</h1>
               <br />
@@ -808,7 +797,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit" onClick={handleFormSubmit} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -820,7 +809,7 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">JEE Details and Achievements</h2>
-            <form onSubmit={nextStep} encType="multipart/form-data">
+            <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               <div>
                 <InputField
                   name="jee_rank"
@@ -866,7 +855,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit" onClick={handleFormSubmit} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -877,7 +866,7 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">Upload Images and Files</h2>
-            <form onSubmit={nextStep} encType='multipart/form-data' >
+            <form onSubmit={handleFormSubmit} encType='multipart/form-data' >
               <div className='flex flex-wrap gap-10'>
 
               <div>
@@ -945,7 +934,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit" onClick={handleFormSubmit} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
