@@ -160,7 +160,7 @@ const DetailsForm = () => {
           username: 'Name must be at least 2 characters long.',
         });
       } else {
-        
+
         setFormErrors({
           username: '',
         });
@@ -168,7 +168,7 @@ const DetailsForm = () => {
         axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           }
         })
           .then((response) => {
@@ -231,6 +231,12 @@ const DetailsForm = () => {
     }
   };
 
+  const finalSubmit = () => {
+
+    alert('Student details have been submitted to the Portal');
+    navigate('/dashboard')
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStudentDetails({ ...studentDetails, [name]: value });
@@ -245,6 +251,7 @@ const DetailsForm = () => {
       setStudentDetails({ ...studentDetails, [fieldName]: null });
     }
   };
+
   const nextStep = (e) => {
     e.preventDefault();
     if (studentDetails.name.length < 2) {
@@ -269,7 +276,7 @@ const DetailsForm = () => {
         return (
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Step 1: Personal Details</h2>
-            <form onSubmit={nextStep}>
+            <form onSubmit={nextStep} encType='multipart/form-data'>
               <div>
                 <input
                   type="text"
@@ -364,7 +371,7 @@ const DetailsForm = () => {
         return (
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Step 2: Parent Details</h2>
-            <form onSubmit={nextStep}>
+            <form onSubmit={nextStep} encType="multipart/form-data">
               <div>
                 <input
                   type="text"
@@ -519,7 +526,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                   Previous
                 </button>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button type="submit" onClick={handleFormSubmit} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                   Next
                 </button>
               </div>
@@ -531,11 +538,7 @@ const DetailsForm = () => {
         return (
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Step 3: 10th and 12th Results</h2>
-            <form onSubmit={nextStep}>
-              <p>Name: {studentDetails.name}</p>
-              <p>Roll Number: {studentDetails.rollNumber}</p>
-              <p>Department: {studentDetails.department}</p>
-
+            <form onSubmit={nextStep} encType="multipart/form-data">
               {/* 12th Class Details */}
               <div>
                 <input
@@ -644,7 +647,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="bg-gray-500 text-white px-4 py-2 rounded hover-bg-gray-600">
                   Previous
                 </button>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button type="submit" onClick={handleFormSubmit} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                   Next
                 </button>
               </div>
@@ -656,7 +659,7 @@ const DetailsForm = () => {
         return (
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Step 4: JEE Details and Achievements</h2>
-            <form onSubmit={nextStep}>
+            <form onSubmit={nextStep} encType="multipart/form-data">
               <div>
                 <input
                   type="number"
@@ -701,7 +704,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="bg-gray-500 text-white px-4 py-2 rounded hover-bg-gray-600">
                   Previous
                 </button>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button type="submit" onClick={handleFormSubmit} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                   Next
                 </button>
               </div>
@@ -712,7 +715,7 @@ const DetailsForm = () => {
         return (
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Step 5: Upload Images and Files</h2>
-            <form onSubmit={nextStep}>
+            <form onSubmit={nextStep} encType='multipart/form-data'>
               <div>
                 <label htmlFor="passport_photograph">Passport Photograph:</label>
                 <input
@@ -729,6 +732,7 @@ const DetailsForm = () => {
                 <input
                   type="file"
                   id="marksheet_10th"
+                  accept='application/pdf'
                   name="marksheet_10th"
                   onChange={(e) => handleFileInputChange(e, 'marksheet_10th')}
                   className="w-full p-2 mb-2 rounded border border-gray-300"
@@ -738,6 +742,7 @@ const DetailsForm = () => {
                 <label htmlFor="marksheet_12th">12th Marksheet:</label>
                 <input
                   type="file"
+                  accept='application/pdf'
                   id="marksheet_12th"
                   name="marksheet_12th"
                   onChange={(e) => handleFileInputChange(e, 'marksheet_12th')}
@@ -748,6 +753,7 @@ const DetailsForm = () => {
                 <label htmlFor="aadhar">Aadhar Card:</label>
                 <input
                   type="file"
+                  accept='application/pdf'
                   id="aadhar"
                   name="aadhar"
                   onChange={(e) => handleFileInputChange(e, 'aadhar')}
@@ -758,6 +764,7 @@ const DetailsForm = () => {
                 <label htmlFor="pancard">PAN Card:</label>
                 <input
                   type="file"
+                  accept='application/pdf'
                   id="pancard"
                   name="pancard"
                   onChange={(e) => handleFileInputChange(e, 'pancard')}
@@ -768,7 +775,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="bg-gray-500 text-white px-4 py-2 rounded hover-bg-gray-600">
                   Previous
                 </button>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <button type="submit" onClick={handleFormSubmit} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                   Next
                 </button>
               </div>
@@ -781,7 +788,7 @@ const DetailsForm = () => {
           <>
             <div className="bg-gray-100 p-4 rounded-lg">
               <h2 className="text-2xl font-bold mb-4">Step 6: Data Submission</h2>
-              <form onSubmit={handleFormSubmit}>
+              <form onSubmit={handleFormSubmit} encType="multipart/form-data">
                 {/* Hidden input fields to store the values */}
                 <div>
                   <label htmlFor="name" className="text-lg font-semibold">Name:</label>
@@ -795,30 +802,7 @@ const DetailsForm = () => {
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
                 </div>
-                <div>
-                  <label htmlFor="rollNumber" className="text-lg font-semibold">Roll Number:</label>
-                  <input
-                    type="text"
-                    id="rollNumber"
-                    name="rollNumber"
-                    placeholder="Roll Number"
-                    value={studentDetails.rollNumber}
-                    onChange={handleInputChange}
-                    className="w-full p-2 mb-2 rounded border border-gray-300"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="department" className="text-lg font-semibold">Department:</label>
-                  <input
-                    type="text"
-                    id="department"
-                    name="department"
-                    placeholder="Department"
-                    value={studentDetails.department}
-                    onChange={handleInputChange}
-                    className="w-full p-2 mb-2 rounded border border-gray-300"
-                  />
-                </div>
+
                 <div>
                   <label htmlFor="dob" className="text-lg font-semibold">Date of Birth:</label>
                   <input
@@ -1062,26 +1046,33 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="passport_photograph" className="text-lg font-semibold">Passport Photograph:</label>
                   <input
-                    type="text"
+                    type="file"  // Use type="file" for file input
                     id="passport_photograph"
                     name="passport_photograph"
-                    placeholder="Passport Photograph"
-                    value={studentDetails.passport_photograph ? studentDetails.passport_photograph.name : 'Not uploaded'}
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
+                  {studentDetails.passport_photograph ? (
+                    <p>Uploaded File: {studentDetails.passport_photograph.name}</p>
+                  ) : (
+                    <p>Not uploaded</p>
+                  )}
                 </div>
+
                 <div>
                   <label htmlFor="marksheet_10th" className="text-lg font-semibold">10th Marksheet:</label>
                   <input
-                    type="text"
+                    type="file"  // Use type="file" for file input
                     id="marksheet_10th"
                     name="marksheet_10th"
-                    placeholder="10th Marksheet"
-                    value={studentDetails.marksheet_10th ? studentDetails.marksheet_10th.name : 'Not uploaded'}
-                    onChange={handleInputChange}
+                    onChange={handleFileInputChange}
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
+                  {studentDetails.marksheet_10th ? (
+                    <p>Uploaded File: {studentDetails.marksheet_10th.name}</p>
+                  ) : (
+                    <p>Not uploaded</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="marksheet_12th" className="text-lg font-semibold">12th Marksheet:</label>
@@ -1126,9 +1117,15 @@ const DetailsForm = () => {
                   <button onClick={prevStep} className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                     Previous
                   </button>
-                  <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                  <button type="submit" onClick={(e) => {
+                      handleFormSubmit(e);
+                      finalSubmit();
+                    }}
+                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                  >
                     Submit
                   </button>
+
                 </div>
               </form>
             </div>
