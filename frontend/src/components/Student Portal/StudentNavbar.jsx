@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
+import { FaTimes } from 'react-icons/fa'; // Import the close icon
 import AuthContext from '../../context/auth/authContext';
 
 const StudentNavbar = ({ user }) => {
@@ -14,28 +15,54 @@ const StudentNavbar = ({ user }) => {
 
   return (
     <nav className="bg-gray-900 p-2 shadow-md">
-      <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white text-xl font-bold mr-4">MAIT</Link>
           <p className="text-white text-base">Welcome, {user.email}</p>
         </div>
         <div className="mt-4 sm:mt-0">
           {/* Hamburger menu icon */}
-          <button onClick={toggleMenu} className="text-white sm:hidden">
-            <FaBars />
-          </button>
-          {/* Responsive menu */}
+          {menuOpen ? (
+            <button onClick={toggleMenu} className="text-white">
+              <FaTimes />
+            </button>
+          ) : (
+            <button onClick={toggleMenu} className="text-white ">
+              <FaBars />
+            </button>
+          )}
+          {/* Dropdown menu */}
           {menuOpen && (
-            <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link to="/timetable" className="text-white hover:underline">Timetable</Link>
-              <Link to="/schedule" className="text-white hover:underline">Schedule</Link>
-              <Link to="/results" className="text-white hover:underline">Results</Link>
-              <Link to="/cms" className="text-white hover:underline">CMS/LMS</Link>
-              <Link to="/help" className="text-white hover:underline">Help/Support</Link>
-              <Link to="/attendance" className="text-white hover:underline">Attendance</Link>
-              <button onClick={logoutUser} className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600">
-                Logout
-              </button>
+            <div className="relative ">
+              
+              <div className="bg-gray-900 text-white absolute  top-0 right-0 w-48 rounded-md shadow-lg">
+                <ul className="p-4 space-y-2">
+                  <li>
+                    <Link to="/timetable" className="hover:underline">Timetable</Link>
+                  </li>
+                  <li>
+                    <Link to="/schedule" className="hover:underline">Schedule</Link>
+                  </li>
+                  <li>
+                    <Link to="/results" className="hover:underline">Results</Link>
+                  </li>
+                  <li>
+                    <Link to="/cms" className="hover:underline">CMS/LMS</Link>
+                  </li>
+                  <li>
+                    <Link to="/help" className="hover:underline">Help/Support</Link>
+                  </li>
+                  <li>
+                    <Link to="/attendance" className="hover:underline">Attendance</Link>
+                  </li>
+                </ul>
+                <button
+                  onClick={logoutUser}
+                  className="bg-red-500 text-white w-full py-2 px-4 rounded-b-md hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           )}
         </div>
