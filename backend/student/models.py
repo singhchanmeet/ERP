@@ -13,7 +13,7 @@ class Student(models.Model):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.name 
     
     class Meta:
         db_table = 'students'  # This sets the table name to 'students'
