@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 
 from ms_identity_web.django.msal_views_and_urls import MsalViews
 from . import settings
@@ -13,4 +14,4 @@ urlpatterns = [
     path(f'{settings.AAD_CONFIG.django.auth_endpoints.prefix}/', include(msal_urls)),    # for ms teams authentication   
     path('student/', include('student.urls')),
     # path('employee/', include('employee.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    #for serving static files
