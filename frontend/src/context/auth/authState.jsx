@@ -7,7 +7,7 @@ const AuthState = (props) => {
   // Use destructuring to extract navigate from the useNavigate hook
   const navigate = useNavigate();
 
-  const host = "http://localhost:8000 ";
+  const host = "http://localhost:8000";
 
   // Use useState initializers to fetch tokens from localStorage
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem("accessToken") || null);

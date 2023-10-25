@@ -105,7 +105,7 @@ const DetailsForm = () => {
 
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000 s/', {
+    axios.get('http://localhost:8000s/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
@@ -123,7 +123,7 @@ const DetailsForm = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000 /student/personal-details/', {
+    axios.get('http://localhost:8000/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const DetailsForm = () => {
       setFormErrors(newFormErrors);
     }
     else {
-      axios.post('http://localhost:8000 /student/personal-details/', studentDetails, {
+      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
