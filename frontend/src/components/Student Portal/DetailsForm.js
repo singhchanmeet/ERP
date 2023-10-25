@@ -105,7 +105,7 @@ const DetailsForm = () => {
 
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000/user-details/', {
+    axios.get('http://localhost:8000 s/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
@@ -123,7 +123,7 @@ const DetailsForm = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('http://localhost:8000 /student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const DetailsForm = () => {
     // Define a function to validate fields for the current step
     const validateStepFields = (stepFields) => {
       Object.keys(stepFields).forEach((key) => {
-        if (typeof stepFields[key] === 'string' && stepFields[key].trim() === '' && stepFields[key] === null ) {
+        if (typeof stepFields[key] === 'string' && stepFields[key].trim() === '' && stepFields[key] === null) {
           newFormErrors[key] = 'This field is required';
           isStepValid = false;
         }
@@ -237,7 +237,7 @@ const DetailsForm = () => {
       setFormErrors(newFormErrors);
     }
     else {
-      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
+      axios.post('http://localhost:8000 /student/personal-details/', studentDetails, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
@@ -517,7 +517,7 @@ const DetailsForm = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <button  type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -529,13 +529,13 @@ const DetailsForm = () => {
         return (
           <div className=" p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 ">Parent Details</h2>
-            <form onSubmit={handleFormSubmit}  encType="multipart/form-data">
+            <form onSubmit={handleFormSubmit} encType="multipart/form-data">
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>Father Details</h1>
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
                 <div>
 
-                  <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange}  placeholder="Father's name" />
+                  <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange} placeholder="Father's name" />
                   {formErrors.father_name && <p className="error text-red-600 text-sm ">{formErrors.father_name}</p>}
                 </div>
 
@@ -678,7 +678,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -798,7 +798,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -826,7 +826,7 @@ const DetailsForm = () => {
                   name="jee_percentile"
                   value={studentDetails.jee_percentile}
                   onChange={handleInputChange}
-                  placeholder="JEE Percentile"
+                  placeholder="JEE Percentile(upto 4 decimals)"
                 />
                 {formErrors.jee_percentile && <p className="error text-red-600 text-sm ">{formErrors.jee_percentile}</p>}
               </div>
@@ -836,6 +836,7 @@ const DetailsForm = () => {
                   value={studentDetails.jee_rollno}
                   onChange={handleInputChange}
                   placeholder="JEE Roll Number"
+
                 />
 
                 {formErrors.jee_rollno && <p className="error text-red-600 text-sm ">{formErrors.jee_rollno}</p>}
@@ -856,7 +857,7 @@ const DetailsForm = () => {
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>
@@ -870,77 +871,77 @@ const DetailsForm = () => {
             <form onSubmit={handleFormSubmit} encType='multipart/form-data' >
               <div className='flex flex-wrap gap-10'>
 
-              <div>
-                <label htmlFor="passport_photograph">Passport Photograph:</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="passport_photograph"
-                  name="passport_photograph"
-                  required
-                  onChange={(e) => handleFileInputChange(e, 'passport_photograph')}
-                  className="w-full p-2 mb-2 rounded border border-gray-300"
-                />
-              </div>
-              <div>
-                <label htmlFor="marksheet_10th">10th Marksheet:</label>
-                <input
-                  type="file"
-                  id="marksheet_10th"
-                  accept='application/pdf'
-                  name="marksheet_10th"
-                  required
-                  onChange={(e) => handleFileInputChange(e, 'marksheet_10th')}
-                  className="w-full p-2 mb-2 rounded border border-gray-300"
-                />
-              </div>
-              <div>
-                <label htmlFor="marksheet_12th">12th Marksheet:</label>
-                <input
-                  type="file"
-                  accept='application/pdf'
-                  id="marksheet_12th"
-                  required
-                  name="marksheet_12th"
-                  onChange={(e) => handleFileInputChange(e, 'marksheet_12th')}
-                  className="w-full p-2 mb-2 rounded border border-gray-300"
-                />
-              </div>
-              <div>
-                <label htmlFor="aadhar">Aadhar Card:</label>
-                <input
-                  type="file"
-                  accept='application/pdf'
-                  id="aadhar"
-                  required
-                  name="aadhar"
-                  onChange={(e) => handleFileInputChange(e, 'aadhar')}
-                  className="w-full p-2 mb-2 rounded border border-gray-300"
-                />
-              </div>
-              <div>
-                <label htmlFor="pancard">PAN Card:</label>
-                <input
-                  type="file"
-                  required
-                  accept='application/pdf'
-                  id="pancard"
-                  name="pancard"
-                  onChange={(e) => handleFileInputChange(e, 'pancard')}
-                  className="w-full p-2 mb-2 rounded border border-gray-300"
-                />
-              </div>
+                <div>
+                  <label htmlFor="passport_photograph">Passport Photograph:</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="passport_photograph"
+                    name="passport_photograph"
+                    required
+                    onChange={(e) => handleFileInputChange(e, 'passport_photograph')}
+                    className="w-full p-2 mb-2 rounded border border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="marksheet_10th">10th Marksheet:</label>
+                  <input
+                    type="file"
+                    id="marksheet_10th"
+                    accept='application/pdf'
+                    name="marksheet_10th"
+                    required
+                    onChange={(e) => handleFileInputChange(e, 'marksheet_10th')}
+                    className="w-full p-2 mb-2 rounded border border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="marksheet_12th">12th Marksheet:</label>
+                  <input
+                    type="file"
+                    accept='application/pdf'
+                    id="marksheet_12th"
+                    required
+                    name="marksheet_12th"
+                    onChange={(e) => handleFileInputChange(e, 'marksheet_12th')}
+                    className="w-full p-2 mb-2 rounded border border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="aadhar">Aadhar Card:</label>
+                  <input
+                    type="file"
+                    accept='application/pdf'
+                    id="aadhar"
+                    required
+                    name="aadhar"
+                    onChange={(e) => handleFileInputChange(e, 'aadhar')}
+                    className="w-full p-2 mb-2 rounded border border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="pancard">PAN Card:</label>
+                  <input
+                    type="file"
+                    required
+                    accept='application/pdf'
+                    id="pancard"
+                    name="pancard"
+                    onChange={(e) => handleFileInputChange(e, 'pancard')}
+                    className="w-full p-2 mb-2 rounded border border-gray-300"
+                  />
+                </div>
 
               </div>
               <br />
               <h2 className="text-base font-semibold leading-7 text-gray-900">Note that:</h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">Please check that all files are uplaoded correctly before proceeding forward.</p>
+              <p className="mt-1 text-sm leading-6 text-gray-600">Please check that all files are uplaoded correctly before proceeding forward.</p>
               <br />
               <div className="flex justify-between">
                 <button onClick={prevStep} className="text-sm font-semibold leading-6 text-gray-900">
                   Previous
                 </button>
-                <button type="submit"  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Next
                 </button>
               </div>

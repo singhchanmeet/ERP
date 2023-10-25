@@ -11,7 +11,7 @@ function StudentLogin() {
  
 
   return (
-    <div className="container mx-auto mt-8 px-10">
+    <div className="container mx-auto mt-8 px-10 h-screen">
       <h2 className="text-xl font-semibold mb-4">Student Login</h2>
       <button
         onClick={handleLogin}

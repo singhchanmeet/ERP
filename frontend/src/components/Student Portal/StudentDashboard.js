@@ -7,7 +7,7 @@ const StudentDashboard = ({ user }) => {
   const accessToken = localStorage.getItem('accessToken');
   const [formFilled, setFormFilled] = useState(false);
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('http://localhost:8000 /student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const StudentDashboard = ({ user }) => {
       .catch((error) => {
         console.error('Error fetching user data:', error);
       });
-  }, [accessToken , formFilled]);
+  }, [accessToken, formFilled]);
   return (
     <div className="p-5 bg-slate-300">
       <div className="mb-8">
@@ -58,14 +58,14 @@ const StudentDashboard = ({ user }) => {
         </h1>
       </div>
       {formFilled ? (
-      <p>You have already filled the details form. Please wait until further notice.</p>
-    ) : (
-      <Link to="/student-details-form">
-        <button className="border-2 p-1 border-indigo-700 font-mono shadow rounded my-2 text-lg">
-          Click Here
-        </button>
-      </Link>
-    )}
+        <p>You have already filled the details form. Please wait until further notice.</p>
+      ) : (
+        <Link to="/student-details-form">
+          <button className="border-2 p-1 border-indigo-700 font-mono shadow rounded my-2 text-lg">
+            Click Here
+          </button>
+        </Link>
+      )}
 
       {/* You can add more student details and components as needed */}
     </div>

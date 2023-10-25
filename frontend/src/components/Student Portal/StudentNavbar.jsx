@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
 import { FaTimes } from 'react-icons/fa'; // Import the close icon
 import AuthContext from '../../context/auth/authContext';
-
+import maitlogomain from '../../assets/maitlogomain.png'
 const StudentNavbar = ({ user }) => {
   const context = useContext(AuthContext);
   const { logoutUser } = context;
@@ -18,6 +18,7 @@ const StudentNavbar = ({ user }) => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white text-xl font-bold mr-4">MAIT</Link>
+          <img src={maitlogomain} alt=""  className='w-20 '/>
           <p className="text-white text-base">Welcome, {user.email}</p>
         </div>
         <div className="mt-4 sm:mt-0">

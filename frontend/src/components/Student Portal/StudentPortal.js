@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function StudentPortal() {
     return (
-        <div className="container mx-auto mt-8">
+        <div className="h-screen container mx-auto mt-8">
             <h2 className="text-xl font-semibold mb-4">Student Portal</h2>
             
             <div className="grid grid-cols-3 gap-4">

@@ -3,7 +3,7 @@ import axios from 'axios';
 import StudentDashboard from '../Student Portal/StudentDashboard';
 import EmployeeDashboard from '../Employee Portal/EmployeeDashboard';
 import ErrorPage from './ErrorPage';
-const Dashboard = ({loggedin , handleLogout}) => {
+const Dashboard = ({ loggedin, handleLogout }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem('accessToken');
@@ -11,12 +11,12 @@ const Dashboard = ({loggedin , handleLogout}) => {
 
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000/user-details/', {
-			headers: {
-				'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
+    axios.get('http://localhost:8000 details/', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
-			}
-		})
+      }
+    })
       .then((response) => {
         // Assuming the API response contains user data
         setUser(response.data);
@@ -29,13 +29,13 @@ const Dashboard = ({loggedin , handleLogout}) => {
   }, [accessToken]);
 
   if (loading) {
-    return <p>Loading... Please wait</p> 
+    return <p>Loading... Please wait</p>
   }
 
   if (!user) {
-    return <ErrorPage/>
+    return <ErrorPage />
   }
- 
+
   // Determine the user's role
   const userRole = user.role;
 
@@ -43,8 +43,8 @@ const Dashboard = ({loggedin , handleLogout}) => {
     <div className=''>
       {/* <h2 className='text-2xl py-3 ml-10 font-mono'>Welcome,<span className=' font-semibold text-red-600'> {user.username}!</span></h2> */}
       {/* Render the appropriate dashboard based on the user's role */}
-      {userRole === 'STUDENT' && <StudentDashboard  user={user} loggedin={loggedin} handleLogout={handleLogout}/>}
-      {userRole === 'EMPLOYEE' && <EmployeeDashboard userRole={userRole} loggedin={loggedin} handleLogout={handleLogout}/>}
+      {userRole === 'STUDENT' && <StudentDashboard user={user} loggedin={loggedin} handleLogout={handleLogout} />}
+      {userRole === 'EMPLOYEE' && <EmployeeDashboard user={user} loggedin={loggedin} handleLogout={handleLogout} />}
       {/* {userRole === 'UNIVERSITY' && <AnalyticDashboard userRole={userRole} loggedin={loggedin} handleLogout={handleLogout}/>} */}
     </div>
   );
