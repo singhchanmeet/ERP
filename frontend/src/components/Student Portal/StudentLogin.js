@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import mslogo from "../../assets/ms_logo.png";
-import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 
 function StudentLogin() {
-    const navigate = useNavigate();
   // Function to initiate the Microsoft login
   const context = useContext(AuthContext);
   const {handleLogin} = context; 
