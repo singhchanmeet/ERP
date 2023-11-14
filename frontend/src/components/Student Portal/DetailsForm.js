@@ -105,7 +105,7 @@ const DetailsForm = () => {
 
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000s/', {
+    axios.get('https://erp.mait.ac.in/user-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
@@ -123,7 +123,7 @@ const DetailsForm = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('https://erp.mait.ac.in/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const DetailsForm = () => {
       setFormErrors(newFormErrors);
     }
     else {
-      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
+      axios.post('https://erp.mait.ac.in/student/personal-details/', studentDetails, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
@@ -355,7 +355,6 @@ const DetailsForm = () => {
                         id="name"
                         value={studentDetails.name}
                         onChange={handleInputChange}
-                        autoComplete="given-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
                     </div>
@@ -394,7 +393,6 @@ const DetailsForm = () => {
                         placeholder="Email"
                         value={studentDetails.email}
                         onChange={handleInputChange}
-                        autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
                     </div>
@@ -430,7 +428,6 @@ const DetailsForm = () => {
                         value={studentDetails.mobile_number}
                         onChange={handleInputChange}
                         id="mobile_number"
-                        autoComplete="mobile_number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         required
                       />
@@ -449,7 +446,6 @@ const DetailsForm = () => {
                         placeholder="Gender"
                         value={studentDetails.gender}
                         onChange={handleInputChange}
-                        autoComplete="gender"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         required
                       >
@@ -474,7 +470,6 @@ const DetailsForm = () => {
                         value={studentDetails.category}
                         id='category'
                         onChange={handleInputChange}
-                        autoComplete="category"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         required
                       >
@@ -502,7 +497,6 @@ const DetailsForm = () => {
                         value={studentDetails.region}
                         id='region'
                         onChange={handleInputChange}
-                        autoComplete="country-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         required
                       >
