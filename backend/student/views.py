@@ -56,7 +56,12 @@ class StudentRegister(APIView):
 
         token = request.identity_context_data._access_token
         decoded_token = jwt.decode(token , options={"verify_signature": False})
-        full_name = f"{decoded_token['given_name']} {decoded_token['family_name']}"
+
+        given_name = decoded_token.get('given_name')
+        family_name = decoded_token.get('family_name')
+
+        full_name = f"{given_name} {family_name}" if family_name is not None else f"{given_name} "      
+        #because everyone doesnt have a family name just like aman
 
         student_id = {
             "user_id": request.identity_context_data.username,
