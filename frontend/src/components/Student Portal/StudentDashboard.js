@@ -7,7 +7,7 @@ const StudentDashboard = ({ user }) => {
   const accessToken = localStorage.getItem('accessToken');
   const [formFilled, setFormFilled] = useState(false);
   useEffect(() => {
-    axios.get('https://erp.mait.ac.in/student/personal-details/', {
+    axios.get('http://localhost:8000/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',

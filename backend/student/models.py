@@ -16,7 +16,7 @@ class Student(models.Model):
         return self.name 
     
     class Meta:
-        db_table = 'students'  # This sets the table name to 'students'
+        db_table = 'students'  
         verbose_name_plural = "Students"
 
 
@@ -50,7 +50,7 @@ class StudentDetails(models.Model):
     #GGSIPU registration number
     ipu_registration_number = models.CharField(max_length=12, unique=True)
 
-    #candidate details
+    #student details
     name = models.CharField(max_length=75, blank=True)
     dob = models.DateField(blank=True, null=True)
     full_address = models.CharField(max_length=150, blank=True)

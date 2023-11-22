@@ -51,3 +51,5 @@ dist/
 .DS_Store
 
 /backend-old
+
+/prod_configuration

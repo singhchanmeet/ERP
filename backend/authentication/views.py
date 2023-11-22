@@ -26,6 +26,17 @@ class UserDetails(APIView):
 
 
 
+def extract_number_from_email(email):
+    parts = email.split('@')  # Split the email address by '@'
+    
+    if len(parts) == 2:
+        number_part = parts[0][-11:]  # Take the last 11 characters from the first part
+        return number_part if number_part.isdigit() else None
+    else:
+        return None
+
+
+
 """
     When MS Azure redirects to /index , these are all the possibilities:
     1) Either it is post signin or post signout
@@ -34,25 +45,29 @@ class UserDetails(APIView):
 """
 
 @api_view(['GET'])
-def index(request):
+def handle_ms_login(request):
 
     # if sign out
     if request.identity_context_data.authenticated == False:
         return redirect('http://localhost:3000/')
 
-    # for employees (example: 1480000361)
-    if len(request.identity_context_data.username) == 10:
-        pass
+    email = request.identity_context_data._id_token_claims.get('preferred_username')
 
-    # for students (example: 01296402722)
-    if len(request.identity_context_data.username) == 11:
-        user = User.objects.filter(user_id=request.identity_context_data.username).first()
+    enrollment_id = extract_number_from_email(email)
+
+    # for students (example: chanmeet.01296402722@cse.mait.ac.in)
+    if enrollment_id:
+        user = User.objects.filter(user_id=enrollment_id).first()
         # already existing record, redirect to login
         if user:
-            return StudentLogin().msteams(request)
+            return StudentLogin().msteams(request, enrollment_id=enrollment_id)
         # first time signing in, redirect to signin
         else:
-            return StudentRegister().msteams(request)
+            return StudentRegister().msteams(request, enrollment_id=enrollment_id)
+        
+    # for employees (example: alok@mait.ac.in)
+    else:
+        pass
             
     #some error  
     return Response({'error': 'Unexpected User ID'}, status=status.HTTP_400_BAD_REQUEST)

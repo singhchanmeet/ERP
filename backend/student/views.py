@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from authentication.models import User
 from rest_framework.permissions import IsAuthenticated
-from .serializers import StudentSerializer, StudentDetailsSerializer
+from . serializers import StudentSerializer, StudentDetailsSerializer
 from authentication.serializers import UserSerializer
 from django.contrib.auth import authenticate, login
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import redirect
 import jwt
 from . models import StudentDetails
+from . permissions import IsStudent
 
 
 class StudentRegister(APIView):
@@ -52,7 +53,7 @@ class StudentRegister(APIView):
 
     
     #To register a student with MS teams, we will call this function because a post request can't be sent
-    def msteams(self, request):
+    def msteams(self, request, enrollment_id):
 
         token = request.identity_context_data._access_token
         decoded_token = jwt.decode(token , options={"verify_signature": False})
@@ -64,7 +65,7 @@ class StudentRegister(APIView):
         #because everyone doesnt have a family name just like aman
 
         student_id = {
-            "user_id": request.identity_context_data.username,
+            "user_id": enrollment_id,
             "name": full_name,
             "email": request.identity_context_data._id_token_claims['preferred_username'],
             "role": "STUDENT",
@@ -90,7 +91,7 @@ class StudentRegister(APIView):
                 student_serializer.save()
                 # This will create both User record and Student record because we have overwritten StudentSerializer's save method
                 # return Response({'message': 'Student registered successfully'}, status=status.HTTP_201_CREATED)
-                return StudentLogin().msteams(request)    #after successful registration, login the user too
+                return StudentLogin().msteams(request, enrollment_id=enrollment_id)    #after successful registration, login the user too
             else:
                 return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -139,8 +140,8 @@ class StudentLogin(TokenObtainPairView):
     #To login a student with MS teams, this function will be called because a post request can't be sent
     def msteams(self, request, *args, **kwargs):
 
-        # Get the user_id from the request data
-        user_id = request.identity_context_data.username   
+        # Get the user_id from the passed keyword arguement
+        user_id = kwargs.get('enrollment_id')
 
         # Retrieve or create a user based on the identity data
         user, created = User.objects.get_or_create(user_id=user_id)
@@ -165,8 +166,8 @@ class StudentLogin(TokenObtainPairView):
         
 class StudentDetailsView(APIView):
 
-    # only authenticated users can access this view
-    permission_classes = (IsAuthenticated,)
+    # only authenticated students can access this view
+    permission_classes = (IsAuthenticated, IsStudent)
 
     # For submitting personal details of student
     def post(self, request):
