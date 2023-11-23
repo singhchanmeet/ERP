@@ -57,7 +57,7 @@ class User(AbstractUser):
     last_name = None
 
     # adding these new fields to our custom User model:
-    user_id = models.CharField(max_length=16, unique=True, db_index=True)   #db_index is for faster queries
+    user_id = models.CharField(max_length=32, unique=True, db_index=True)   #db_index is for faster queries
     name = models.CharField(max_length=50)
     role = models.CharField(max_length=8, choices=Role.choices)
     is_teams_user = models.BooleanField(default=False, help_text=_("Is the user logged in via Microsoft Teams?"))

@@ -13,6 +13,5 @@ urlpatterns = [
     path('', include('authentication.urls')),   
     path(f'{settings.AAD_CONFIG.django.auth_endpoints.prefix}/', include(msal_urls)),    # for ms teams authentication   
     path('student/', include('student.urls')),
-    # path("^static/(?P<path>.*)$"),
-    # path('employee/', include('employee.urls')),
+    path('employee/', include('employee.urls')),
 ] + static('/media/', document_root=settings.MEDIA_ROOT) + static('/static/', document_root=settings.STATIC_ROOT)    #for serving static files (like admin panel css) and media files (uploaded by user)

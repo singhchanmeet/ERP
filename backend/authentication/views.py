@@ -7,6 +7,7 @@ from .serializers import UserSerializer
 from django.http import HttpResponse
 from . models import User
 from student.views import StudentRegister, StudentLogin
+from employee.views import EmployeeRegister, EmployeeLogin
 from django.shortcuts import redirect
 
 
@@ -67,7 +68,14 @@ def handle_ms_login(request):
         
     # for employees (example: alok@mait.ac.in)
     else:
-        pass
+        # for employees, we have to check by email because no employee_id is returned by microsoft
+        user = User.objects.filter(email=email).first()
+        # already existing record, redirect to login
+        if user:
+            return EmployeeLogin().msteams(request, email=email)
+        # first time signing in, redirect to signin
+        else:
+            return EmployeeRegister().msteams(request, email=email)
             
     #some error  
     return Response({'error': 'Unexpected User ID'}, status=status.HTTP_400_BAD_REQUEST)
