@@ -5,6 +5,7 @@ import { DetailsForm, Home, Dashboard, EmployeeApply, EmployeeLogin, EmployeePor
 import ComingSoon from './components/ComingSoon';
 import MicrosoftLoginCallback from './components/standard/MicrosoftLoginCallback';
 import AuthState from './context/auth/authState';
+import StudentDetails from './components/Student Portal/StudentDetails';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/student/register" element={<ComingSoon />} />
                     <Route path="/student/admission" element={<ComingSoon />} />
                     <Route path="/student-details-form" element={<DetailsForm />} />
+                    <Route path="/student-details" element={<StudentDetails />} />
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
                     {/* Add more routes as needed */}
                 </Routes>

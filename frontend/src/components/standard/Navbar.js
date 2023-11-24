@@ -5,91 +5,63 @@ import ErrorPage from './ErrorPage';
 import axios from 'axios';
 import EmployeeNavbar from '../Employee Portal/EmployeeNavbar';
 import StudentNavbar from '../Student Portal/StudentNavbar';
+import { Dialog } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+
+const navigation = [
+    { name: 'Home', href: '#' },
+    { name: 'Features', href: '#' },
+    { name: 'Pricing', href: '#' },
+    { name: 'Contact', href: '#' },
+  ];
 
 const Navbar = () => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const accessToken = localStorage.getItem('accessToken');
+
     useEffect(() => {
         // Fetch the user details from your API
         axios.get('http://localhost:8000/user-details/', {
             headers: {
-                'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
-                'Content-Type': 'application/json', // Adjust headers as needed
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
             },
         })
             .then((response) => {
-                // Assuming the API response contains user data
                 setUser(response.data);
+                setIsLoading(false); // Set loading to false once user data is available
             })
             .catch((error) => {
                 console.error('Error fetching user data:', error);
+                setIsLoading(false); // Set loading to false in case of an error
             });
     }, [accessToken]);
 
+    if (isLoading) {
+        // Show a loading state or spinner
+        return <div>Loading...</div>;
+    }
 
     if (!user) {
-        return (<nav className="bg-gray-900 text-white p-4">
-            <div className="container mx-auto flex items-center justify-between">
-                <div className="text-xl font-semibold">
-                    <Link to="/">College ERP</Link>
-                </div>
-                <ul className="flex space-x-4">
-                    <li>
-                        <Link to="/" className="hover:text-gray-400">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/employee" className="hover:text-gray-400">Employee</Link>
-                    </li>
-                    <li>
-                        <Link to="/student" className="hover:text-gray-400">Student</Link>
-                    </li>
-                    <li>
-                        <Link to="/about" className="hover:text-gray-400">About</Link>
-                    </li>
-                </ul>
-            </div>
-        </nav>)
+        return (
+            <nav className="">
+                
+            </nav>
+        );
     }
 
     // Determine the user's role
     const userRole = user.role;
     if (userRole === 'STUDENT') {
-        return (
-            <StudentNavbar user={user} />
-        )
+        return <StudentNavbar user={user} />;
     }
+
     if (userRole === 'EMPLOYEE') {
-        return (
-            <>
-                <EmployeeNavbar />
-            </>
-        )
+        return <EmployeeNavbar />;
+    } else {
+        return <ErrorPage message="Unknown user role." />;
     }
-    else {
-        return (
-            <nav className="bg-gray-900 text-white p-4">
-                <div className="container mx-auto flex items-center justify-between">
-                    <div className="text-xl font-semibold">
-                        <Link to="/">College ERP</Link>
-                    </div>
-                    <ul className="flex space-x-4">
-                        <li>
-                            <Link to="/" className="hover:text-gray-400">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/employee" className="hover:text-gray-400">Employee</Link>
-                        </li>
-                        <li>
-                            <Link to="/student" className="hover:text-gray-400">Student</Link>
-                        </li>
-                        <li>
-                            <Link to="/about" className="hover:text-gray-400">About</Link>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        )
-    }
-}
+};
 
 export default Navbar;

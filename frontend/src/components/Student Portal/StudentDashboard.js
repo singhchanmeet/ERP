@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import StudentNavbar from './StudentNavbar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import StudentSidePanel from './StudentSidePanel';
+
 
 const StudentDashboard = ({ user }) => {
   const accessToken = localStorage.getItem('accessToken');
   const [formFilled, setFormFilled] = useState(false);
+  const [student, setStudent] = useState(null);
   useEffect(() => {
     axios.get('http://localhost:8000/student/personal-details/', {
       headers: {
@@ -14,9 +17,11 @@ const StudentDashboard = ({ user }) => {
       }
     })
       .then((response) => {
+        setStudent(response.data);
         if (response.status === 204) {
           // If status is 204, set formFilled to false
           setFormFilled(false);
+
         } else if (response.data.pancard !== null) {
           // If response.data.pancard is not null, set formFilled to true
           setFormFilled(true);
@@ -34,41 +39,74 @@ const StudentDashboard = ({ user }) => {
       });
   }, [accessToken, formFilled]);
   return (
-    <div className="p-5 bg-slate-300">
-      <div className="mb-8">
-        <h1 className="text-xl font-semibold text-red-600">Student Dashboard</h1>
+    <div className='bg-slate-300'>
+
+      <div className="p-5  w-[90%] m-auto">
+        <div className="mb-8 w-fit">
+          <Link to={'/dashboard'} ><h1 className="text-xl hover:bg-gray-100 text-blue-900  w-fit p-2 rounded font-semibold text-red-600 bg-gray-200">Student Dashboard</h1></Link>
+        </div>
+        <div className='flex gap-8'>
+          {formFilled ? (
+            <div>
+              <StudentSidePanel />
+            </div>
+          ) : (<></>)}
+          <>
+            {formFilled ? (
+              <>
+                <div>
+                  <table className="table h-">
+                    <tbody>
+                      <tr className="border-b-2 border-gray-500">
+                        <th className="px-2 py-2 border-r-2 font-semibold">Name</th>
+                        <td className="px-2">{user.name}</td>
+                      </tr>
+                      <tr className="border-b-2 border-gray-500">
+                        <th className="py-2 px-2 border-r-2 font-semibold">Email</th>
+                        <td className="px-2">{user.email}</td>
+                      </tr>
+                      {/* Add more details as needed */}
+                      <tr className="border-b-2 border-gray-500">
+                        <th className="py-2 px-2 border-r-2 font-semibold">Enrollment Number</th>
+                        <td className="px-2">{student.enrollment_number}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <table className="table">
+                    <tbody>
+                      <tr className="border-b-2 border-gray-500">
+                        <th className="px-2 py-2 border-r-2 font-semibold">Name</th>
+                        <td className="px-2">{user.name}</td>
+                      </tr>
+                      <tr className="border-b-2 border-gray-500">
+                        <th className="py-2 px-2 border-r-2 font-semibold">Email</th>
+                        <td className="px-2">{user.email}</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                  <div className="my-4">
+                    <h1 className="font-semibold text-red-600">
+                      To proceed further and fill the form, please share your details.
+                    </h1>
+                  </div>
+                  <div class="mt-10">
+                    <Link to={'/student-details-form'}><button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to proceed</button></Link>
+                  </div>
+
+                </div>
+              </>
+            )}
+          </>
+        </div>
       </div>
-
-      <table className="table">
-        <tbody>
-          <tr className="border-b-2 border-gray-500">
-            <th className="px-2 py-2 border-r-2 font-semibold">Roll No.</th>
-            <td className=" px-2">{user.name}</td>
-          </tr>
-          <tr className="border-b-2 border-gray-500">
-            <th className="py-2 px-2 border-r-2 font-semibold">Your Email</th>
-            <td className=" px-2">{user.email}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div className="my-4">
-        <h1 className=" font-semibold text-violet-600">
-          To proceed further and fill the form, please share your details.
-        </h1>
-      </div>
-      {formFilled ? (
-        <p>You have already filled the details form. Please wait until further notice.</p>
-      ) : (
-        <Link to="/student-details-form">
-          <button className="border-2 p-1 border-indigo-700 font-mono shadow rounded my-2 text-lg">
-            Click Here
-          </button>
-        </Link>
-      )}
-
-      {/* You can add more student details and components as needed */}
     </div>
+
   );
 };
 

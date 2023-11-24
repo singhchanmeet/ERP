@@ -374,7 +374,6 @@ const DetailsForm = () => {
                         onChange={handleInputChange}
                         id="dob"
                         required
-                        autoComplete="family-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -685,55 +684,88 @@ const DetailsForm = () => {
           <div className="p-4 rounded-lg">
             <h2 className="text-2xl font-semibold border-b-2 pb-4 mb-4 text-blue-700 "> Academic Results</h2>
             <form onSubmit={handleFormSubmit} encType="multipart/form-data">
-              {/* 12th Class Details */}
+              {/* 10th Class Details */}
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>10th class Details</h1>
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="board_10th" className="block text-sm font-medium leading-6 text-gray-900">
+                    10th Board
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type='text'
+                      name="board_10th"
+                      value={studentDetails.board_10th}
+                      onChange={handleInputChange}
+                      placeholder="10th Board"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.board_10th && <p className="error text-red-600 text-sm ">{formErrors.board_10th}</p>}
+                  </div>
+                </div>
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="year_of_10th" className="block text-sm font-medium leading-6 text-gray-900">
+                    Year of Passing (10th)
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      name="year_of_10th"
+                      value={studentDetails.year_of_10th}
+                      onChange={handleInputChange}
+                      placeholder="Year of Passing (10th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.year_of_10th && <p className="error text-red-600 text-sm ">{formErrors.year_of_10th}</p>}
+                  </div>
+                </div>
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="rollno_10th" className="block text-sm font-medium leading-6 text-gray-900">
+                    10th Roll Number
+                  </label>
+                  <div className="mt-2">
 
-                <div>
-                  <InputField
-                    name="board_10th"
-                    value={studentDetails.board_10th}
-                    onChange={handleInputChange}
-                    placeholder="10th Board"
-                  />
-                  {formErrors.board_10th && <p className="error text-red-600 text-sm ">{formErrors.board_10th}</p>}
-                </div>
-                <div>
-                  <InputField
-                    name="year_of_10th"
-                    value={studentDetails.year_of_10th}
-                    onChange={handleInputChange}
-                    placeholder="Year of Passing (10th)"
-                  />
-                  {formErrors.year_of_10th && <p className="error text-red-600 text-sm ">{formErrors.year_of_10th}</p>}
-                </div>
-                <div>
-                  <InputField
-                    name="rollno_10th"
-                    value={studentDetails.rollno_10th}
-                    onChange={handleInputChange}
-                    placeholder="10th Roll Number"
-                  />
+                    <input
+                      name="rollno_10th"
+                      value={studentDetails.rollno_10th}
+                      onChange={handleInputChange}
+                      placeholder="10th Roll Number"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                   {formErrors.rollno_10th && <p className="error text-red-600 text-sm ">{formErrors.rollno_10th}</p>}
                 </div>
-                <div>
-                  <InputField
-                    name="school_10th"
-                    value={studentDetails.school_10th}
-                    onChange={handleInputChange}
-                    placeholder="School Name (10th)"
-                  />
-                  {formErrors.school_10th && <p className="error text-red-600 text-sm ">{formErrors.school_10th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="school_10th" className="block text-sm font-medium leading-6 text-gray-900">
+                    School Name (10th)
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="school_10th"
+                      value={studentDetails.school_10th}
+                      onChange={handleInputChange}
+                      placeholder="School Name (10th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.school_10th && <p className="error text-red-600 text-sm ">{formErrors.school_10th}</p>}
+                  </div>
                 </div>
-                <div>
-                  <InputField
-                    name="aggregate_10th"
-                    value={studentDetails.aggregate_10th}
-                    onChange={handleInputChange}
-                    placeholder="Aggregate (10th)"
-                  />
-                  {formErrors.aggregate_10th && <p className="error text-red-600 text-sm ">{formErrors.aggregate_10th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="aggregate_10th" className="block text-sm font-medium leading-6 text-gray-900">
+                    Aggregate (10th)
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="aggregate_10th"
+                      value={studentDetails.aggregate_10th}
+                      onChange={handleInputChange}
+                      placeholder="Aggregate (10th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.aggregate_10th && <p className="error text-red-600 text-sm ">{formErrors.aggregate_10th}</p>}
+                  </div>
                 </div>
               </div>
               <br />
@@ -749,23 +781,37 @@ const DetailsForm = () => {
                   />
                   {formErrors.board_12th && <p className="error text-red-600 text-sm ">{formErrors.board_12th}</p>}
                 </div>
-                <div>
-                  <InputField
-                    name="year_of_12th"
-                    value={studentDetails.year_of_12th}
-                    onChange={handleInputChange}
-                    placeholder="Year of Passing (12th)"
-                  />
-                  {formErrors.year_of_12th && <p className="error text-red-600 text-sm ">{formErrors.year_of_12th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="year_of_12th" className="block text-sm font-medium leading-6 text-gray-900">
+                    Year of Passing (12th)
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="year_of_12th"
+                      value={studentDetails.year_of_12th}
+                      onChange={handleInputChange}
+                      placeholder="Year of Passing (12th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.year_of_12th && <p className="error text-red-600 text-sm ">{formErrors.year_of_12th}</p>}
+                  </div>
                 </div>
-                <div>
-                  <InputField
-                    name="rollno_12th"
-                    value={studentDetails.rollno_12th}
-                    onChange={handleInputChange}
-                    placeholder="12th Roll Number"
-                  />
-                  {formErrors.rollno_12th && <p className="error text-red-600 text-sm ">{formErrors.rollno_12th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="rollno_12th" className="block text-sm font-medium leading-6 text-gray-900">
+                    12th Roll Number
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="rollno_12th"
+                      value={studentDetails.rollno_12th}
+                      onChange={handleInputChange}
+                      placeholder="12th Roll Number"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.rollno_12th && <p className="error text-red-600 text-sm ">{formErrors.rollno_12th}</p>}
+                  </div>
                 </div>
                 <div>
                   <InputField
@@ -776,14 +822,21 @@ const DetailsForm = () => {
                   />
                   {formErrors.school_12th && <p className="error text-red-600 text-sm ">{formErrors.school_12th}</p>}
                 </div>
-                <div>
-                  <InputField
-                    name="aggregate_12th"
-                    value={studentDetails.aggregate_12th}
-                    onChange={handleInputChange}
-                    placeholder="Aggregate (12th)"
-                  />
-                  {formErrors.aggregate_12th && <p className="error text-red-600 text-sm ">{formErrors.aggregate_12th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="aggregate_12th" className="block text-sm font-medium leading-6 text-gray-900">
+                    Aggregate (12th)
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="aggregate_12th"
+                      value={studentDetails.aggregate_12th}
+                      onChange={handleInputChange}
+                      placeholder="Aggregate (12th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    {formErrors.aggregate_12th && <p className="error text-red-600 text-sm ">{formErrors.aggregate_12th}</p>}
+                  </div>
                 </div>
               </div>
 

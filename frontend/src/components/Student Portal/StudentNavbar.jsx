@@ -1,14 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
 import { FaTimes } from 'react-icons/fa'; // Import the close icon
 import AuthContext from '../../context/auth/authContext';
 import maitlogomain from '../../assets/maitlogomain.png'
-const StudentNavbar = ({ user }) => {
+import axios from 'axios';
+const StudentNavbar = () => {
   const context = useContext(AuthContext);
   const { logoutUser } = context;
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [user, setUser] = useState(null);
+  const accessToken = localStorage.getItem('accessToken');
+  useEffect(() => {
+    // Fetch the user details from your API
+    axios.get('http://localhost:8000/user-details/', {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
+        'Content-Type': 'application/json', // Adjust headers as needed
+      },
+    })
+      .then((response) => {
+        // Assuming the API response contains user data
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [accessToken]);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -16,11 +34,13 @@ const StudentNavbar = ({ user }) => {
   return (
     <nav className="bg-gray-900 p-2 shadow-md px-10  ">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          <Link to="/" className="text-white text-xl font-bold mr-4">MAIT</Link>
-          <img src={maitlogomain} alt=""  className='w-20 '/>
-          <p className="text-white text-base">Welcome, {user.email}</p>
+        <div className="flex items-center gap-10">
+          <Link to={'/'}><img src={maitlogomain} alt="" className='w-20 ' /></Link>
+          {user && (
+            <p className="text-white text-base">Welcome, {user.name}</p>
+          )}
         </div>
+
         <div className="mt-4 sm:mt-0">
           {/* Hamburger menu icon */}
           {menuOpen ? (
@@ -35,7 +55,7 @@ const StudentNavbar = ({ user }) => {
           {/* Dropdown menu */}
           {menuOpen && (
             <div className="relative ">
-              
+
               <div className="bg-gray-900 text-white absolute  top-0 right-0 w-48 rounded-md shadow-lg">
                 <ul className="p-4 space-y-2">
                   <li>

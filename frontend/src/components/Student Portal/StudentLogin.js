@@ -10,7 +10,7 @@ function StudentLogin() {
 
   return (
     <div className="container mx-auto mt-8 px-10 h-screen">
-      <h2 className="text-xl font-semibold mb-4">Student Login</h2>
+      <h2 className="text-xl font-semibold mb-4">Login Page</h2>
       <button
         onClick={handleLogin}
         className="hover:bg-zinc-200 font-semibold py-2 px-4 border-[1px] border-black my-2"
