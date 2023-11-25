@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 const EmployeeState = (props) => {
   const navigate = useNavigate();
-  const host = "https://erp.mait.ac.in/backend"
+  const host = "http://localhost:8000"
   const credsInitial = []
   const [creds, setCreds] = useState(credsInitial)
   //manage marks

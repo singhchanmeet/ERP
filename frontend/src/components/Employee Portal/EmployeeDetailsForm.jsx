@@ -10,7 +10,7 @@ const EmployeeDetailsForm = () => {
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
     const [employeeDetails, setEmployeeDetails] = useState({
-        employeeId: '',
+        employee_id: '',
         name: '',
         dob: '',
         fullAddress: '',
@@ -75,7 +75,7 @@ const EmployeeDetailsForm = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('https://erp.mait.ac.in/backend/user-details/', {
+        axios.get('http://localhost:8000/user-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
                 'Content-Type': 'application/json', // Adjust headers as needed
@@ -93,7 +93,7 @@ const EmployeeDetailsForm = () => {
     }, [accessToken]);
 
     useEffect(() => {
-        axios.get('https://erp.mait.ac.in/backend/student/personal-details/', {
+        axios.get('http://localhost:8000/employee/personal-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
@@ -118,60 +118,26 @@ const EmployeeDetailsForm = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://erp.mait.ac.in/backend/student/personal-details/', employeeDetails, {
+        axios.post('http://localhost:8000/employee/personal-details/', employeeDetails, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'multipart/form-data',
             }
         })
             .then((response) => {
-                // Handle the response, e.g., display a success message.
-                setFormErrors({
-                    enrollment_number: '',
-                    ipu_registration_number: '',
-                    name: '',
-                    dob: '',
-                    full_address: '',
-                    email: '',
-                    mobile_number: '',
-                    gender: '',
-                    category: '',
-                    region: '',
-                    father_name: '',
-                    mother_name: '',
-                    father_qualification: '',
-                    mother_qualification: '',
-                    father_occupation: '',
-                    mother_occupation: '',
-                    father_job_designation: '',
-                    mother_job_designation: '',
-                    father_business_type: '',
-                    mother_business_type: '',
-                    father_mobile_number: '',
-                    mother_mobile_number: '',
-                    father_office_address: '',
-                    mother_office_address: '',
-                    guardian_name: '',
-                    board_12th: '',
-                    year_of_12th: '',
-                    rollno_12th: '',
-                    school_12th: '',
-                    aggregate_12th: '',
-                    board_10th: '',
-                    year_of_10th: '',
-                    rollno_10th: '',
-                    school_10th: '',
-                    aggregate_10th: '',
-                    jee_rank: '',
-                    jee_percentile: '',
-                    jee_rollno: '',
-                    special_achievements: '',
-                    passport_photograph: '',
-                    marksheet_10th: '',
-                    marksheet_12th: '',
-                    aadhar: '',
-                    pancard: '',
-                });
+            
+                const newAccessToken = response.data.access;
+                console.log(response.data.access);
+                const newRefreshToken = response.data.refresh;
+
+                // Remove existing tokens from local storage
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+
+                // Set the new tokens in local storage
+                localStorage.setItem('accessToken', newAccessToken);
+                localStorage.setItem('refreshToken', newRefreshToken);
+                console.log(response.data.access);
                 setStep(step + 1);
 
             })
@@ -225,13 +191,13 @@ const EmployeeDetailsForm = () => {
                                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                     <div className="sm:col-span-3">
                                         <InputField
-                                            name="employeeId"
-                                            value={employeeDetails.employeeId}
+                                            name="employee_id"
+                                            value={employeeDetails.employee_id}
                                             onChange={handleInputChange}
                                             placeholder="Employee ID"
                                             required
                                         />
-                                        {formErrors.employeeId && <p className="error text-red-600 text-sm font-semibold">{formErrors.employeeId}</p>}
+                                        {formErrors.employee_id && <p className="error text-red-600 text-sm font-semibold">{formErrors.employee_id}</p>}
                                     </div>
 
                                     <div className="sm:col-span-3">

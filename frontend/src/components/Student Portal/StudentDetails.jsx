@@ -10,7 +10,7 @@ const StudentDetails = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        axios.get('https://erp.mait.ac.in/backend/student/personal-details/', {
+        axios.get('http://localhost:8000/student/personal-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const StudentDetails = () => {
                         <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details</p>
                         <br /><div>
 
-                            <img className='w-[150px]' src={`https://erp.mait.ac.in/backend${studentData.passport_photograph}`} alt="Passport Photograph" />
+                            <img className='w-[150px]' src={`http://localhost:8000${studentData.passport_photograph}`} alt="Passport Photograph" />
                         </div>
                         <div>
                             <div class="px-4 sm:px-0">

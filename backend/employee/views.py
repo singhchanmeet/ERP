@@ -103,3 +103,48 @@ class EmployeeLogin(TokenObtainPairView):
 
 
         
+     
+class EmployeeDetailsView(APIView):
+
+    # only authenticated students can access this view
+    permission_classes = (IsAuthenticated, IsEmployee)
+
+    # For submitting personal details of employee
+    def post(self, request):
+
+        employee = EmployeeDetails.objects.filter(employee_id=request.data.get('employee_id')).first()
+
+        if employee:
+            # If the record exists, update it with the new data
+            employee_serializer = EmployeeDetailsSerializer(employee, data=request.data)
+        else:
+            # If the record doesn't exist, create a new record
+            employee_serializer = EmployeeDetailsSerializer(data=request.data)
+
+        if employee_serializer.is_valid():
+            employee_serializer.save()
+            # after successful saving, update user_id in User table
+            current_employee = request.user
+            current_employee.user_id = request.data.get('employee_id')
+            current_employee.save()
+            # Because the user_id has just changed so the access token is invalid
+            # so regenerating tokens
+            token = EmployeeLogin().get_tokens_for_user(current_employee)
+            return Response(token, status=status.HTTP_200_OK)
+        else:
+            return Response(employee_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    
+    # For fetching personal details of employee
+    def get(self, request):
+
+        employee_id = request.user.user_id
+        employee = EmployeeDetails.objects.filter(employee_id=employee_id).first()
+
+        if employee:
+            serializer = EmployeeDetailsSerializer(employee)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Employee details not found'}, status=status.HTTP_204_NO_CONTENT)
+    
