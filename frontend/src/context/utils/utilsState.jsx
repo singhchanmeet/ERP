@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 const UtilsState = (props) => {
   const navigate = useNavigate();
-  const host = "http://localhost:8000"
+  const host = "https://erp.mait.ac.in/backend"
   const credsInitial = []
   const [creds, setCreds] = useState(credsInitial)
 

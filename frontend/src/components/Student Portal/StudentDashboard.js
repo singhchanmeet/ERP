@@ -10,7 +10,7 @@ const StudentDashboard = ({ user }) => {
   const [formFilled, setFormFilled] = useState(false);
   const [student, setStudent] = useState(null);
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('https://erp.mait.ac.in/backend/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -39,18 +39,18 @@ const StudentDashboard = ({ user }) => {
       });
   }, [accessToken, formFilled]);
   return (
-    <div className='bg-slate-300'>
+    <div className='bg-slate-300 h'>
 
       <div className="p-5  w-[90%] m-auto">
         <div className="mb-8 w-fit">
           <Link to={'/dashboard'} ><h1 className="text-xl hover:bg-gray-100 text-blue-900  w-fit p-2 rounded font-semibold text-blue-900 bg-gray-200">Student Dashboard</h1></Link>
         </div>
         <div className='flex gap-8'>
-          {formFilled ? (
-            <div>
+          {formFilled ?  (
+            <div className='sm:block hidden'>
               <StudentSidePanel />
             </div>
-          ) : (<></>)}
+          ) : null}
           <>
             {formFilled ? (
               <>

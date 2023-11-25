@@ -105,7 +105,7 @@ const DetailsForm = () => {
 
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000/user-details/', {
+    axios.get('https://erp.mait.ac.in/backend/user-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
@@ -123,7 +123,7 @@ const DetailsForm = () => {
   }, [accessToken]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('https://erp.mait.ac.in/backend/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const DetailsForm = () => {
       setFormErrors(newFormErrors);
     }
     else {
-      axios.post('http://localhost:8000/student/personal-details/', studentDetails, {
+      axios.post('https://erp.mait.ac.in/backend/student/personal-details/', studentDetails, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
@@ -772,14 +772,22 @@ const DetailsForm = () => {
               <h1 className='text-lg  w-fit px-2 py-1 text-blue-700 font-semibold border-b-2 pb-4'>12th class Details</h1>
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
-                <div>
-                  <InputField
-                    name="board_12th"
-                    value={studentDetails.board_12th}
-                    onChange={handleInputChange}
-                    placeholder="12th Board"
-                  />
-                  {formErrors.board_12th && <p className="error text-red-600 text-sm ">{formErrors.board_12th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="board_12th" className="block text-sm font-medium leading-6 text-gray-900">
+                    12th Board
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="board_12th"
+                      value={studentDetails.board_12th}
+                      onChange={handleInputChange}
+                      placeholder="12th Board"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
+                    />
+                    {formErrors.board_12th && <p className="error text-red-600 text-sm ">{formErrors.board_12th}</p>}
+                  </div>
                 </div>
                 <div className="sm:col-span-3 mt-2">
                   <label htmlFor="year_of_12th" className="block text-sm font-medium leading-6 text-gray-900">
@@ -813,14 +821,22 @@ const DetailsForm = () => {
                     {formErrors.rollno_12th && <p className="error text-red-600 text-sm ">{formErrors.rollno_12th}</p>}
                   </div>
                 </div>
-                <div>
-                  <InputField
-                    name="school_12th"
-                    value={studentDetails.school_12th}
-                    onChange={handleInputChange}
-                    placeholder="School Name (12th)"
-                  />
-                  {formErrors.school_12th && <p className="error text-red-600 text-sm ">{formErrors.school_12th}</p>}
+                <div className="sm:col-span-3 mt-2">
+                  <label htmlFor="school_12th" className="block text-sm font-medium leading-6 text-gray-900">
+                    School Name (12th)
+                  </label>
+                  <div className="mt-2">
+
+                    <input
+                      name="school_12th"
+                      value={studentDetails.school_12th}
+                      onChange={handleInputChange}
+                      placeholder="School Name (12th)"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
+                    />
+                    {formErrors.school_12th && <p className="error text-red-600 text-sm ">{formErrors.school_12th}</p>}
+                  </div>
                 </div>
                 <div className="sm:col-span-3 mt-2">
                   <label htmlFor="aggregate_12th" className="block text-sm font-medium leading-6 text-gray-900">

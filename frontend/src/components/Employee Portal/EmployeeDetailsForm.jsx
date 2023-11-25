@@ -75,7 +75,7 @@ const EmployeeDetailsForm = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('http://localhost:8000/user-details/', {
+        axios.get('https://erp.mait.ac.in/backend/user-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
                 'Content-Type': 'application/json', // Adjust headers as needed
@@ -93,7 +93,7 @@ const EmployeeDetailsForm = () => {
     }, [accessToken]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/student/personal-details/', {
+        axios.get('https://erp.mait.ac.in/backend/student/personal-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const EmployeeDetailsForm = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8000/student/personal-details/', employeeDetails, {
+        axios.post('https://erp.mait.ac.in/backend/student/personal-details/', employeeDetails, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'multipart/form-data',

@@ -14,7 +14,7 @@ const EmployeeNavbar = () => {
   const accessToken = localStorage.getItem('accessToken');
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000/user-details/', {
+    axios.get('https://erp.mait.ac.in/backend/user-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed
