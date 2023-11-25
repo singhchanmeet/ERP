@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2023 at 10:38 AM
+-- Generation Time: Nov 23, 2023 at 02:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -114,6 +114,49 @@ CREATE TABLE `django_session` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(75) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `contact_number` varchar(15) NOT NULL,
+  `ip_address` char(39) DEFAULT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `employee_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_personal_details`
+--
+
+CREATE TABLE `employee_personal_details` (
+  `id` bigint(20) NOT NULL,
+  `employee_id` varchar(10) NOT NULL,
+  `name` varchar(75) NOT NULL,
+  `dob` date DEFAULT NULL,
+  `full_address` varchar(150) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile_number` varchar(10) NOT NULL,
+  `gender` varchar(6) NOT NULL,
+  `designation` varchar(27) NOT NULL,
+  `department` varchar(79) NOT NULL,
+  `bloodgroup` varchar(3) NOT NULL,
+  `emergency_name` varchar(75) NOT NULL,
+  `emergency_number` varchar(10) NOT NULL,
+  `passport_photograph` varchar(100) DEFAULT NULL,
+  `aadhar` varchar(100) DEFAULT NULL,
+  `pancard` varchar(100) DEFAULT NULL,
+  `ip_address` char(39) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -124,7 +167,7 @@ CREATE TABLE `students` (
   `contact_number` varchar(15) NOT NULL,
   `ip_address` char(39) DEFAULT NULL,
   `date_joined` datetime(6) NOT NULL,
-  `student_id_id` bigint(20) NOT NULL
+  `student_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -138,13 +181,13 @@ CREATE TABLE `student_personal_details` (
   `enrollment_number` varchar(11) NOT NULL,
   `ipu_registration_number` varchar(12) NOT NULL,
   `name` varchar(75) NOT NULL,
-  `dob` date NOT NULL,
+  `dob` date DEFAULT NULL,
   `full_address` varchar(150) NOT NULL,
   `email` varchar(50) NOT NULL,
   `mobile_number` varchar(10) NOT NULL,
   `gender` varchar(6) NOT NULL,
-  `category` varchar(30) NOT NULL,
-  `region` varchar(15) NOT NULL,
+  `category` varchar(15) NOT NULL,
+  `region` varchar(13) NOT NULL,
   `father_name` varchar(75) NOT NULL,
   `mother_name` varchar(75) NOT NULL,
   `father_qualification` varchar(30) NOT NULL,
@@ -174,11 +217,11 @@ CREATE TABLE `student_personal_details` (
   `jee_percentile` decimal(15,11) DEFAULT NULL,
   `jee_rollno` varchar(12) NOT NULL,
   `special_achievements` varchar(200) NOT NULL,
-  `passport_photograph` varchar(100) NOT NULL,
-  `marksheet_10th` varchar(100) NOT NULL,
-  `marksheet_12th` varchar(100) NOT NULL,
-  `aadhar` varchar(100) NOT NULL,
-  `pancard` varchar(100) NOT NULL,
+  `passport_photograph` varchar(100) DEFAULT NULL,
+  `marksheet_10th` varchar(100) DEFAULT NULL,
+  `marksheet_12th` varchar(100) DEFAULT NULL,
+  `aadhar` varchar(100) DEFAULT NULL,
+  `pancard` varchar(100) DEFAULT NULL,
   `ip_address` char(39) DEFAULT NULL,
   `created_at` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -224,7 +267,7 @@ CREATE TABLE `users` (
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
-  `user_id` varchar(16) NOT NULL,
+  `user_id` varchar(32) NOT NULL,
   `name` varchar(50) NOT NULL,
   `role` varchar(8) NOT NULL,
   `is_teams_user` tinyint(1) NOT NULL,
@@ -310,11 +353,25 @@ ALTER TABLE `django_session`
   ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
 
 --
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `employee_id_id` (`employee_id`);
+
+--
+-- Indexes for table `employee_personal_details`
+--
+ALTER TABLE `employee_personal_details`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `employee_id` (`employee_id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_id_id` (`student_id_id`);
+  ADD UNIQUE KEY `student_id_id` (`student_id`);
 
 --
 -- Indexes for table `student_personal_details`
@@ -403,6 +460,18 @@ ALTER TABLE `django_migrations`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `employee_personal_details`
+--
+ALTER TABLE `employee_personal_details`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
@@ -469,10 +538,16 @@ ALTER TABLE `django_admin_log`
   ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `employees`
+--
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employees_employee_id_95510a2e_fk_users_id` FOREIGN KEY (`employee_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `students_student_id_id_df57b54f_fk_users_id` FOREIGN KEY (`student_id_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `students_student_id_563bb1b1_fk_users_id` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `token_blacklist_blacklistedtoken`

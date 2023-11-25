@@ -5,7 +5,7 @@ from . import utils
 
 class Student(models.Model):
 
-    student_id = models.OneToOneField(User, on_delete=models.CASCADE) #Foreign Key
+    student_id = models.OneToOneField(User, on_delete=models.CASCADE, db_column='student_id') #Foreign Key
     name = models.CharField(max_length=75)
     email = models.EmailField(max_length=50)
     contact_number = models.CharField(max_length=15, blank=True)
