@@ -43,7 +43,7 @@ const StudentDashboard = ({ user }) => {
 
       <div className="p-5  w-[90%] m-auto">
         <div className="mb-8 w-fit">
-          <Link to={'/dashboard'} ><h1 className="text-xl hover:bg-gray-100 text-blue-900  w-fit p-2 rounded font-semibold text-red-600 bg-gray-200">Student Dashboard</h1></Link>
+          <Link to={'/dashboard'} ><h1 className="text-xl hover:bg-gray-100 text-blue-900  w-fit p-2 rounded font-semibold text-blue-900 bg-gray-200">Student Dashboard</h1></Link>
         </div>
         <div className='flex gap-8'>
           {formFilled ? (
@@ -58,16 +58,16 @@ const StudentDashboard = ({ user }) => {
                   <table className="table h-">
                     <tbody>
                       <tr className="border-b-2 border-gray-500">
-                        <th className="px-2 py-2 border-r-2 font-semibold">Name</th>
+                        <th className="px-2 py-2 border-r-2 font-semibold border-gray-500">Name</th>
                         <td className="px-2">{user.name}</td>
                       </tr>
                       <tr className="border-b-2 border-gray-500">
-                        <th className="py-2 px-2 border-r-2 font-semibold">Email</th>
+                        <th className="py-2 px-2 border-r-2 font-semibold border-gray-500">Email</th>
                         <td className="px-2">{user.email}</td>
                       </tr>
                       {/* Add more details as needed */}
                       <tr className="border-b-2 border-gray-500">
-                        <th className="py-2 px-2 border-r-2 font-semibold">Enrollment Number</th>
+                        <th className="py-2 px-2 border-r-2 font-semibold border-gray-500">Enrollment Number</th>
                         <td className="px-2">{student.enrollment_number}</td>
                       </tr>
                     </tbody>
@@ -80,19 +80,19 @@ const StudentDashboard = ({ user }) => {
                   <table className="table">
                     <tbody>
                       <tr className="border-b-2 border-gray-500">
-                        <th className="px-2 py-2 border-r-2 font-semibold">Name</th>
+                        <th className="px-2 py-2 border-r-2 font-semibold border-gray-500">Name</th>
                         <td className="px-2">{user.name}</td>
                       </tr>
                       <tr className="border-b-2 border-gray-500">
-                        <th className="py-2 px-2 border-r-2 font-semibold">Email</th>
+                        <th className="py-2 px-2 border-r-2 font-semibold border-gray-500">Email</th>
                         <td className="px-2">{user.email}</td>
                       </tr>
 
                     </tbody>
                   </table>
                   <div className="my-4">
-                    <h1 className="font-semibold text-red-600">
-                      To proceed further and fill the form, please share your details.
+                    <h1 className="text-red-600">
+                      To proceed further, Please fill the form below.
                     </h1>
                   </div>
                   <div class="mt-10">

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import maitlogomain from '../../assets/maitlogomain.png'
+import AuthContext from '../../context/auth/authContext';
 
 const navigation = [
     { name: 'Home', href: '#' },
@@ -13,6 +14,8 @@ const navigation = [
 
 function Home() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const context = useContext(AuthContext);
+    const {handleLogin} = context; 
     return (
         <div className="bg-white">
             <header className="absolute inset-x-0 top-0 z-50">
@@ -72,8 +75,7 @@ function Home() {
                                     ))}
                                 </div>
                                 <div className="py-6">
-                                    <a
-                                        href="#"
+                                    <a onClick={handleLogin}
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-orange-100 hover:bg-gray-700"
                                     >
                                         Log in
@@ -110,8 +112,7 @@ function Home() {
                             Manage Efficiently and Effortlessly
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <Link
-                                to={'/login'}
+                            <Link onClick={handleLogin}
                                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Login with Microsoft
