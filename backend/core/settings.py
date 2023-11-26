@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'authentication',
     'student',
     'employee',
+    'counsellor',
+    'groups',
 ]
 
 # Telling Django to use the JWT method for authentication
