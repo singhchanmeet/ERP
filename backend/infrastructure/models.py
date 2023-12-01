@@ -29,7 +29,7 @@ class InfrastructureCategories(models.Model):
         ROOM_CATEGORY = "room_category", "room_category"
         ITEM_TYPE = "item_type", "item_type"
 
-    form_field = models.CharField(max_length=15)    # the corresponding field of form
+    form_field = models.CharField(max_length=15, choices=FormField.choices)    # the corresponding field of form
     dropdown_value = models.CharField(max_length=25)    # the dropdown values for that field
     
     class Meta:

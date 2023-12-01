@@ -1,5 +1,5 @@
-from . models import InfrastructureForm
-from . serializers import InfrastructureFormSerializer
+from . models import InfrastructureForm, InfrastructureCategories
+from . serializers import InfrastructureFormSerializer, InfrastructureCategoriesSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -38,4 +38,13 @@ class InfrastructureFormView(APIView):
 
         return Response({'message': 'Details Submitted Successfully'}, status=status.HTTP_200_OK)
                 
+
+class InfrastructureCategoriesView(APIView):
+
+    def get(self, request):
+        queryset = InfrastructureCategories.objects.all()
+        category_serializer = InfrastructureCategoriesSerializer(queryset, many=True)
+        # print(category_serializer.data)
+        return Response(category_serializer.data, status=status.HTTP_200_OK)
+
         
