@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'authentication',
     'student',
     'employee',
-    'counsellor',
+    # 'counsellor',
     'groups',
+    'infrastructure',
 ]
 
 # Telling Django to use the JWT method for authentication
@@ -116,7 +117,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

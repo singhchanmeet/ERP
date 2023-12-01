@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/student/handle-allot-groups/" method="post">
+        {% csrf_token %}
+        <select name="group_name">
+            <option value="None" selected disabled hidden>Select Group</option>
+            <option value="3C11">3C11</option>
+            <option value="3C12">3C12</option>
+            <option value="3C13">3C13</option>
+        </select>
+        <input type="text" name="all_student_ids" value="{{all_student_ids}}" style="display: none;">
+        <button type="submit">Submit</button>
+        {{all_student_ids}}
+    </form>
+</body>
+</html>

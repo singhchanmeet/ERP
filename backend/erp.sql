@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2023 at 02:34 PM
+-- Generation Time: Nov 28, 2023 at 07:36 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -55,6 +55,19 @@ CREATE TABLE `auth_permission` (
   `name` varchar(255) NOT NULL,
   `content_type_id` int(11) NOT NULL,
   `codename` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `counsellor_groups`
+--
+
+CREATE TABLE `counsellor_groups` (
+  `id` bigint(20) NOT NULL,
+  `counsellor_name` varchar(75) NOT NULL,
+  `counsellor_id` bigint(20) NOT NULL,
+  `group_name` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -157,6 +170,16 @@ CREATE TABLE `employee_personal_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `groups`
+--
+
+CREATE TABLE `groups` (
+  `group_name` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -167,6 +190,19 @@ CREATE TABLE `students` (
   `contact_number` varchar(15) NOT NULL,
   `ip_address` char(39) DEFAULT NULL,
   `date_joined` datetime(6) NOT NULL,
+  `student_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_groups`
+--
+
+CREATE TABLE `student_groups` (
+  `id` bigint(20) NOT NULL,
+  `student_name` varchar(75) NOT NULL,
+  `group_name` varchar(4) DEFAULT NULL,
   `student_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -325,6 +361,14 @@ ALTER TABLE `auth_permission`
   ADD UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`);
 
 --
+-- Indexes for table `counsellor_groups`
+--
+ALTER TABLE `counsellor_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `counsellor_id` (`counsellor_id`),
+  ADD KEY `counsellor_groups_group_name_008422e8_fk_groups_group_name` (`group_name`);
+
+--
 -- Indexes for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -367,11 +411,25 @@ ALTER TABLE `employee_personal_details`
   ADD UNIQUE KEY `employee_id` (`employee_id`);
 
 --
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`group_name`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `student_id_id` (`student_id`);
+
+--
+-- Indexes for table `student_groups`
+--
+ALTER TABLE `student_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_id` (`student_id`),
+  ADD KEY `student_groups_group_name_5759a34c_fk_groups_group_name` (`group_name`);
 
 --
 -- Indexes for table `student_personal_details`
@@ -442,6 +500,12 @@ ALTER TABLE `auth_permission`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `counsellor_groups`
+--
+ALTER TABLE `counsellor_groups`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -475,6 +539,12 @@ ALTER TABLE `employee_personal_details`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `student_groups`
+--
+ALTER TABLE `student_groups`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
@@ -531,6 +601,13 @@ ALTER TABLE `auth_permission`
   ADD CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 
 --
+-- Constraints for table `counsellor_groups`
+--
+ALTER TABLE `counsellor_groups`
+  ADD CONSTRAINT `counsellor_groups_counsellor_id_4810df7d_fk_users_id` FOREIGN KEY (`counsellor_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `counsellor_groups_group_name_008422e8_fk_groups_group_name` FOREIGN KEY (`group_name`) REFERENCES `groups` (`group_name`);
+
+--
 -- Constraints for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -548,6 +625,13 @@ ALTER TABLE `employees`
 --
 ALTER TABLE `students`
   ADD CONSTRAINT `students_student_id_563bb1b1_fk_users_id` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `student_groups`
+--
+ALTER TABLE `student_groups`
+  ADD CONSTRAINT `student_groups_group_name_5759a34c_fk_groups_group_name` FOREIGN KEY (`group_name`) REFERENCES `groups` (`group_name`),
+  ADD CONSTRAINT `student_groups_student_id_2cd9b76d_fk_users_id` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `token_blacklist_blacklistedtoken`
