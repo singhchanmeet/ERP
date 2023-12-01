@@ -43,8 +43,29 @@ class InfrastructureCategoriesView(APIView):
 
     def get(self, request):
         queryset = InfrastructureCategories.objects.all()
-        category_serializer = InfrastructureCategoriesSerializer(queryset, many=True)
-        # print(category_serializer.data)
-        return Response(category_serializer.data, status=status.HTTP_200_OK)
+        # category_serializer = InfrastructureCategoriesSerializer(queryset, many=True)
+
+        institute = []
+        department = []
+        room_category = []
+        item_type = []
+        for each_data in queryset:
+            if each_data.form_field == "institute":
+                institute.append(each_data.dropdown_value)
+            elif each_data.form_field == "department":
+                department.append(each_data.dropdown_value)
+            elif each_data.form_field == "room_category":
+                room_category.append(each_data.dropdown_value)
+            elif each_data.form_field == "item_type":
+                item_type.append(each_data.dropdown_value)
+
+        response = {
+            'institute': institute,
+            'department': department,
+            'room_category': room_category,
+            'item_type' : item_type,
+        }
+        return Response(response, status=status.HTTP_200_OK)
+        # return Response(category_serializer.data, status=status.HTTP_200_OK)
 
         
