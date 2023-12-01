@@ -8,7 +8,7 @@ import AuthContext from '../../context/auth/authContext';
 const navigation = [
     { name: 'Home', href: '#' },
     { name: 'Student', href: '#' },
-    { name: 'Employee', href: '#' },
+    { name: 'Infrastructure', href: '/infra-login' },
     { name: 'About', href: '#' },
 ];
 

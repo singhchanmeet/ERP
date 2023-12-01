@@ -7,6 +7,8 @@ import MicrosoftLoginCallback from './components/standard/MicrosoftLoginCallback
 import AuthState from './context/auth/authState';
 import StudentDetails from './components/Student Portal/StudentDetails';
 import EmployeeDetailsForm from './components/Employee Portal/EmployeeDetailsForm';
+import InfraLogin from './components/Infra/InfraLogin';
+import InfraForm from './components/Infra/InfraForm';
 
 function App() {
     return (
@@ -26,6 +28,8 @@ function App() {
                     <Route path="/employee-details-form" element={<EmployeeDetailsForm />} />
                     <Route path="/student-details" element={<StudentDetails />} />
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
+                    <Route path="/infra-login" element={<InfraLogin />} />
+                    <Route path="/infra-form" element={<InfraForm />} />
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />
