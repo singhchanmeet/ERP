@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2023 at 07:36 PM
+-- Generation Time: Dec 01, 2023 at 08:57 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -175,6 +175,36 @@ CREATE TABLE `employee_personal_details` (
 
 CREATE TABLE `groups` (
   `group_name` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `infrastructure`
+--
+
+CREATE TABLE `infrastructure` (
+  `id` bigint(20) NOT NULL,
+  `item_id` varchar(75) NOT NULL,
+  `institute` varchar(5) NOT NULL,
+  `department` varchar(10) NOT NULL,
+  `room_category` varchar(20) NOT NULL,
+  `room_number` varchar(3) NOT NULL,
+  `item_type` varchar(25) NOT NULL,
+  `year_of_purchase` varchar(4) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `infrastructure_categories`
+--
+
+CREATE TABLE `infrastructure_categories` (
+  `id` bigint(20) NOT NULL,
+  `form_field` varchar(15) NOT NULL,
+  `dropdown_value` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -417,6 +447,19 @@ ALTER TABLE `groups`
   ADD PRIMARY KEY (`group_name`);
 
 --
+-- Indexes for table `infrastructure`
+--
+ALTER TABLE `infrastructure`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `item_id` (`item_id`);
+
+--
+-- Indexes for table `infrastructure_categories`
+--
+ALTER TABLE `infrastructure_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -533,6 +576,18 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `employee_personal_details`
 --
 ALTER TABLE `employee_personal_details`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `infrastructure`
+--
+ALTER TABLE `infrastructure`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `infrastructure_categories`
+--
+ALTER TABLE `infrastructure_categories`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --

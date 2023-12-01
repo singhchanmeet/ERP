@@ -19,13 +19,13 @@ class InfrastructureFormView(APIView):
 
     def post(self, request):
 
-        no_of_items = request.POST.get('numberOfUnits')
+        no_of_items = request.data.get('numberOfUnits')
 
-        institute = request.POST.get('institute')
-        department = request.POST.get('department')
-        room_category = request.POST.get('room_category')
-        room_number = request.POST.get('room_number')
-        item_type = request.POST.get('item_type')
+        institute = request.data.get('institute')
+        department = request.data.get('department')
+        room_category = request.data.get('room_category')
+        room_number = request.data.get('room_number')
+        item_type = request.data.get('item_type')
 
         flag = True
         for i in range(int(no_of_items)):
