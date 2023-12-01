@@ -6,15 +6,16 @@ import InfraNavbar from './InfraNavbar';
 const InfraForm = () => {
     const [formData, setFormData] = useState({
         department: '',
-        collegeName: '',
-        roomCategory: '',
-        roomNumber: '',
-        item: '',
-        yearOfPurchase: '',
+        institute: '',
+        room_category: '',
+        room_number: '',
+        item_type: '',
+        year_of_purchase: '',
         numberOfUnits: '',
     });
 
-
+    const [dropdownData, setDropdownData] = useState(null);
+    const [loadingDropdown, setLoadingDropdown] = useState(true);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -23,51 +24,122 @@ const InfraForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add logic for form submission here
-        console.log('Form submitted:', formData);
+
+        try {
+            const response = await fetch('https://admin.erp.mait.ac.in/infra/submit-form/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                    // You may include additional headers as needed
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Form submission failed');
+            }
+
+            // Assuming the backend responds with data after successful submission
+            const responseData = await response.json();
+
+            alert('Assets Added!!');
+
+            // Reset the form data to a blank state
+            setFormData({
+                department: '',
+                institute: '',
+                room_category: '',
+                room_number: '',
+                item_type: '',
+                year_of_purchase: '',
+                numberOfUnits: '',
+            });
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            // Handle errors, show an error message, etc.
+        }
     };
+
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const accessToken = localStorage.getItem('accessToken');
     // let [authToken, setAuthToken] = useState(()=> localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')) : null)
 
-    //   useEffect(() => {
-    //     // Fetch the user details from your API
-    //     axios.get('http://localhost:8000/user-details/', {
-    //       headers: {
-    //         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
-    //         'Content-Type': 'application/json', // Adjust headers as needed
-    //       }
-    //     })
-    //       .then((response) => {
-    //         // Assuming the API response contains user data
-    //         setUser(response.data);
-    //         setLoading(false)
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error fetching user data:', error);
-    //         setLoading(false)
-    //       });
-    //   }, [accessToken]);
 
-    //   if (loading) {
-    //     return <p>Loading... Please wait</p>
-    //   }
+    useEffect(() => {
+        // Fetch the user details from your API
+        axios.get('https://admin.erp.mait.ac.in/user-details/', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json', // Adjust headers as needed
+            }
+        })
+            .then((response) => {
+                // Assuming the API response contains user data
+                setUser(response.data);
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.error('Error fetching user data:', error);
+                setLoading(false)
+            });
+    }, [accessToken]);
+    useEffect(() => {
+        axios.get('https://admin.erp.mait.ac.in/infra/dropdown-data/')
+            .then((response) => {
+                setDropdownData(response.data);
+                setLoadingDropdown(false);
+            })
+            .catch((error) => {
+                console.error('Error fetching dropdown data:', error);
+                setLoadingDropdown(false);
+            });
+    }, []);
+    if (loading) {
+        return <p>Loading... Please wait</p>
+    }
 
-    //   if (!user) {
-    //     return <ErrorPage />
-    //   }
+
+    if (!user) {
+        return <ErrorPage />
+    }
+
+
+
     return (
         <>
-            <InfraNavbar/>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <h2 className="mt-6 text-center text-2xl font-bold leading-9 text-gray-900">Assets Adding Form</h2>
                 </div>
 
                 <form className="mt-8 w-[300px] m-auto space-y-6" onSubmit={handleSubmit}>
+
+                    <div className="sm:col-span-3">
+                        <label htmlFor="institute" className="block text-sm font-medium leading-5 text-gray-700">
+                            College Name
+                        </label>
+                        <select
+                            id="institute"
+                            name="institute"
+                            onChange={handleInputChange}
+                            value={formData.institute}
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        >
+                            <option value="">Select College Name</option>
+                            {dropdownData.institute.map((inst) => (
+                                <option key={inst} value={inst}>
+                                    {inst}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+
                     <div className='sm:col-span-3'>
                         <label htmlFor="department" className="block text-sm font-medium leading-5 text-gray-700">
                             Department
@@ -80,80 +152,67 @@ const InfraForm = () => {
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option value="">Select Department</option>
-                            <option value="IT">Information Technology</option>
-                            <option value="HR">Human Resources</option>
-                            {/* Add more options as needed */}
+                            {dropdownData.department.map((dept) => (
+                                <option key={dept} value={dept}>
+                                    {dept}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
-                    <div className="sm:col-span-3">
-                        <label htmlFor="collegeName" className="block text-sm font-medium leading-5 text-gray-700">
-                            College Name
-                        </label>
-                        <select
-                            id="collegeName"
-                            name="collegeName"
-                            onChange={handleInputChange}
-                            value={formData.collegeName}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                        >
-                            <option value="">Select College Name</option>
-                            <option value="MAIT">Maharaja Agrasen Institute of Technology (MAIT)</option>
-                            <option value="MAIMS">Maharaja Agrasen Institute of Management Studies (MAIMS)</option>
-                        </select>
-                    </div>
+
 
                     <div>
-                        <label htmlFor="roomCategory" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="room_category" className="block text-sm font-medium leading-6 text-gray-900">
                             Room Category
                         </label>
                         <select
-                            id="roomCategory"
-                            name="roomCategory"
+                            id="room_category"
+                            name="room_category"
                             onChange={handleInputChange}
-                            value={formData.roomCategory}
+                            value={formData.room_category}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                             <option value="">Select Room Category</option>
-                            <option value="Faculty Room">Faculty Room</option>
-                            <option value="Lab">Lab</option>
-                            <option value="Lecture Room">Lecture Room</option>
-                            {/* Add more options as needed */}
+                            {dropdownData.room_category.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
                     <div>
-                        <label htmlFor="roomNumber" className="block text-sm font-medium leading-5 text-gray-700">
+                        <label htmlFor="room_number" className="block text-sm font-medium leading-5 text-gray-700">
                             Room Number
                         </label>
                         <input
-                            id="roomNumber"
-                            name="roomNumber"
+                            id="room_number"
+                            name="room_number"
                             type="text"
                             onChange={handleInputChange}
-                            value={formData.roomNumber}
+                            value={formData.room_number}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="item" className="block text-sm font-medium leading-5 text-gray-700">
+                        <label htmlFor="item_type" className="block text-sm font-medium leading-5 text-gray-700">
                             Item
                         </label>
                         <select
-                            id="item"
-                            name="item"
+                            id="item_type"
+                            name="item_type"
                             onChange={handleInputChange}
-                            value={formData.item}
+                            value={formData.item_type}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                            <option value="">Select Item</option>
-                            <option value="PCs">PCs</option>
-                            <option value="UPS Batteries">UPS Batteries</option>
-                            <option value="CPUs">CPUs</option>
-                            <option value="Keyboards">Keyboards</option>
-                            <option value="Mice">Mice</option>
-                            {/* Add more options as needed */}
+                            <option value="">Select Item type</option>
+                            {dropdownData.item_type.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
@@ -171,15 +230,15 @@ const InfraForm = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="yearOfPurchase" className="block text-sm font-medium leading-5 text-gray-700">
+                        <label htmlFor="year_of_purchase" className="block text-sm font-medium leading-5 text-gray-700">
                             Year of Purchase
                         </label>
                         <input
-                            id="yearOfPurchase"
-                            name="yearOfPurchase"
+                            id="year_of_purchase"
+                            name="year_of_purchase"
                             type="text"
                             onChange={handleInputChange}
-                            value={formData.yearOfPurchase}
+                            value={formData.year_of_purchase}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         />
                     </div>

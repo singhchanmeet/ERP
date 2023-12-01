@@ -9,7 +9,7 @@ const EmployeeDashboard = ({user}) => {
   const [formFilled, setFormFilled] = useState(false);
   const [student, setStudent] = useState(null);
   useEffect(() => {
-    axios.get('http://localhost:8000/student/personal-details/', {
+    axios.get('https://admin.erp.mait.ac.in/student/personal-details/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',

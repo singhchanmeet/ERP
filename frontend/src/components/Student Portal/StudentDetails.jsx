@@ -10,7 +10,7 @@ const StudentDetails = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/student/personal-details/', {
+        axios.get('https://admin.erp.mait.ac.in/student/personal-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
