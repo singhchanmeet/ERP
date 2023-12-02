@@ -12,6 +12,7 @@ const InfraForm = () => {
         item_type: '',
         year_of_purchase: '',
         numberOfUnits: '',
+        status: '',
     });
 
     const [dropdownData, setDropdownData] = useState(null);
@@ -56,6 +57,7 @@ const InfraForm = () => {
                 item_type: '',
                 year_of_purchase: '',
                 numberOfUnits: '',
+                status: ''
             });
 
         } catch (error) {
@@ -215,6 +217,23 @@ const InfraForm = () => {
                             ))}
                         </select>
                     </div>
+
+                    <div>
+                        <label htmlFor="status" className="block text-sm font-medium leading-5 text-gray-700">
+                            Item Status
+                        </label>
+                        <select
+                            id="status"
+                            name="status"
+                            onChange={handleInputChange}
+                            value={formData.status}
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        >
+                            <option value="1">Active/Working</option>
+                            <option value="0">Not Working/Faulty</option>
+                        </select>
+                    </div>
+
 
                     <div>
                         <label htmlFor="numberOfUnits" className="block text-sm font-medium leading-5 text-gray-700">
