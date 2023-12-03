@@ -6,6 +6,8 @@ class InfrastructureFormAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['item_id', 'item_type', 'status'] 
     list_filter = ['status'] 
 
+    change_list_template = "excel_upload_changelist.html"
+
 class InstitutesAdmin(admin.ModelAdmin):
     list_display = ['institute']
 

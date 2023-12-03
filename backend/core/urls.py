@@ -15,4 +15,4 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('employee/', include('employee.urls')),
     path('infra/', include('infrastructure.urls')),
-] + static('/media/', document_root=settings.MEDIA_ROOT) + static('/static/', document_root=settings.STATIC_ROOT)    #for serving static files (like admin panel css) and media files (uploaded by user)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)    #for serving static files (like admin panel css) and media files (uploaded by user)

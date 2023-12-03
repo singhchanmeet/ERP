@@ -18,6 +18,27 @@ const InfraForm = () => {
         invoice: null,
     });
 
+    // State variables for filtered dropdown data
+    const [filteredDepartments, setFilteredDepartments] = useState([]);
+    const [filteredRoomNumbers, setFilteredRoomNumbers] = useState([]);
+
+    // Update departments based on selected institute
+    const handleInstituteChange = (e) => {
+        const selectedInstitute = e.target.value;
+        const departmentsForInstitute = dropdownData['institute-departments'][selectedInstitute.toLowerCase()] || [];
+        setFormData(prevData => ({ ...prevData, institute: selectedInstitute, department: '' }));
+        setFilteredDepartments(departmentsForInstitute);
+        setFilteredRoomNumbers([]);
+    };
+
+    // Update room numbers based on selected department
+    const handleDepartmentChange = (e) => {
+        const selectedDepartment = e.target.value;
+        const roomsForDepartment = dropdownData['departments-rooms'][selectedDepartment.toLowerCase()] || [];
+        setFormData(prevData => ({ ...prevData, department: selectedDepartment, room_number: '' }));
+        setFilteredRoomNumbers(roomsForDepartment);
+    };
+
     const [dropdownData, setDropdownData] = useState(null);
     const [loadingDropdown, setLoadingDropdown] = useState(true);
     const handleInputChange = (e) => {
@@ -48,7 +69,7 @@ const InfraForm = () => {
                 },
             });
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Form submission failed');
             }
 
@@ -115,6 +136,10 @@ const InfraForm = () => {
         return <p>Loading... Please wait</p>
     }
 
+    if (loadingDropdown) {
+        return <p>Loading... Please wait</p>
+    }
+
 
     if (!user) {
         return <ErrorPage />
@@ -146,7 +171,7 @@ const InfraForm = () => {
                                 <label htmlFor="institute" className="block text-sm font-medium leading-5 text-gray-700 mb-2 ">
                                     Institute Name
                                 </label>
-                                <select
+                                {/* <select
                                     id="institute"
                                     name="institute"
                                     onChange={handleInputChange}
@@ -160,6 +185,22 @@ const InfraForm = () => {
                                             {inst}
                                         </option>
                                     ))}
+                                </select> */}
+                                <select
+                                    id="institute"
+                                    name="institute"
+                                    onChange={handleInstituteChange}
+                                    required
+                                    value={formData.institute}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    // ... (other attributes remain the same)
+                                >
+                                    <option value="">Select Institute</option>
+                                    {dropdownData.institute.map((inst) => (
+                                        <option key={inst} value={inst}>
+                                            {inst}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -168,7 +209,7 @@ const InfraForm = () => {
                                 <label htmlFor="department" className="block text-sm font-medium leading-5 text-gray-700 mb-2">
                                     Department Name
                                 </label>
-                                <select
+                                {/* <select
                                     id="department"
                                     name="department"
                                     onChange={handleInputChange}
@@ -177,6 +218,21 @@ const InfraForm = () => {
                                 >
                                     <option value="">All</option>
                                     {dropdownData.department.map((dept) => (
+                                        <option key={dept} value={dept}>
+                                            {dept}
+                                        </option>
+                                    ))}
+                                </select> */}
+                                <select
+                                    id="department"
+                                    name="department"
+                                    onChange={handleDepartmentChange}
+                                    value={formData.department}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    // ... (other attributes remain the same)
+                                >
+                                    <option value="">Select Department</option>
+                                    {filteredDepartments.map((dept) => (
                                         <option key={dept} value={dept}>
                                             {dept}
                                         </option>
@@ -210,14 +266,45 @@ const InfraForm = () => {
                                 <label htmlFor="room_number" className="block text-sm font-medium leading-5 text-gray-700 mb-2">
                                     Room Number
                                 </label>
-                                <input
-                                    id="room_number"
+                                {/* <input */}
+                                    {/* id="room_number"
                                     name="room_number"
                                     type="text"
                                     onChange={handleInputChange}
                                     value={formData.room_number}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                />
+                                /> */}
+                                {/* <select
+                                    id="room_number"
+                                    name="room_number"
+                                    onChange={handleInputChange}
+                                    required
+                                    value={formData.room_number}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                >
+                                    <option value="all">All</option>
+                                    {dropdownData.room_number.map((inst) => (
+                                        <option key={inst} value={inst}>
+                                            {inst}
+                                        </option>
+                                    ))}
+                                </select> */}
+                                <select
+                                    id="room_number"
+                                    name="room_number"
+                                    onChange={handleInputChange}
+                                    required
+                                    value={formData.room_number}
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    // ... (other attributes remain the same)
+                                >
+                                    <option value="">Select Room Number</option>
+                                    {filteredRoomNumbers.map((room) => (
+                                        <option key={room} value={room}>
+                                            {room}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className='sm:col-span-3'>
                                 <label htmlFor="item_type" className="block text-sm font-medium leading-5 text-gray-700 mb-2">
@@ -292,7 +379,6 @@ const InfraForm = () => {
                                             name="invoice"
                                             type="file"
                                             accept=".pdf, .doc, .docx"
-                                            required
                                             onChange={handleFileChange}
                                             className="sr-only"
                                         />

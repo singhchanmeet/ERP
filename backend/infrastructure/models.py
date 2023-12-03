@@ -1,6 +1,7 @@
 from django.db import models
+from . import utils
 
-# Create your models here.
+
 class InfrastructureForm(models.Model):
     item_id = models.CharField(max_length=75, unique=True, db_index=True)
     institute = models.CharField(max_length=5)
@@ -8,8 +9,9 @@ class InfrastructureForm(models.Model):
     room_category = models.CharField(max_length=20)
     room_number = models.CharField(max_length=3)
     item_type = models.CharField(max_length=25)
-    year_of_purchase = models.CharField(max_length=4)
+    year_of_purchase = models.CharField(max_length=4, blank=True, null=True)
     status = models.BooleanField(default=True)    #working/non-working
+    invoice = models.FileField(upload_to=utils.invoice_rename, blank=True, null=True)
 
     
     def __str__(self):

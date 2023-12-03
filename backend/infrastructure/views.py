@@ -26,7 +26,6 @@ class InfrastructureFormView(APIView):
         room_category = request.data.get('room_category')
         room_number = request.data.get('room_number')
         item_type = request.data.get('item_type')
-        status = request.data.get('status')
         flag = True
         for i in range(int(no_of_items)):
             item_id = generate_item_id(institute, department, item_type, room_category, room_number)
@@ -76,7 +75,7 @@ class DropdownValuesView(APIView):
         response = {
             "institute": [],
             "department": [],
-            "rooms": [],
+            "room_number": [],
             "room_category": [],
             "item_type": [],
             "institute-departments": {}, 
@@ -96,7 +95,7 @@ class DropdownValuesView(APIView):
         # Fetch data for Rooms
         rooms = Rooms.objects.all()
         room_list = [room.room_number for room in rooms]
-        response['rooms'] = room_list
+        response['room_number'] = room_list
 
         # Fetch data for RoomCategories
         room_categories = RoomCategories.objects.all()
@@ -131,5 +130,58 @@ class DropdownValuesView(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
             
+
+# import pandas as pd
+# from rest_framework.parsers import FileUploadParser
+
+
+# class ExcelUploadView(APIView):
+#     parser_classes = (FileUploadParser,)
+
+#     def post(self, request, *args, **kwargs):
+
+#         file = request.data['excel_file']  
+
+#         # Check if the uploaded file is in Excel format
+#         if not file.name.endswith('.xlsx'):
+#             return Response({'error': 'Please upload a valid Excel file'}, status=400)
+
+#         try:
+#             # Read the Excel file using pandas
+#             df = pd.read_excel(file)
+
+#             # Loop through each row in the Excel file
+#             for index, row in df.iterrows():
+#                 institute = row['institute']
+#                 department = row['department']
+#                 room_category = row['room_category']
+#                 room_number = row['room_number']
+#                 item_type = row['item_type']
+#                 year_of_purchase = row['year_of_purchase']
+#                 no_of_items = row['no_of_items']
+
+#                 # Generate item_id and save the data to the database
+#                 for i in range(no_of_items):
+#                     item_id = generate_item_id(institute, department, item_type, room_category, room_number)
+#                     infrastructure_data = {
+#                         'item_id': item_id,
+#                         'institute': institute,
+#                         'department': department,
+#                         'room_category': room_category,
+#                         'room_number': room_number,
+#                         'item_type': item_type,
+#                         'year_of_purchase': year_of_purchase if not pd.isnull(year_of_purchase) else None,
+#                     }
+#                     infrastructure_serializer = InfrastructureFormSerializer(data=infrastructure_data)
+#                     if infrastructure_serializer.is_valid():
+#                         infrastructure_serializer.save()
+#                     else:
+#                         return Response(infrastructure_serializer.errors, status=400)
+
+#             return Response({'message': 'Data from Excel file has been successfully added to the database'}, status=200)
+
+#         except Exception as e:
+#             return Response({'error': str(e)}, status=400)
+
 
         
