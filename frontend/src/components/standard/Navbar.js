@@ -22,7 +22,7 @@ const Navbar = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('https://admin.erp.mait.ac.in/user-details/', {
+        axios.get('http://localhost:8000/user-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',

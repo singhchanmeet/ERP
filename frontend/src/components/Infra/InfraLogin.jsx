@@ -8,7 +8,7 @@ import axios from 'axios';
 const InfraLogin = () => {
     const navigate = useNavigate();
     const navigation = [
-        { name: 'Home', href: '#' },
+        { name: 'Home', href: '/' },
         { name: 'Student', href: '#' },
         { name: 'Infrastructure', href: '/infra-login' },
         { name: 'About', href: '#' },
@@ -21,7 +21,7 @@ const InfraLogin = () => {
 
     const handleInfraLogin = async () => {
         try {
-            const response = await axios.post('https://admin.erp.mait.ac.in/student/login/', {
+            const response = await axios.post('http://localhost:8000/student/login/', {
                 user_id,
                 password,
             });
@@ -33,9 +33,10 @@ const InfraLogin = () => {
             localStorage.setItem('refreshToken', refreshToken);
 
             // Redirect or perform other actions upon successful login
-            navigate('/infra-form');
+            navigate('/dashboard');
         } catch (error) {
             console.error('Login failed', error);
+            alert('Incorrect Credentials')
         }
     };
 
