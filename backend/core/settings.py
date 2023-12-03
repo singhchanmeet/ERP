@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'employee',
     # 'counsellor',
     'groups',
+    'batches',
     'infrastructure',
+    'fees',
 ]
 
 # Telling Django to use the JWT method for authentication

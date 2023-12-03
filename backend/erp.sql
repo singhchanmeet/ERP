@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2023 at 08:57 PM
+-- Generation Time: Dec 02, 2023 at 02:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -55,6 +55,16 @@ CREATE TABLE `auth_permission` (
   `name` varchar(255) NOT NULL,
   `content_type_id` int(11) NOT NULL,
   `codename` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `batches`
+--
+
+CREATE TABLE `batches` (
+  `batch` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -170,6 +180,38 @@ CREATE TABLE `employee_personal_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fees`
+--
+
+CREATE TABLE `fees` (
+  `id` bigint(20) NOT NULL,
+  `tution_fee` varchar(8) NOT NULL,
+  `activity_fee` varchar(8) NOT NULL,
+  `university_fee` varchar(8) NOT NULL,
+  `security_fee` varchar(8) NOT NULL,
+  `college_magazine` varchar(8) NOT NULL,
+  `rechecking_fee` varchar(8) NOT NULL,
+  `reappear_fee` varchar(8) NOT NULL,
+  `fine` varchar(8) NOT NULL,
+  `institute_alumni_contribution` varchar(8) NOT NULL,
+  `book_bank` varchar(8) NOT NULL,
+  `total_fee` varchar(8) DEFAULT NULL,
+  `display_tution_fee` tinyint(1) NOT NULL,
+  `display_activity_fee` tinyint(1) NOT NULL,
+  `display_university_fee` tinyint(1) NOT NULL,
+  `display_security_fee` tinyint(1) NOT NULL,
+  `display_college_magazine` tinyint(1) NOT NULL,
+  `display_rechecking_fee` tinyint(1) NOT NULL,
+  `display_reappear_fee` tinyint(1) NOT NULL,
+  `display_fine` tinyint(1) NOT NULL,
+  `display_institute_alumni_contribution` tinyint(1) NOT NULL,
+  `display_book_bank` tinyint(1) NOT NULL,
+  `batch` varchar(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -220,7 +262,8 @@ CREATE TABLE `students` (
   `contact_number` varchar(15) NOT NULL,
   `ip_address` char(39) DEFAULT NULL,
   `date_joined` datetime(6) NOT NULL,
-  `student_id` bigint(20) NOT NULL
+  `student_id` bigint(20) NOT NULL,
+  `batch` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -391,6 +434,12 @@ ALTER TABLE `auth_permission`
   ADD UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`);
 
 --
+-- Indexes for table `batches`
+--
+ALTER TABLE `batches`
+  ADD PRIMARY KEY (`batch`);
+
+--
 -- Indexes for table `counsellor_groups`
 --
 ALTER TABLE `counsellor_groups`
@@ -441,6 +490,13 @@ ALTER TABLE `employee_personal_details`
   ADD UNIQUE KEY `employee_id` (`employee_id`);
 
 --
+-- Indexes for table `fees`
+--
+ALTER TABLE `fees`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `batch` (`batch`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
@@ -464,7 +520,8 @@ ALTER TABLE `infrastructure_categories`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `student_id_id` (`student_id`);
+  ADD UNIQUE KEY `student_id_id` (`student_id`),
+  ADD KEY `students_batch_ea766616_fk_batches_batch` (`batch`);
 
 --
 -- Indexes for table `student_groups`
@@ -579,6 +636,12 @@ ALTER TABLE `employee_personal_details`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `fees`
+--
+ALTER TABLE `fees`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `infrastructure`
 --
 ALTER TABLE `infrastructure`
@@ -676,9 +739,16 @@ ALTER TABLE `employees`
   ADD CONSTRAINT `employees_employee_id_95510a2e_fk_users_id` FOREIGN KEY (`employee_id`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `fees`
+--
+ALTER TABLE `fees`
+  ADD CONSTRAINT `fees_batch_d2203470_fk_batches_batch` FOREIGN KEY (`batch`) REFERENCES `batches` (`batch`);
+
+--
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
+  ADD CONSTRAINT `students_batch_ea766616_fk_batches_batch` FOREIGN KEY (`batch`) REFERENCES `batches` (`batch`),
   ADD CONSTRAINT `students_student_id_563bb1b1_fk_users_id` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`);
 
 --

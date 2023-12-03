@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from authentication.models import User
+from batches.models import Batches
 from rest_framework.permissions import IsAuthenticated
 from . serializers import StudentSerializer, StudentDetailsSerializer
 from authentication.serializers import UserSerializer
@@ -36,6 +37,7 @@ class StudentRegister(APIView):
                 'name': request.data['name'],
                 'email': request.data['email'],
                 'contact_number': request.data['contact_number'],
+                'batch': Batches.objects.filter(batch = f'20{int(request.data["user_id"][-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
                 'ip_address': request.META.get('REMOTE_ADDR')
             }
 
@@ -81,6 +83,7 @@ class StudentRegister(APIView):
                 'student_id': student_id,   #foreign key
                 'name': full_name,
                 'email': request.identity_context_data._id_token_claims['preferred_username'],
+                'batch': Batches.objects.filter(batch = f'20{int(enrollment_id[-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
                 'ip_address': request.META.get('REMOTE_ADDR')
             }
 

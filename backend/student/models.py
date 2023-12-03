@@ -1,5 +1,6 @@
 from django.db import models
 from authentication.models import User
+from batches.models import Batches
 from django.utils.html import mark_safe
 from . import utils
 
@@ -10,6 +11,7 @@ class Student(models.Model):
     name = models.CharField(max_length=75)
     email = models.EmailField(max_length=50)
     contact_number = models.CharField(max_length=15, blank=True)
+    batch = models.ForeignKey(Batches, on_delete=models.SET_NULL, null=True, db_column='batch')
     ip_address = models. GenericIPAddressField(blank=True, null=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
