@@ -26,7 +26,7 @@ class InfrastructureFormView(APIView):
         room_category = request.data.get('room_category')
         room_number = request.data.get('room_number')
         item_type = request.data.get('item_type')
-
+        status = request.data.get('status')
         flag = True
         for i in range(int(no_of_items)):
             item_id = generate_item_id(institute, department, item_type, room_category, room_number)
@@ -35,7 +35,8 @@ class InfrastructureFormView(APIView):
             infrastructure_serializer = InfrastructureFormSerializer(data=data)
             if infrastructure_serializer.is_valid():
                 infrastructure_serializer.save()
-
+            else:
+                return Response(infrastructure_serializer.errors)
         return Response({'message': 'Details Submitted Successfully'}, status=status.HTTP_200_OK)
                 
 

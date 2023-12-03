@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { DetailsForm, Home, Dashboard, EmployeeApply, EmployeeLogin, EmployeePortal, EmployeeRegistration, Footer, Navbar, StudentAdmission, StudentLogin, StudentPortal, StudentRegistration } from './components/bundle';
@@ -7,6 +6,9 @@ import MicrosoftLoginCallback from './components/standard/MicrosoftLoginCallback
 import AuthState from './context/auth/authState';
 import StudentDetails from './components/Student Portal/StudentDetails';
 import EmployeeDetailsForm from './components/Employee Portal/EmployeeDetailsForm';
+import InfraLogin from './components/Infra/InfraLogin';
+import InfraForm from './components/Infra/InfraForm';
+import ManagingDashboard from './components/Infra/ManagingDashboard';
 
 function App() {
     return (
@@ -26,6 +28,9 @@ function App() {
                     <Route path="/employee-details-form" element={<EmployeeDetailsForm />} />
                     <Route path="/student-details" element={<StudentDetails />} />
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
+                    <Route path="/infra-login" element={<InfraLogin />} />
+                    <Route path="/infra-form" element={<InfraForm />} />
+                    <Route path="/manage-infra" element={<ManagingDashboard />} />
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />

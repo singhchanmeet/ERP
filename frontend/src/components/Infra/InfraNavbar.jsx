@@ -5,8 +5,7 @@ import { FaTimes } from 'react-icons/fa'; // Import the close icon
 import AuthContext from '../../context/auth/authContext';
 import maitlogomain from '../../assets/maitlogomain.png'
 import axios from 'axios';
-
-const EmployeeNavbar = () => {
+const InfraNavbar = () => {
   const context = useContext(AuthContext);
   const { logoutUser } = context;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,6 +30,7 @@ const EmployeeNavbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
   return (
     <nav className="bg-gray-900 p-2 shadow-md px-10  ">
       <div className="container mx-auto flex justify-between items-center">
@@ -62,22 +62,7 @@ const EmployeeNavbar = () => {
                     <Link to="/dashboard" className="hover:underline">Dashboard</Link>
                   </li>
                   <li>
-                    <Link to="/timetable" className="hover:underline">Timetable</Link>
-                  </li>
-                  <li>
-                    <Link to="/manage-infra" className="hover:underline">Infrastructure</Link>
-                  </li>
-                  <li>
-                    <Link to="/results" className="hover:underline">Results</Link>
-                  </li>
-                  <li>
-                    <Link to="/cms" className="hover:underline">CMS/LMS</Link>
-                  </li>
-                  <li>
                     <Link to="/help" className="hover:underline">Help/Support</Link>
-                  </li>
-                  <li>
-                    <Link to="/attendance" className="hover:underline">Attendance</Link>
                   </li>
                 </ul>
                 <button
@@ -95,4 +80,4 @@ const EmployeeNavbar = () => {
   );
 };
 
-export default EmployeeNavbar
+export default InfraNavbar
