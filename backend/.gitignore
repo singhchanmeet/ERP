@@ -1,5 +1,6 @@
 aad.config.json*
 env/
+media/
 .log
 .log*
 error.log/
