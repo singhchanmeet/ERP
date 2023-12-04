@@ -20,6 +20,8 @@ class DepartmentsAdmin(admin.ModelAdmin):
 class RoomsAdmin(admin.ModelAdmin):
     list_display = ['room_number']
 
+    change_list_template = "rooms_add_changelist.html"
+
 class RoomCategoriesAdmin(admin.ModelAdmin):
     list_display = ['room_category']
 

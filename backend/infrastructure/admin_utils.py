@@ -2,11 +2,12 @@ import pandas as pd
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import InfrastructureForm
+from .models import InfrastructureForm, Rooms
 from .serializers import InfrastructureFormSerializer
 
 from django.contrib import admin
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 def generate_item_id(ins, dept, item_type, categ, roomno):
 
@@ -72,3 +73,16 @@ def generatePDF(modeladmin, request, queryset):
     all_records = InfrastructureForm.objects.filter(pk__in = all_ids) #pk is primary key
     context = {'all_records' : all_records}
     return render(request,'pdfs-infra.html', context)
+
+def bulk_rooms_add(request):
+
+    block = request.POST.get('block')
+    floor = request.POST.get('floor')
+    no_of_rooms = request.POST.get('no_of_rooms')
+
+    for i in range(int(no_of_rooms)):
+        room_no = f'{block}{floor}{i+1}'
+        Rooms.objects.create(room_number=room_no)
+    
+    messages.add_message(request, messages.INFO, f'{no_of_rooms} rooms added successfully.')
+    return redirect('/admin/infrastructure/rooms/')

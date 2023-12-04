@@ -62,7 +62,7 @@ const InfraForm = () => {
                 formDataToSend.append(key, value);
             });
 
-            const response = await axios.post('http://localhost:8000/infra/submit-form/', formDataToSend, {
+            const response = await axios.post('https://admin.erp.mait.ac.in/infra/submit-form/', formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -105,7 +105,7 @@ const InfraForm = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('http://localhost:8000/user-details/', {
+        axios.get('https://admin.erp.mait.ac.in/user-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json', // Adjust headers as needed
@@ -122,7 +122,7 @@ const InfraForm = () => {
             });
     }, [accessToken]);
     useEffect(() => {
-        axios.get('http://localhost:8000/infra/dropdown-data/')
+        axios.get('https://admin.erp.mait.ac.in/infra/dropdown-data/')
             .then((response) => {
                 setDropdownData(response.data);
                 setLoadingDropdown(false);
