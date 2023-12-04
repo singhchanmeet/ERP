@@ -13,7 +13,7 @@ const InfraForm = () => {
         room_number: '',
         item_type: '',
         year_of_purchase: '',
-        numberOfUnits: '',
+        numberOfUnits: '1',
         status: '',
         invoice: null,
     });
@@ -86,7 +86,7 @@ const InfraForm = () => {
                 room_number: '',
                 item_type: '',
                 year_of_purchase: '',
-                numberOfUnits: '',
+                numberOfUnits: '1',
                 status: '',
                 invoice: null,
             });
@@ -193,7 +193,7 @@ const InfraForm = () => {
                                     required
                                     value={formData.institute}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    // ... (other attributes remain the same)
+                                // ... (other attributes remain the same)
                                 >
                                     <option value="">Select Institute</option>
                                     {dropdownData.institute.map((inst) => (
@@ -227,9 +227,10 @@ const InfraForm = () => {
                                     id="department"
                                     name="department"
                                     onChange={handleDepartmentChange}
+                                    required
                                     value={formData.department}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    // ... (other attributes remain the same)
+                                // ... (other attributes remain the same)
                                 >
                                     <option value="">Select Department</option>
                                     {filteredDepartments.map((dept) => (
@@ -251,6 +252,7 @@ const InfraForm = () => {
                                     name="room_category"
                                     onChange={handleInputChange}
                                     value={formData.room_category}
+                                    required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
                                     <option value="">Select Room Category</option>
@@ -267,7 +269,7 @@ const InfraForm = () => {
                                     Room Number
                                 </label>
                                 {/* <input */}
-                                    {/* id="room_number"
+                                {/* id="room_number"
                                     name="room_number"
                                     type="text"
                                     onChange={handleInputChange}
@@ -296,7 +298,7 @@ const InfraForm = () => {
                                     required
                                     value={formData.room_number}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    // ... (other attributes remain the same)
+                                // ... (other attributes remain the same)
                                 >
                                     <option value="">Select Room Number</option>
                                     {filteredRoomNumbers.map((room) => (
@@ -315,6 +317,7 @@ const InfraForm = () => {
                                     name="item_type"
                                     onChange={handleInputChange}
                                     value={formData.item_type}
+                                    required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
                                     <option value="">Select Item type</option>
@@ -343,6 +346,7 @@ const InfraForm = () => {
                                     name="status"
                                     onChange={handleInputChange}
                                     value={formData.status}
+                                    required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                 >
                                     <option value="1">Active/Working</option>
@@ -364,31 +368,23 @@ const InfraForm = () => {
                             </div>
                             <div className="mt-3">
                                 <label htmlFor="invoice" className="block text-sm font-medium text-gray-700">
-                                    Bill/Invoice Copy
+                                    Bill/Invoice Copy (optional)
                                 </label>
 
                                 <div className="mt-1 flex items-center">
-
-                                    <label
-                                        htmlFor="file-upload"
-                                        className="bg-white border-2 relative cursor-pointer  rounded-md font-medium  text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 p-2"
-                                    >
-                                        <span>Upload Bill/Invoice</span>
-                                        <input
-                                            id="invoice"
-                                            name="invoice"
-                                            type="file"
-                                            accept=".pdf, .doc, .docx"
-                                            onChange={handleFileChange}
-                                            className="sr-only"
-                                        />
-                                    </label>
-                                    <p className="pl-1">or drag and drop</p>
+                                    <input
+                                        id="invoice"
+                                        name="invoice"
+                                        type="file"
+                                        accept=".pdf, .doc, .docx"
+                                        onChange={handleFileChange}
+                                        className="p-2 border rounded-md font-medium text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    />
                                 </div>
                             </div>
                             <div className='sm:col-span-3'>
                                 <label htmlFor="year_of_purchase" className="block text-sm font-medium leading-5 text-gray-700 mb-2">
-                                    Year of Purchase
+                                    Year of Purchase (optional)
                                 </label>
                                 <input
                                     id="year_of_purchase"
