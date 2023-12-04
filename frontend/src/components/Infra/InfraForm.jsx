@@ -25,7 +25,7 @@ const InfraForm = () => {
     // Update departments based on selected institute
     const handleInstituteChange = (e) => {
         const selectedInstitute = e.target.value;
-        const departmentsForInstitute = dropdownData['institute-departments'][selectedInstitute.toLowerCase()] || [];
+        const departmentsForInstitute = dropdownData['institute-departments'][selectedInstitute] || [];
         setFormData(prevData => ({ ...prevData, institute: selectedInstitute, department: '' }));
         setFilteredDepartments(departmentsForInstitute);
         setFilteredRoomNumbers([]);
@@ -34,7 +34,7 @@ const InfraForm = () => {
     // Update room numbers based on selected department
     const handleDepartmentChange = (e) => {
         const selectedDepartment = e.target.value;
-        const roomsForDepartment = dropdownData['departments-rooms'][selectedDepartment.toLowerCase()] || [];
+        const roomsForDepartment = dropdownData['departments-rooms'][selectedDepartment] || [];
         setFormData(prevData => ({ ...prevData, department: selectedDepartment, room_number: '' }));
         setFilteredRoomNumbers(roomsForDepartment);
     };

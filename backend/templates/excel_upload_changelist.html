@@ -4,7 +4,8 @@
     <div>
         <form action="/infra/handle-excel/" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-                <input type="file" name="excel_file">Upload Excel File
+                <label for="excel_file">Upload Excel File</label>
+                <input type="file" name="excel_file" id="excel_file">
                 <button type="submit">Submit</button>
         </form>
     </div>

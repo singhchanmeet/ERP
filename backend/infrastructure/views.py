@@ -21,11 +21,11 @@ class InfrastructureFormView(APIView):
 
         no_of_items = request.data.get('numberOfUnits')
 
-        institute = request.data.get('institute')
-        department = request.data.get('department')
-        room_category = request.data.get('room_category')
+        institute = request.data.get('institute').upper()
+        department = request.data.get('department').upper()
+        room_category = request.data.get('room_category').upper()
         room_number = request.data.get('room_number')
-        item_type = request.data.get('item_type')
+        item_type = request.data.get('item_type').upper()
         flag = True
         for i in range(int(no_of_items)):
             item_id = generate_item_id(institute, department, item_type, room_category, room_number)
@@ -110,8 +110,8 @@ class DropdownValuesView(APIView):
         # Fetch data for InstituteDepartments
         institute_departments = InstituteDepartments.objects.all()
         for inst_dept in institute_departments:
-            institute_name = inst_dept.institute.institute.lower()
-            department_name = inst_dept.department.department.lower()
+            institute_name = inst_dept.institute.institute.upper()
+            department_name = inst_dept.department.department.upper()
             if institute_name in response["institute-departments"]:
                 response["institute-departments"][institute_name].append(department_name)
             else:
@@ -120,7 +120,7 @@ class DropdownValuesView(APIView):
         # Fetch data for DepartmentRooms
         department_rooms = DepartmentRooms.objects.all()
         for dept_room in department_rooms:
-            department_name = dept_room.department.department.lower()
+            department_name = dept_room.department.department.upper()
             room_number = dept_room.room_number.room_number
             if department_name in response["departments-rooms"]:
                 response["departments-rooms"][department_name].append(room_number)
@@ -184,4 +184,13 @@ class DropdownValuesView(APIView):
 #             return Response({'error': str(e)}, status=400)
 
 
-        
+class InfrastructureAllRecords(APIView):
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+
+        all_records = InfrastructureForm.objects.all()
+        serializer = InfrastructureFormSerializer(all_records, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

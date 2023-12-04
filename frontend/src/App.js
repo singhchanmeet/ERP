@@ -9,6 +9,7 @@ import EmployeeDetailsForm from './components/Employee Portal/EmployeeDetailsFor
 import InfraLogin from './components/Infra/InfraLogin';
 import InfraForm from './components/Infra/InfraForm';
 import ManagingDashboard from './components/Infra/ManagingDashboard';
+import InfraData from './components/Infra/InfraData';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
                     <Route path="/infra-login" element={<InfraLogin />} />
                     <Route path="/infra-form" element={<InfraForm />} />
+                    <Route path="/infra-data" element={<InfraData />} />
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
                     {/* Add more routes as needed */}
                 </Routes>

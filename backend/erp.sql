@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2023 at 02:45 PM
+-- Generation Time: Dec 04, 2023 at 10:17 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -78,6 +78,28 @@ CREATE TABLE `counsellor_groups` (
   `counsellor_name` varchar(75) NOT NULL,
   `counsellor_id` bigint(20) NOT NULL,
   `group_name` varchar(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `departments`
+--
+
+CREATE TABLE `departments` (
+  `department` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `department_and_rooms`
+--
+
+CREATE TABLE `department_and_rooms` (
+  `id` bigint(20) NOT NULL,
+  `department` varchar(10) DEFAULT NULL,
+  `room_number` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -233,20 +255,61 @@ CREATE TABLE `infrastructure` (
   `room_category` varchar(20) NOT NULL,
   `room_number` varchar(3) NOT NULL,
   `item_type` varchar(25) NOT NULL,
-  `year_of_purchase` varchar(4) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `year_of_purchase` varchar(4) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  `invoice` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `infrastructure_categories`
+-- Table structure for table `institutes`
 --
 
-CREATE TABLE `infrastructure_categories` (
+CREATE TABLE `institutes` (
+  `institute` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `institute_and_departments`
+--
+
+CREATE TABLE `institute_and_departments` (
   `id` bigint(20) NOT NULL,
-  `form_field` varchar(15) NOT NULL,
-  `dropdown_value` varchar(25) NOT NULL
+  `department` varchar(10) DEFAULT NULL,
+  `institute` varchar(8) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_types`
+--
+
+CREATE TABLE `item_types` (
+  `item_type` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `room_number` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_categories`
+--
+
+CREATE TABLE `room_categories` (
+  `room_category` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -448,6 +511,20 @@ ALTER TABLE `counsellor_groups`
   ADD KEY `counsellor_groups_group_name_008422e8_fk_groups_group_name` (`group_name`);
 
 --
+-- Indexes for table `departments`
+--
+ALTER TABLE `departments`
+  ADD PRIMARY KEY (`department`);
+
+--
+-- Indexes for table `department_and_rooms`
+--
+ALTER TABLE `department_and_rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `department_and_rooms_department_ea382512_fk_departmen` (`department`),
+  ADD KEY `department_and_rooms_room_number_f0849a37_fk_rooms_room_number` (`room_number`);
+
+--
 -- Indexes for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -510,10 +587,36 @@ ALTER TABLE `infrastructure`
   ADD UNIQUE KEY `item_id` (`item_id`);
 
 --
--- Indexes for table `infrastructure_categories`
+-- Indexes for table `institutes`
 --
-ALTER TABLE `infrastructure_categories`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `institutes`
+  ADD PRIMARY KEY (`institute`);
+
+--
+-- Indexes for table `institute_and_departments`
+--
+ALTER TABLE `institute_and_departments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `institute_and_depart_institute_ca795e29_fk_institute` (`institute`),
+  ADD KEY `institute_and_depart_department_6605d7d0_fk_departmen` (`department`);
+
+--
+-- Indexes for table `item_types`
+--
+ALTER TABLE `item_types`
+  ADD PRIMARY KEY (`item_type`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_number`);
+
+--
+-- Indexes for table `room_categories`
+--
+ALTER TABLE `room_categories`
+  ADD PRIMARY KEY (`room_category`);
 
 --
 -- Indexes for table `students`
@@ -606,6 +709,12 @@ ALTER TABLE `counsellor_groups`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `department_and_rooms`
+--
+ALTER TABLE `department_and_rooms`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -648,9 +757,9 @@ ALTER TABLE `infrastructure`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `infrastructure_categories`
+-- AUTO_INCREMENT for table `institute_and_departments`
 --
-ALTER TABLE `infrastructure_categories`
+ALTER TABLE `institute_and_departments`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
@@ -726,6 +835,13 @@ ALTER TABLE `counsellor_groups`
   ADD CONSTRAINT `counsellor_groups_group_name_008422e8_fk_groups_group_name` FOREIGN KEY (`group_name`) REFERENCES `groups` (`group_name`);
 
 --
+-- Constraints for table `department_and_rooms`
+--
+ALTER TABLE `department_and_rooms`
+  ADD CONSTRAINT `department_and_rooms_department_ea382512_fk_departmen` FOREIGN KEY (`department`) REFERENCES `departments` (`department`),
+  ADD CONSTRAINT `department_and_rooms_room_number_f0849a37_fk_rooms_room_number` FOREIGN KEY (`room_number`) REFERENCES `rooms` (`room_number`);
+
+--
 -- Constraints for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -743,6 +859,13 @@ ALTER TABLE `employees`
 --
 ALTER TABLE `fees`
   ADD CONSTRAINT `fees_batch_d2203470_fk_batches_batch` FOREIGN KEY (`batch`) REFERENCES `batches` (`batch`);
+
+--
+-- Constraints for table `institute_and_departments`
+--
+ALTER TABLE `institute_and_departments`
+  ADD CONSTRAINT `institute_and_depart_department_6605d7d0_fk_departmen` FOREIGN KEY (`department`) REFERENCES `departments` (`department`),
+  ADD CONSTRAINT `institute_and_depart_institute_ca795e29_fk_institute` FOREIGN KEY (`institute`) REFERENCES `institutes` (`institute`);
 
 --
 -- Constraints for table `students`

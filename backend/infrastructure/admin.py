@@ -1,12 +1,15 @@
 from django.contrib import admin
 from . models import InfrastructureForm, Institutes, Departments, Rooms, RoomCategories, ItemTypes, InstituteDepartments, DepartmentRooms
 from import_export.admin import ExportActionMixin
+from . admin_utils import generatePDF
 
 class InfrastructureFormAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['item_id', 'item_type', 'status'] 
     list_filter = ['status'] 
 
     change_list_template = "excel_upload_changelist.html"
+
+    actions = [generatePDF]
 
 class InstitutesAdmin(admin.ModelAdmin):
     list_display = ['institute']

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF - Infrastructure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-table th,
+        .pdf-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            /*font-weight: bold;*/
+            text-align: center;
+        }
+        
+        .pdf-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .pdf-button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #f2f2f2;
+            border: 2px solid #000;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .pdf-button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="item_id_checkbox">Item ID</label>
+        <input type="checkbox" id="item_id_checkbox" class="checkbox" checked>
+        <label for="institute_checkbox">Institute</label>
+        <input type="checkbox" id="institute_checkbox" class="checkbox" checked>
+        <label for="department_checkbox">Department</label>
+        <input type="checkbox" id="department_checkbox" class="checkbox" checked>
+        <label for="room_category_checkbox">Room Category</label>
+        <input type="checkbox" id="room_category_checkbox" class="checkbox" checked>
+        <label for="room_number_checkbox">Room No.</label>
+        <input type="checkbox" id="room_number_checkbox" class="checkbox" checked>
+        <label for="item_type_checkbox">Item Type</label>
+        <input type="checkbox" id="item_type_checkbox" class="checkbox" checked>
+        <label for="year_of_purchase_checkbox">Date of Purchase</label>
+        <input type="checkbox" id="year_of_purchase_checkbox" class="checkbox" checked>
+
+        <button class="pdf-button" onclick="printPageArea('INFRA-PDF')">Print PDF</button>
+    </div>
+    
+    <div id="INFRA-PDF">
+        <table class="pdf-table">
+            <thead>
+                <tr id="heading_row">
+                    <th id="item_id_heading">ITEM ID</th>
+                    <th id="institute_heading">INSTITUTE</th>
+                    <th id="department_heading">DEPARTMENT</th>
+                    <th id="room_category_heading">ROOM CATEGORY</th>
+                    <th id="room_number_heading">ROOM NO.</th>
+                    <th id="item_type_heading">ITEM TYPE</th>
+                    <th id="year_of_purchase_heading">DATE OF PURCHASE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in all_records %}
+                <tr>
+                    <td id="item_id_data">{{ record.item_id }}</td>
+                    <td id="institute_data">{{ record.institute }}</td>
+                    <td id="department_data">{{ record.department }}</td>
+                    <td id="room_category_data">{{ record.room_category }}</td>
+                    <td id="room_number_data">{{ record.room_number }}</td>
+                    <td id="item_type_data">{{ record.item_type }}</td>
+                    <td id="year_of_purchase_data">{{ record.year_of_purchase }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.checkbox');
+        const headings = document.querySelectorAll('th');
+        const dataCells = document.querySelectorAll('td');
+
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    headings[index].style.display = 'table-cell';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'table-cell';
+                        }
+                    });
+                } else {
+                    headings[index].style.display = 'none';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+
+        function printPageArea(areaID) {
+            const printContent = document.getElementById(areaID).innerHTML;
+            const originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            document.title = 'INFRASTRUCTURE PDF';
+            // Restore display of hidden fields after printing (if needed)
+            checkboxes.forEach((checkbox, index) => {
+                if (!checkbox.checked) {
+                    headings[index].style.display = 'table-cell';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'table-cell';
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

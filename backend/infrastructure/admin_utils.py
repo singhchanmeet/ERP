@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from .models import InfrastructureForm
 from .serializers import InfrastructureFormSerializer
 
+from django.contrib import admin
+from django.shortcuts import render
 
 def generate_item_id(ins, dept, item_type, categ, roomno):
 
@@ -30,11 +32,11 @@ class ExcelUploadView(APIView):
 
             # Loop through each row in the Excel file
             for index, row in df.iterrows():
-                institute = row['institute']
-                department = row['department']
-                room_category = row['room_category']
+                institute = row['institute'].upper()
+                department = row['department'].upper()
+                room_category = row['room_category'].upper()
                 room_number = row['room_number']
-                item_type = row['item_type']
+                item_type = row['item_type'].upper()
                 year_of_purchase = row['year_of_purchase']
                 no_of_items = row['no_of_items']
 
@@ -60,3 +62,13 @@ class ExcelUploadView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=400)
+
+
+@admin.action(description='Generate PDF file')
+def generatePDF(modeladmin, request, queryset):
+    all_ids = []  # storing ids from the queryset in a list
+    for query in queryset:
+        all_ids.append(query.id)
+    all_records = InfrastructureForm.objects.filter(pk__in = all_ids) #pk is primary key
+    context = {'all_records' : all_records}
+    return render(request,'pdfs-infra.html', context)
