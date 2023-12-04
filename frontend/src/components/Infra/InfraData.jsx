@@ -10,7 +10,7 @@ const InfraData = () => {
     const tableRef = useRef(null);
 
     useEffect(() => {
-        axios.get('https://admin.erp.mait.ac.in/infra/all-data/', {
+        axios.get('http://localhost:8000/infra/all-data/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',

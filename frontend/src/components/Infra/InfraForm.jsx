@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ErrorPage from '../standard/ErrorPage';
 import axios from 'axios';
-import InfraNavbar from './InfraNavbar';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -62,7 +61,7 @@ const InfraForm = () => {
                 formDataToSend.append(key, value);
             });
 
-            const response = await axios.post('https://admin.erp.mait.ac.in/infra/submit-form/', formDataToSend, {
+            const response = await axios.post('http://localhost:8000/infra/submit-form/', formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -105,7 +104,7 @@ const InfraForm = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('https://admin.erp.mait.ac.in/user-details/', {
+        axios.get('http://localhost:8000/user-details/', {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json', // Adjust headers as needed
@@ -122,7 +121,7 @@ const InfraForm = () => {
             });
     }, [accessToken]);
     useEffect(() => {
-        axios.get('https://admin.erp.mait.ac.in/infra/dropdown-data/')
+        axios.get('http://localhost:8000/infra/dropdown-data/')
             .then((response) => {
                 setDropdownData(response.data);
                 setLoadingDropdown(false);

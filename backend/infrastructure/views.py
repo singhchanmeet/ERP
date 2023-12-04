@@ -30,7 +30,9 @@ class InfrastructureFormView(APIView):
         for i in range(int(no_of_items)):
             item_id = generate_item_id(institute, department, item_type, room_category, room_number)
             data = request.data
+            data._mutable = True
             data['item_id'] = item_id
+            data._mutable = False
             infrastructure_serializer = InfrastructureFormSerializer(data=data)
             if infrastructure_serializer.is_valid():
                 infrastructure_serializer.save()
