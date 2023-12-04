@@ -25,7 +25,7 @@ DEBUG = True
 ALLOWED_HOSTS = [env('ALLOWED_HOST_1'), env('ALLOWED_HOST_2'), env('ALLOWED_HOST_3'),]
 
 # The domains that are allowed to make requests
-CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'),]
+CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'), env('CORS_ALLOWED_ORIGIN_2')]
 
 
 # Application definition
