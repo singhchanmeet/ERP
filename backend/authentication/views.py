@@ -10,6 +10,11 @@ from student.views import StudentRegister, StudentLogin
 from employee.views import EmployeeRegister, EmployeeLogin
 from django.shortcuts import redirect
 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env() 
+
 
 
 class UserDetails(APIView):
@@ -50,7 +55,7 @@ def handle_ms_login(request):
 
     # if sign out
     if request.identity_context_data.authenticated == False:
-        return redirect('http://localhost:3000/')
+        return redirect(env('REDIRECT_URL'))
 
     email = request.identity_context_data._id_token_claims.get('preferred_username')
 

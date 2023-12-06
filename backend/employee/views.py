@@ -13,6 +13,10 @@ import jwt
 from . models import EmployeeDetails
 from . permissions import IsEmployee
 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env() 
 
 
 class EmployeeRegister(APIView):
@@ -96,7 +100,7 @@ class EmployeeLogin(TokenObtainPairView):
             # since the parent class's post method takes both user_id and password so we can't use that method here
             # so instead we are using our own get_tokens_for_user method
             
-            redirect_url = f"http://localhost:3000/call_back/?status=success&&access_token={token['access']}&&refresh_token={token['refresh']}"
+            redirect_url = f"{env('REDIRECT_URL')}call_back/?status=success&&access_token={token['access']}&&refresh_token={token['refresh']}"
             return redirect(redirect_url)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
