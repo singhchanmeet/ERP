@@ -1,5 +1,5 @@
 ## 📝 Introduction
- * Welcome to the official repository of **Project ERP** by [Maharaja Agrasen Institute of Technology](http://mait.ac.in). This project is under active development under the guidance of the CSE department at MAIT.
+ * Welcome to the official repository of **Project ERP** by [Maharaja Agrasen Institute of Technology](http://mait.ac.in). This project is under active development under the guidance of the CSE department at MAIT.  [(Hosted Link)](https://erp.mait.ac.in)
  * If you're a developer looking to contribute to our project, please follow the instructions below.
 
 
