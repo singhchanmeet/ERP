@@ -15,4 +15,5 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('employee/', include('employee.urls')),
     path('infra/', include('infrastructure.urls')),
+    path('fee/', include('fees.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('serve-static', document_root='serve-static')   #for serving static files (like admin panel css) and media files (uploaded by user)

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px 0;
+            border: 2px solid black; /* Add black borders to the table */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .selected-row {
+            background-color: lightgreen;
+        }
+        #total-amount {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select the fee payment you would like to make</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fee Type</th>
+                <th>Amount</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fee_type, amount in fees.items %}
+                <tr id="{{ fee_type }}">
+                    <td>{{ fee_type }}</td>
+                    <td>{{ amount }}</td>
+                    <td>
+                        <input type="checkbox" name="selected_fees" value="{{ fee_type }}">
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="total-amount">
+        Total Amount: 0.0
+    </div>
+
+    <form action="/fee/create_billdesk_order/" method="post">
+        {% csrf_token %}
+        <input type="text" id="total_amount" name="total_amount" style="display: none;">
+        <label for="enrollment_no">Your 11 Digit Enrollment Number</label>
+        <input type="text" id="enrollment_no" name="enrollment_no" placeholder="Enrollment No." required>
+        <button type="submit">Proceed to Pay</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var checkboxes = document.querySelectorAll('input[name="selected_fees"]');
+            var totalAmountDisplay = document.getElementById('total-amount');
+    
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    updateTotalAmount();
+                    updateRowColor(checkbox);
+                });
+            });
+    
+            function updateTotalAmount() {
+                var totalAmount = 0.0;
+                var totalAmountDiv = document.getElementById('total_amount');
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        totalAmount += parseFloat(checkbox.parentNode.previousElementSibling.textContent);
+                    }
+                });
+                totalAmountDisplay.textContent = "Total Amount: " + totalAmount.toFixed(2);
+                totalAmountDiv.value = totalAmount.toFixed(2);
+            }
+    
+            function updateRowColor(checkbox) {
+                var feeType = checkbox.value;
+                var feeRow = document.getElementById(feeType);
+                
+                if (checkbox.checked) {
+                    feeRow.classList.add('selected-row');
+                } else {
+                    feeRow.classList.remove('selected-row');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -72,7 +72,7 @@ def generatePDF(modeladmin, request, queryset):
         all_ids.append(query.id)
     all_records = InfrastructureForm.objects.filter(pk__in = all_ids) #pk is primary key
     context = {'all_records' : all_records}
-    return render(request,'pdfs-infra.html', context)
+    return render(request,'infrastructure/pdfs-infra.html', context)
 
 def bulk_rooms_add(request):
 

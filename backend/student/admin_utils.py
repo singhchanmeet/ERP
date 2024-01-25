@@ -15,7 +15,7 @@ def allot_group_to_students(self, request, queryset):
     all_student_ids = []
     for student in queryset:
         all_student_ids.append(student.student_id.user_id)
-    return render(request, 'allot-groups.html', {'all_student_ids': all_student_ids})
+    return render(request, 'groups/allot-groups.html', {'all_student_ids': all_student_ids})
 
 
 # This function will handle the post request sent by allot-groups.html file

@@ -7,7 +7,7 @@ class InfrastructureFormAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['item_id', 'item_type', 'status'] 
     list_filter = ['status'] 
 
-    change_list_template = "excel_upload_changelist.html"
+    change_list_template = "infrastructure/excel_upload_changelist.html"
 
     actions = [generatePDF]
 
@@ -20,7 +20,7 @@ class DepartmentsAdmin(admin.ModelAdmin):
 class RoomsAdmin(admin.ModelAdmin):
     list_display = ['room_number']
 
-    change_list_template = "rooms_add_changelist.html"
+    change_list_template = "infrastructure/rooms_add_changelist.html"
 
 class RoomCategoriesAdmin(admin.ModelAdmin):
     list_display = ['room_category']

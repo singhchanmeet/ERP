@@ -1,44 +1,143 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
-from student.permissions import IsStudent
-from student.models import Student
+from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from . models import Fees
 
-class FeesDisplayView(APIView):
+import requests
+import json
+from pathlib import Path
+import jwt
 
-    permission_classes=(IsAuthenticated, IsStudent)
+import random
+import string
 
-    def get(self, request):
+import time
+from django.utils import timezone
 
-        logged_in_student = Student.objects.filter(student_id=request.user).first()
-        batch = logged_in_student.batch
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env() 
 
-        fees = Fees.objects.filter(batch=batch).first()
-        response = {}
+
+def fees_login(request):
+    
+    if request.method == 'POST':
+        batch = request.POST.get('batch')
+        return redirect('fees_display', batch)
+        
+    # GET REQUEST
+    return render(request, 'fees/fees_login.html')
+
+
+def fees_display(request, batch):
+    fees = Fees.objects.filter(batch=batch).first()
+    fees_context = {}
+
+    if fees:
 
         if fees.display_tution_fee:
-            response['tution_fee'] = fees.tution_fee
+            fees_context['Tution Fee'] = float(fees.tution_fee)
         if fees.display_activity_fee:
-            response['activity_fee'] = fees.activity_fee
+            fees_context['Activity Fee'] = float(fees.activity_fee)
         if fees.display_university_fee:
-            response['university_fee'] = fees.university_fee
+            fees_context['University Fee'] = float(fees.university_fee)
         if fees.display_security_fee:
-            response['security_fee'] = fees.security_fee
+            fees_context['Security Fee'] = float(fees.security_fee)
         if fees.display_college_magazine:
-            response['college_magazine'] = fees.college_magazine
+            fees_context['College Magazine'] = float(fees.college_magazine)
         if fees.display_rechecking_fee:
-            response['rechecking_fee'] = fees.rechecking_fee
+            fees_context['Rechecking Fee'] = float(fees.rechecking_fee)
         if fees.display_reappear_fee:
-            response['reappear_fee'] = fees.reappear_fee
+            fees_context['Reappear Fee'] = float(fees.reappear_fee)
         if fees.display_fine:
-            response['fine'] = fees.fine
+            fees_context['Fine'] = float(fees.fine)
         if fees.display_institute_alumni_contribution:
-            response['institute_alumni_contribution'] = fees.institute_alumni_contribution
+            fees_context['Institute Alumni Contribution'] = float(fees.institute_alumni_contribution)
         if fees.display_book_bank:
-            response['book_bank'] = fees.book_bank
-        response['total_fee'] = fees.total_fee
+            fees_context['Book Bank'] = float(fees.book_bank)
+        # fees_context['total_fee'] = float(fees.total_fee)
 
-        return Response(response, status=status.HTTP_200_OK)
+        context = {'fees' : fees_context}
+
+        return render(request, 'fees/fees_display.html', context)
+    
+    else:
+        return HttpResponse('Resource Not Found')
+  
+
+
+def generate_order_id(enrollment_no):
+    # Do some extra generation here as per sir's instruction
+    return enrollment_no
+
+def generate_trace_id():
+    alphanumeric_chars = string.ascii_letters + string.digits
+    trace_id = ''.join(random.choice(alphanumeric_chars) for _ in range(35))
+    # add logic for checking that this value isnt repeated in the past 24 hours    
+    return trace_id
+    
+def create_billdesk_order(request):
+    if request.method == 'POST':
+        total_amount = request.POST.get('total_amount')
+        enrollment_no = request.POST.get('enrollment_no')
+                
+        current_datetime_utc = timezone.now()
+        # Convert the datetime to IST
+        current_datetime_ist = current_datetime_utc.astimezone(timezone.get_current_timezone())
+        formatted_datetime = current_datetime_ist.strftime('%Y-%m-%dT%H:%M:%S%z')
+        
+        try:
+            
+            json_file_path = Path(__file__).resolve().parent / 'create_order.json'
+            json_file_content = json_file_path.read_text()
+            json_data = json.loads(json_file_content)
+
+            # Use the json_data as needed in your view logic
+            json_data['orderid'] = generate_order_id(enrollment_no)
+            json_data['amount'] = total_amount
+            json_data['order_date'] = formatted_datetime
+            json_data['device']['ip'] = request.META.get('REMOTE_ADDR')
+            json_data['device']['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
+            
+            current_timestamp = int(time.time())
+            
+            post_url = env('CREATE_ORDER_URL')
+            
+            headers = {
+                'Content-Type': 'application/jose',
+                'accept': 'application/jose',
+                'bd-traceid': generate_trace_id(),
+                'bd-timestamp': str(current_timestamp),
+            }
+            
+            # JWS Header fields
+            jws_header = {
+                'alg': env('ALG'),
+                'clientid': env('CLIENT_ID'),
+            }
+            
+            # Create a JWS-HMAC token with the JSON data and JWS header
+            encrypted_token = jwt.encode(
+                payload=json_data,
+                key=env('SECRET_KEY'),
+                algorithm=env('ALG'),
+                headers=jws_header,
+            )
+            
+            # Include the encrypted token in the request header
+            # headers['Authorization'] = f'Bearer {encrypted_token}'
+            
+            # Make the POST request
+            response = requests.post(post_url, data=encrypted_token, headers=headers)
+            
+            print(response._content)
+            
+            # return it as a JsonResponse
+            return JsonResponse(json_data)
+        
+        except FileNotFoundError:
+            return JsonResponse({'status': 'error', 'message': 'File not found'})
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
