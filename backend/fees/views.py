@@ -118,10 +118,17 @@ def create_billdesk_order(request):
             # Make the POST request
             response = requests.post(post_url, data=encrypted_token, headers=headers)
             
-            # print(response._content)
+            print(response._content)
             
-            # return it as a JsonResponse
-            return JsonResponse(response)
+            # # return it as a JsonResponse
+            # return JsonResponse(response._content)
+            
+            # Assuming response._content is a bytes object
+            content_str = response._content.decode('utf-8')
+            data = json.loads(content_str)
+
+            # Return the entire content as a JSON response
+            return JsonResponse(data)
         
         except FileNotFoundError:
             return JsonResponse({'status': 'error', 'message': 'File not found'})
