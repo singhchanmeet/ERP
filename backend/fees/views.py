@@ -121,7 +121,7 @@ def create_billdesk_order(request):
             # print(response._content)
             
             # return it as a JsonResponse
-            return JsonResponse(response._content)
+            return JsonResponse({"response": response._content})
         
         except FileNotFoundError:
             return JsonResponse({'status': 'error', 'message': 'File not found'})
