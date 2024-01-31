@@ -7,8 +7,7 @@ import json
 from pathlib import Path
 import jwt
 
-import random
-import string
+from .utils import generate_order_id, generate_trace_id
 
 import time
 from django.utils import timezone
@@ -64,18 +63,7 @@ def fees_display(request, batch):
     else:
         return HttpResponse('Resource Not Found')
   
-
-
-def generate_order_id(enrollment_no):
-    # Do some extra generation here as per sir's instruction
-    return enrollment_no
-
-def generate_trace_id():
-    alphanumeric_chars = string.ascii_letters + string.digits
-    trace_id = ''.join(random.choice(alphanumeric_chars) for _ in range(35))
-    # add logic for checking that this value isnt repeated in the past 24 hours    
-    return trace_id
-    
+   
 def create_billdesk_order(request):
     if request.method == 'POST':
         total_amount = request.POST.get('total_amount')
@@ -130,10 +118,10 @@ def create_billdesk_order(request):
             # Make the POST request
             response = requests.post(post_url, data=encrypted_token, headers=headers)
             
-            print(response._content)
+            # print(response._content)
             
             # return it as a JsonResponse
-            return JsonResponse(json_data)
+            return JsonResponse(response._content)
         
         except FileNotFoundError:
             return JsonResponse({'status': 'error', 'message': 'File not found'})
@@ -141,3 +129,9 @@ def create_billdesk_order(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
+
+def billdesk_order_callback(request):
+    if request.METHOD == 'POST':
+        print (request.data)
+        return HttpResponse('ok')
