@@ -150,6 +150,7 @@ def create_billdesk_order(request):
 
 @csrf_exempt
 def billdesk_order_callback(request):
-    if request.METHOD == 'POST':
-        print (request.data)
-        return HttpResponse(request.data)
+    
+    # print (request.data)
+    decoded_response = jwt.decode(request.data, key=env('BD_SECRET_KEY'), algorithms=["HS256"])
+    return HttpResponse(decoded_response)
