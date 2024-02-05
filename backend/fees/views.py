@@ -146,14 +146,14 @@ def create_billdesk_order(request):
             # Create a JWS-HMAC token with the JSON data and JWS header
             # encrypted_token = jws.sign(
             #     payload=json_data,
-            #     key=env('SECRET_KEY'),
+            #     key=env('BD_SECRET_KEY'),
             #     algorithm=env('ALG'),
             #     headers=jws_header,
             # )
-            token = jwt.encode(json_data, f"{env('SECRET_KEY')}", algorithm="HS256", headers=jws_header )
+            token = jwt.encode(json_data, f"{env('BD_SECRET_KEY')}", algorithm="HS256", headers=jws_header )
             # encrypted_token = jwt.encode(
             #     payload=json_data,
-            #     key=env('SECRET_KEY'),
+            #     key=env('BD_SECRET_KEY'),
             #     algorithm=env('ALG'),
             #     headers=jws_header,
             # )
@@ -179,7 +179,7 @@ def create_billdesk_order(request):
             # Return the entire content as a JSON response
             # return JsonResponse(data)
             json_response = {
-                'key' : f"{env('SECRET_KEY')}",
+                'key' : f"{env('BD_SECRET_KEY')}",
                 'status_code': response.status_code,
                 'request_url': response.request.url,
                 'request_method': response.request.method,
