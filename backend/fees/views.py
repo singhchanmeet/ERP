@@ -94,7 +94,7 @@ def create_billdesk_order(request):
             # json_data['orderid'] = generate_order_id(enrollment_no)
             json_data['amount'] = total_amount
             json_data['order_date'] = formatted_datetime
-            json_data['device']['ip'] = get_client_ip(request)
+            json_data['device']['ip'] = "192.168.125.223"
             json_data['device']['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
             
             current_timestamp = int(time.time())
@@ -114,34 +114,34 @@ def create_billdesk_order(request):
                 'clientid': env('CLIENT_ID'),
             }
             
-            json_data = {
-                "mercid": "UATMATESV2",
-                "orderid": "01KLDSDFD22",
-                "amount": "500.00",
-                "order_date": "2024-02-05T11:23:36+05:30",
-                "currency": "356",
-                "ru": "https://admin.erp.mait.ac.in/fee/s2sresp/",
-                "itemcode": "DIRECT",
-                "device": {
-                    "init_channel": "internet",
-                    "ip": "202.149.208.92",
-                    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-                    "accept_header": "text/html",
-                    "fingerprintid": "61b12c18b5d0cf901be34a23ca64bb19",
-                    "browser_tz": "-330",
-                    "browser_color_depth": "32",
-                    "browser_java_enabled": "false",
-                    "browser_screen_height": "601",
-                    "browser_screen_width": "657",
-                    "browser_language": "en-US",
-                    "browser_javascript_enabled": "true"
-                }
-            }
+            # json_data = {
+            #     "mercid": "UATMATESV2",
+            #     "orderid": "01KLDSDFD22",
+            #     "amount": "500.00",
+            #     "order_date": "2024-02-05T11:23:36+05:30",
+            #     "currency": "356",
+            #     "ru": "https://admin.erp.mait.ac.in/fee/s2sresp/",
+            #     "itemcode": "DIRECT",
+            #     "device": {
+            #         "init_channel": "internet",
+            #         "ip": "202.149.208.92",
+            #         "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+            #         "accept_header": "text/html",
+            #         "fingerprintid": "61b12c18b5d0cf901be34a23ca64bb19",
+            #         "browser_tz": "-330",
+            #         "browser_color_depth": "32",
+            #         "browser_java_enabled": "false",
+            #         "browser_screen_height": "601",
+            #         "browser_screen_width": "657",
+            #         "browser_language": "en-US",
+            #         "browser_javascript_enabled": "true"
+            #     }
+            # }
             
-            jws_header = {
-                "alg": "HS256",
-                "clientid": "uatmatesv2"
-            }
+            # jws_header = {
+            #     "alg": "HS256",
+            #     "clientid": "uatmatesv2"
+            # }
             
             # Create a JWS-HMAC token with the JSON data and JWS header
             encrypted_token = jws.sign(
