@@ -114,6 +114,35 @@ def create_billdesk_order(request):
                 'clientid': env('CLIENT_ID'),
             }
             
+            json_data = {
+                "mercid": "UATMATESV2",
+                "orderid": "01KLDSDFD22",
+                "amount": "500.00",
+                "order_date": "2024-02-05T11:23:36+05:30",
+                "currency": "356",
+                "ru": "https://admin.erp.mait.ac.in/fee/s2sresp/",
+                "itemcode": "DIRECT",
+                "device": {
+                    "init_channel": "internet",
+                    "ip": "202.149.208.92",
+                    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+                    "accept_header": "text/html",
+                    "fingerprintid": "61b12c18b5d0cf901be34a23ca64bb19",
+                    "browser_tz": "-330",
+                    "browser_color_depth": "32",
+                    "browser_java_enabled": "false",
+                    "browser_screen_height": "601",
+                    "browser_screen_width": "657",
+                    "browser_language": "en-US",
+                    "browser_javascript_enabled": "true"
+                }
+            }
+            
+            jws_header = {
+                "alg": "HS256",
+                "clientid": "uatmatesv2"
+            }
+            
             # Create a JWS-HMAC token with the JSON data and JWS header
             encrypted_token = jws.sign(
                 payload=json_data,
@@ -133,9 +162,10 @@ def create_billdesk_order(request):
             
             # token_bytes = encrypted_token.encode('utf-8')
             
+            # encrypted_token="eyJhbGciOiJIUzI1NiIsImNsaWVudGlkIjoidWF0bWF0ZXN2MiJ9.eyJtZXJjaWQiOiJVQVRNQVRFU1YyIiwib3JkZXJpZCI6IjAxS0xEU0RGRDIyIiwiYW1vdW50IjoiNTAwLjAwIiwib3JkZXJfZGF0ZSI6IjIwMjQtMDItMDVUMTE6MjM6MzYrMDU6MzAiLCJjdXJyZW5jeSI6IjM1NiIsInJ1IjoiaHR0cHM6Ly9hZG1pbi5lcnAubWFpdC5hYy5pbi9mZWUvczJzcmVzcC8iLCJpdGVtY29kZSI6IkRJUkVDVCIsImRldmljZSI6eyJpbml0X2NoYW5uZWwiOiJpbnRlcm5ldCIsImlwIjoiMjAyLjE0OS4yMDguOTIiLCJ1c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyMS4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYWNjZXB0X2hlYWRlciI6InRleHQvaHRtbCIsImZpbmdlcnByaW50aWQiOiI2MWIxMmMxOGI1ZDBjZjkwMWJlMzRhMjNjYTY0YmIxOSIsImJyb3dzZXJfdHoiOiItMzMwIiwiYnJvd3Nlcl9jb2xvcl9kZXB0aCI6IjMyIiwiYnJvd3Nlcl9qYXZhX2VuYWJsZWQiOiJmYWxzZSIsImJyb3dzZXJfc2NyZWVuX2hlaWdodCI6IjYwMSIsImJyb3dzZXJfc2NyZWVuX3dpZHRoIjoiNjU3IiwiYnJvd3Nlcl9sYW5ndWFnZSI6ImVuLVVTIiwiYnJvd3Nlcl9qYXZhc2NyaXB0X2VuYWJsZWQiOiJ0cnVlIn19.M7Hd5N4iw5-j1V_jk2XrbscLUTusNAfztZiPIaTCCqU"
             # Make the POST request
             response = requests.post(post_url, data=encrypted_token, headers=headers)
-            
+            print(encrypted_token)
             print(response._content)
             
             # # return it as a JsonResponse
