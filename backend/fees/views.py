@@ -90,8 +90,8 @@ def create_billdesk_order(request):
             json_data = json.loads(json_file_content)
 
             # Use the json_data as needed in your view logic
-            json_data['orderid'] = "01KLDSDFD22"
-            # json_data['orderid'] = generate_order_id(enrollment_no)
+            # json_data['orderid'] = generate_order_id()
+            json_data['orderid'] = generate_order_id(enrollment_no)
             json_data['amount'] = total_amount
             json_data['order_date'] = formatted_datetime
             json_data['device']['ip'] = "192.168.125.223"
@@ -144,12 +144,13 @@ def create_billdesk_order(request):
             # }
             
             # Create a JWS-HMAC token with the JSON data and JWS header
-            encrypted_token = jws.sign(
-                payload=json_data,
-                key=env('SECRET_KEY'),
-                algorithm=env('ALG'),
-                headers=jws_header,
-            )
+            # encrypted_token = jws.sign(
+            #     payload=json_data,
+            #     key=env('SECRET_KEY'),
+            #     algorithm=env('ALG'),
+            #     headers=jws_header,
+            # )
+            token = jwt.encode(payload=json_data, key=env('SECRET_KEY'), algorithm="HS256", headers=jws_header)
             # encrypted_token = jwt.encode(
             #     payload=json_data,
             #     key=env('SECRET_KEY'),
@@ -164,8 +165,8 @@ def create_billdesk_order(request):
             
             # encrypted_token="eyJhbGciOiJIUzI1NiIsImNsaWVudGlkIjoidWF0bWF0ZXN2MiJ9.eyJtZXJjaWQiOiJVQVRNQVRFU1YyIiwib3JkZXJpZCI6IjAxS0xEU0RGRDIyIiwiYW1vdW50IjoiNTAwLjAwIiwib3JkZXJfZGF0ZSI6IjIwMjQtMDItMDVUMTE6MjM6MzYrMDU6MzAiLCJjdXJyZW5jeSI6IjM1NiIsInJ1IjoiaHR0cHM6Ly9hZG1pbi5lcnAubWFpdC5hYy5pbi9mZWUvczJzcmVzcC8iLCJpdGVtY29kZSI6IkRJUkVDVCIsImRldmljZSI6eyJpbml0X2NoYW5uZWwiOiJpbnRlcm5ldCIsImlwIjoiMjAyLjE0OS4yMDguOTIiLCJ1c2VyX2FnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyMS4wLjAuMCBTYWZhcmkvNTM3LjM2IiwiYWNjZXB0X2hlYWRlciI6InRleHQvaHRtbCIsImZpbmdlcnByaW50aWQiOiI2MWIxMmMxOGI1ZDBjZjkwMWJlMzRhMjNjYTY0YmIxOSIsImJyb3dzZXJfdHoiOiItMzMwIiwiYnJvd3Nlcl9jb2xvcl9kZXB0aCI6IjMyIiwiYnJvd3Nlcl9qYXZhX2VuYWJsZWQiOiJmYWxzZSIsImJyb3dzZXJfc2NyZWVuX2hlaWdodCI6IjYwMSIsImJyb3dzZXJfc2NyZWVuX3dpZHRoIjoiNjU3IiwiYnJvd3Nlcl9sYW5ndWFnZSI6ImVuLVVTIiwiYnJvd3Nlcl9qYXZhc2NyaXB0X2VuYWJsZWQiOiJ0cnVlIn19.M7Hd5N4iw5-j1V_jk2XrbscLUTusNAfztZiPIaTCCqU"
             # Make the POST request
-            response = requests.post(post_url, data=encrypted_token, headers=headers)
-            print(encrypted_token)
+            response = requests.post(post_url, data=token, headers=headers)
+            print(token)
             print(response._content)
             
             # # return it as a JsonResponse
