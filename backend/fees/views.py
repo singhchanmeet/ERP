@@ -102,16 +102,16 @@ def create_billdesk_order(request):
             post_url = env('CREATE_ORDER_URL')
             
             headers = {
-                'Content-Type': 'application/jose',
-                'Accept': 'application/jose',
-                'BD-Traceid': generate_trace_id(),
-                'BD-Timestamp': str(current_timestamp),
+                "Content-Type": "application/jose",
+                "Accept": "application/jose",
+                "BD-Traceid": f"{generate_trace_id()}",
+                "BD-Timestamp": f"{str(current_timestamp)}",
             }
             
             # JWS Header fields
             jws_header = {
-                'alg': env('ALG'),
-                'clientid': env('CLIENT_ID'),
+                "alg": f"{env('ALG')}",
+                "clientid": f"{env('CLIENT_ID')}",
             }
             
             # json_data = {
@@ -150,7 +150,7 @@ def create_billdesk_order(request):
             #     algorithm=env('ALG'),
             #     headers=jws_header,
             # )
-            token = jwt.encode(json_data, 'GKOpRWGo0qqQvN4A8AmNmVyrWvDqtalq', algorithm="HS256", headers=jws_header )
+            token = jwt.encode(json_data, f"{env('SECRET_KEY')}", algorithm="HS256", headers=jws_header )
             # encrypted_token = jwt.encode(
             #     payload=json_data,
             #     key=env('SECRET_KEY'),
