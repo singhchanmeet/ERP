@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from . models import Fees
 
+from django.views.decorators.csrf import csrf_exempt
+
 import requests
 import json
 from pathlib import Path
@@ -146,7 +148,7 @@ def create_billdesk_order(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-
+@csrf_exempt
 def billdesk_order_callback(request):
     if request.METHOD == 'POST':
         print (request.data)
