@@ -103,9 +103,9 @@ def create_billdesk_order(request):
             
             headers = {
                 'Content-Type': 'application/jose',
-                'accept': 'application/jose',
-                'bd-traceid': generate_trace_id(),
-                'bd-timestamp': str(current_timestamp),
+                'Accept': 'application/jose',
+                'BD-Traceid': generate_trace_id(),
+                'BD-Timestamp': str(current_timestamp),
             }
             
             # JWS Header fields
