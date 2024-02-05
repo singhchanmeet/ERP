@@ -18,6 +18,14 @@ import environ
 env = environ.Env()
 environ.Env.read_env() 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 
 def fees_login(request):
     
@@ -82,10 +90,11 @@ def create_billdesk_order(request):
             json_data = json.loads(json_file_content)
 
             # Use the json_data as needed in your view logic
-            json_data['orderid'] = generate_order_id(enrollment_no)
+            json_data['orderid'] = "01KLDSDFD22"
+            # json_data['orderid'] = generate_order_id(enrollment_no)
             json_data['amount'] = total_amount
             json_data['order_date'] = formatted_datetime
-            json_data['device']['ip'] = request.META.get('HTTP_X_FORWARDED_FOR','')
+            json_data['device']['ip'] = get_client_ip(request)
             json_data['device']['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
             
             current_timestamp = int(time.time())
