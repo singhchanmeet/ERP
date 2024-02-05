@@ -150,7 +150,7 @@ def create_billdesk_order(request):
             #     algorithm=env('ALG'),
             #     headers=jws_header,
             # )
-            token = jwt.encode(json_data, env('SECRET_KEY'), algorithm="HS256", headers=jws_header )
+            token = jwt.encode(json_data, 'GKOpRWGo0qqQvN4A8AmNmVyrWvDqtalq', algorithm="HS256", headers=jws_header )
             # encrypted_token = jwt.encode(
             #     payload=json_data,
             #     key=env('SECRET_KEY'),
