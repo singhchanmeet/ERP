@@ -150,4 +150,4 @@ def create_billdesk_order(request):
 def billdesk_order_callback(request):
     if request.METHOD == 'POST':
         print (request.data)
-        return HttpResponse('ok')
+        return HttpResponse(request.data)
