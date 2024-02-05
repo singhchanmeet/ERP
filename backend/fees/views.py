@@ -153,4 +153,4 @@ def billdesk_order_callback(request):
     
     # print (request.data)
     decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=["HS256"])
-    return HttpResponse(decoded_response)
+    return JsonResponse(decoded_response)
