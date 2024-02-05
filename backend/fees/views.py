@@ -111,24 +111,34 @@ def create_billdesk_order(request):
             
             # Make the POST request
             response = requests.post(post_url, data=token, headers=headers)
-            print(token)
-            print(response._content)
 
-            # Return the entire content as a JSON response
-            json_response = {
-                'key' : env('BD_SECRET_KEY'),
-                'status_code': response.status_code,
-                'request_url': response.request.url,
-                'request_method': response.request.method,
-                'request_headers': dict(response.request.headers),
-                'request_body': response.request.body.decode('utf-8') if isinstance(response.request.body, bytes) else response.request.body,
-                'response_headers': dict(response.headers),
-                'response_content': response.text
-            }
-
+            # # Return the entire content as a JSON response
+            # json_response = {
+            #     'key' : env('BD_SECRET_KEY'),
+            #     'status_code': response.status_code,
+            #     'request_url': response.request.url,
+            #     'request_method': response.request.method,
+            #     'request_headers': dict(response.request.headers),
+            #     'request_body': response.request.body.decode('utf-8') if isinstance(response.request.body, bytes) else response.request.body,
+            #     'response_headers': dict(response.headers),
+            #     'response_content': response.text
+            # }
             # Return a JsonResponse with the information
-            return JsonResponse(json_response, json_dumps_params={'indent': 2})
-        
+            # return JsonResponse(json_response, json_dumps_params={'indent': 2})
+            if response.status_code == 200:
+            
+                decoded_response = jwt.decode(jwt=response.text, key=env('BD_SECRET_KEY'), algorithms=["HS256"])
+                
+                context = {"merchantId" : env('MERCHANT_ID'),
+                            "bdOrderId" : decoded_response.get('bdorderid', None),
+                            "authToken" : decoded_response['links'][1]['headers']['authorization']
+                        }
+                
+                return render(request, 'fees/transaction.html', context)
+            
+            else:
+                return HttpResponse(response.text)
+            
         except FileNotFoundError:
             return JsonResponse({'status': 'error', 'message': 'File not found'})
         except json.JSONDecodeError:
