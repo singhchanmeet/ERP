@@ -5,7 +5,8 @@ from . models import Fees
 import requests
 import json
 from pathlib import Path
-import jwt
+# import jwt
+from jose import jws, jwt
 
 from .utils import generate_order_id, generate_trace_id
 
@@ -72,7 +73,7 @@ def create_billdesk_order(request):
         current_datetime_utc = timezone.now()
         # Convert the datetime to IST
         current_datetime_ist = current_datetime_utc.astimezone(timezone.get_current_timezone())
-        formatted_datetime = current_datetime_ist.strftime('%Y-%m-%dT%H:%M:%S%z')
+        formatted_datetime = current_datetime_ist.strftime('%Y-%m-%dT%H:%M:%S+05:30')
         
         try:
             
@@ -84,7 +85,7 @@ def create_billdesk_order(request):
             json_data['orderid'] = generate_order_id(enrollment_no)
             json_data['amount'] = total_amount
             json_data['order_date'] = formatted_datetime
-            json_data['device']['ip'] = request.META.get('REMOTE_ADDR')
+            json_data['device']['ip'] = request.META.get('HTTP_X_FORWARDED_FOR','')
             json_data['device']['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
             
             current_timestamp = int(time.time())
@@ -105,15 +106,23 @@ def create_billdesk_order(request):
             }
             
             # Create a JWS-HMAC token with the JSON data and JWS header
-            encrypted_token = jwt.encode(
+            encrypted_token = jws.sign(
                 payload=json_data,
                 key=env('SECRET_KEY'),
                 algorithm=env('ALG'),
                 headers=jws_header,
             )
+            # encrypted_token = jwt.encode(
+            #     payload=json_data,
+            #     key=env('SECRET_KEY'),
+            #     algorithm=env('ALG'),
+            #     headers=jws_header,
+            # )
             
             # Include the encrypted token in the request header
             # headers['Authorization'] = f'Bearer {encrypted_token}'
+            
+            # token_bytes = encrypted_token.encode('utf-8')
             
             # Make the POST request
             response = requests.post(post_url, data=encrypted_token, headers=headers)
@@ -128,7 +137,19 @@ def create_billdesk_order(request):
             data = json.loads(content_str)
 
             # Return the entire content as a JSON response
-            return JsonResponse(data)
+            # return JsonResponse(data)
+            json_response = {
+                'status_code': response.status_code,
+                'request_url': response.request.url,
+                'request_method': response.request.method,
+                'request_headers': dict(response.request.headers),
+                'request_body': response.request.body.decode('utf-8') if isinstance(response.request.body, bytes) else response.request.body,
+                'response_headers': dict(response.headers),
+                'response_content': response.text
+            }
+
+            # Return a JsonResponse with the information
+            return JsonResponse(json_response, json_dumps_params={'indent': 2})
         
         except FileNotFoundError:
             return JsonResponse({'status': 'error', 'message': 'File not found'})
