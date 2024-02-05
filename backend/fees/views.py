@@ -179,6 +179,7 @@ def create_billdesk_order(request):
             # Return the entire content as a JSON response
             # return JsonResponse(data)
             json_response = {
+                'key' : f"{env('SECRET_KEY')}",
                 'status_code': response.status_code,
                 'request_url': response.request.url,
                 'request_method': response.request.method,
