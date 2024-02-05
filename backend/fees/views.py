@@ -127,7 +127,7 @@ def create_billdesk_order(request):
             # return JsonResponse(json_response, json_dumps_params={'indent': 2})
             if response.status_code == 200:
             
-                decoded_response = jwt.decode(jwt=response.text, key=env('BD_SECRET_KEY'), algorithms=["HS256"])
+                decoded_response = jwt.decode(response.text, key=env('BD_SECRET_KEY'), algorithms=["HS256"])
                 
                 context = {"merchantId" : env('MERCHANT_ID'),
                             "bdOrderId" : decoded_response.get('bdorderid', None),
