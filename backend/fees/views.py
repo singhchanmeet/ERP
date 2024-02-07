@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
-from . models import Fees
+from . models import Fees, BilldeskOrders, BilldeskTransactions
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -109,7 +109,7 @@ def create_billdesk_order(request):
                 "clientid": f"{env('CLIENT_ID')}"
             }
             
-            token = jwt.encode(json_data, env('BD_SECRET_KEY'), algorithm="HS256", headers=jws_header )
+            token = jwt.encode(json_data, env('BD_SECRET_KEY'), algorithm=env('ALG'), headers=jws_header )
             
             # Make the POST request
             response = requests.post(post_url, data=token, headers=headers)
@@ -129,10 +129,16 @@ def create_billdesk_order(request):
             # return JsonResponse(json_response, json_dumps_params={'indent': 2})
             if response.status_code == 200:
             
-                decoded_response = jwt.decode(response.text, key=env('BD_SECRET_KEY'), algorithms=["HS256"])
+                decoded_response = jwt.decode(response.text, key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
+                
+                new_order = BilldeskOrders.objects.create(order_id=json_data['orderid'], 
+                                                          bd_order_id=decoded_response.get('bdorderid', ''), 
+                                                          order_response=decoded_response)
+                
+                new_order.save()
                 
                 context = {"merchantId" : env('MERCHANT_ID'),
-                            "bdOrderId" : decoded_response.get('bdorderid', None),
+                            "bdOrderId" : decoded_response.get('bdorderid', ''),
                             "authToken" : decoded_response['links'][1]['headers']['authorization']
                         }
                 
@@ -141,16 +147,25 @@ def create_billdesk_order(request):
             else:
                 return HttpResponse(response.text)
             
-        except FileNotFoundError:
-            return JsonResponse({'status': 'error', 'message': 'File not found'})
-        except json.JSONDecodeError:
-            return JsonResponse({'status': 'error', 'message': 'Invalid JSON format'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
 
 @csrf_exempt
 def billdesk_order_callback(request):
     
-    # print (request.data)
-    decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=["HS256"])
-    return JsonResponse(decoded_response)
+    decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
+    
+    new_transaction = BilldeskTransactions.objects.create(order_id=decoded_response.get('orderid', ''),
+                            transaction_id=decoded_response.get('transactionid', ''), transaction_status=decoded_response.get('transaction_error_type', ''),
+                            payment_method=decoded_response.get('payment_method_type', ''), transaction_response=decoded_response)
+    
+    new_transaction.save()
+    
+    response = {
+        "Transaction ID " : decoded_response.get('transactionid', ''),
+        "Order ID" : decoded_response.get('orderid', ''),
+        "Transaction Status" : decoded_response.get('transaction_error_type', '').toupper(),
+        "Transaction Time" : decoded_response.get('transaction_date', '')
+    }
+
+    return JsonResponse(response)

@@ -53,3 +53,30 @@ class Fees(models.Model):
     class Meta:
         db_table = 'fees'  
         verbose_name_plural = "Fees"
+
+
+
+class BilldeskOrders(models.Model):
+    
+    order_id = models.CharField(max_length=25)
+    bd_order_id = models.CharField(max_length=25)
+    order_time = models.DateTimeField(auto_now_add=True)
+    order_response = models.TextField()
+    
+    class Meta:
+        db_table = 'billdesk_orders'
+        verbose_name_plural = 'Billdesk Orders'
+
+
+class BilldeskTransactions(models.Model):
+    
+    order_id = models.CharField(max_length=25)
+    transaction_id = models.CharField(max_length=25)
+    transaction_status = models.CharField(max_length=25)
+    payment_method = models.CharField(max_length=25)
+    transaction_time = models.DateTimeField(auto_now_add=True)
+    transaction_response = models.TextField()
+    
+    class Meta:
+        db_table = 'billdesk_transactions'
+        verbose_name_plural = 'Billdesk Transactions'
