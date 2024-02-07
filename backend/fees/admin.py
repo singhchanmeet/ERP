@@ -16,6 +16,10 @@ class BilldeskOrdersAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
     
+    # This will disable change functionality
+    def has_change_permission(self, request, obj=None):
+        return False
+    
 class BilldeskTransactionsAdmin(admin.ModelAdmin):
     list_display = ['order_id', 'transaction_id', 'transaction_status', 'payment_method', 'transaction_time', 'transaction_response']
     
@@ -25,6 +29,10 @@ class BilldeskTransactionsAdmin(admin.ModelAdmin):
     
     # This will disable delete functionality
     def has_delete_permission(self, request, obj=None):
+        return False
+    
+    # This will disable change functionality
+    def has_change_permission(self, request, obj=None):
         return False
 
 admin.site.register(Fees, FeesAdmin)

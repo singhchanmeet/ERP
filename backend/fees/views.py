@@ -164,7 +164,7 @@ def billdesk_order_callback(request):
     response = {
         "Transaction ID " : decoded_response.get('transactionid', ''),
         "Order ID" : decoded_response.get('orderid', ''),
-        "Transaction Status" : decoded_response.get('transaction_error_type', '').toupper(),
+        "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
         "Transaction Time" : decoded_response.get('transaction_date', '')
     }
 
