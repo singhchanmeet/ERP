@@ -60,6 +60,7 @@ class BilldeskOrders(models.Model):
     
     order_id = models.CharField(max_length=25)
     bd_order_id = models.CharField(max_length=25)
+    order_amount = models.CharField(max_length=12)
     order_time = models.DateTimeField(auto_now_add=True)
     order_response = models.TextField()
     
@@ -72,6 +73,7 @@ class BilldeskTransactions(models.Model):
     
     order_id = models.CharField(max_length=25)
     transaction_id = models.CharField(max_length=25)
+    transaction_amount = models.CharField(max_length=12)
     transaction_status = models.CharField(max_length=25)
     payment_method = models.CharField(max_length=25)
     transaction_time = models.DateTimeField(auto_now_add=True)

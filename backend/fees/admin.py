@@ -6,7 +6,7 @@ class FeesAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['batch', 'total_fee']
     
 class BilldeskOrdersAdmin(admin.ModelAdmin):
-    list_display = ['order_id', 'bd_order_id', 'order_time', 'order_response']
+    list_display = ['order_id', 'bd_order_id', 'order_amount', 'order_time']
     
     # This will disbale add functionality
     def has_add_permission(self, request):
@@ -21,7 +21,7 @@ class BilldeskOrdersAdmin(admin.ModelAdmin):
         return False
     
 class BilldeskTransactionsAdmin(admin.ModelAdmin):
-    list_display = ['order_id', 'transaction_id', 'transaction_status', 'payment_method', 'transaction_time', 'transaction_response']
+    list_display = ['order_id', 'transaction_id', 'transaction_amount', 'transaction_status', 'payment_method', 'transaction_time']
     
     # This will disbale add functionality
     def has_add_permission(self, request):
