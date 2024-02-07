@@ -131,7 +131,7 @@ def create_billdesk_order(request):
             
                 decoded_response = jwt.decode(response.text, key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
                 
-                new_order = BilldeskOrders.objects.create(order_id=json_data['orderid'], 
+                new_order = BilldeskOrders.objects.create(order_id=json_data['orderid'], order_amount=total_amount,
                                                           bd_order_id=decoded_response.get('bdorderid', ''), 
                                                           order_response=decoded_response)
                 
@@ -155,8 +155,8 @@ def billdesk_order_callback(request):
     
     decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
     
-    new_transaction = BilldeskTransactions.objects.create(order_id=decoded_response.get('orderid', ''),
-                            transaction_id=decoded_response.get('transactionid', ''), transaction_status=decoded_response.get('transaction_error_type', ''),
+    new_transaction = BilldeskTransactions.objects.create(order_id=decoded_response.get('orderid', ''), transaction_id=decoded_response.get('transactionid', ''),
+                            transaction_amount=decoded_response.get('amount', ''), transaction_status=decoded_response.get('transaction_error_type', ''),
                             payment_method=decoded_response.get('payment_method_type', ''), transaction_response=decoded_response)
     
     new_transaction.save()
