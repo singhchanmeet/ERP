@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'groups',
     'batches',
     'infrastructure',
-    'fees',
+    'fees',     # this is the old fees app  which works independently from erp
+    'fees_erp', # this is the main fees app integrated with the whole erp project
 ]
 
 # Telling Django to use the JWT method for authentication

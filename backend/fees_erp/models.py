@@ -1,9 +1,9 @@
 from django.db import models
-
+from batches.models import Batches
 
 class Fees(models.Model):
 
-    batch = models.CharField(max_length=10)
+    batch = models.OneToOneField(Batches, on_delete=models.SET_NULL, null=True, db_column='batch')
 
     tution_fee = models.CharField(max_length=8, default="0")
     activity_fee = models.CharField(max_length=8, default="0")
@@ -51,7 +51,7 @@ class Fees(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        db_table = 'old_fees'  
+        db_table = 'erp_fees'  
         verbose_name_plural = "Fees"
 
 
@@ -65,7 +65,7 @@ class BilldeskOrders(models.Model):
     order_response = models.TextField()
     
     class Meta:
-        db_table = 'old_billdesk_orders'
+        db_table = 'erp_billdesk_orders'
         verbose_name_plural = 'Billdesk Orders'
 
 
@@ -80,5 +80,5 @@ class BilldeskTransactions(models.Model):
     transaction_response = models.TextField()
     
     class Meta:
-        db_table = 'old_billdesk_transactions'
+        db_table = 'erp_billdesk_transactions'
         verbose_name_plural = 'Billdesk Transactions'

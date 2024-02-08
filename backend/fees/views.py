@@ -142,6 +142,8 @@ def create_billdesk_order(request):
                             "authToken" : decoded_response['links'][1]['headers']['authorization']
                         }
                 
+                # TO DO: change this logic . "NEVER RENDER AFTER A SUCCESSFUL POST REQUEST. ALWAYS REDIRECT."
+                # Otherwise when refreshed the whole fn will be called again and new order will be created.
                 return render(request, 'fees/transaction.html', context)
             
             else:
