@@ -77,7 +77,7 @@ def create_billdesk_order(request):
     
     if request.method == 'POST':
         
-        total_amount = request.POST.get('total_amount')
+        total_amount = request.data.get('total_amount')
         enrollment_no = request.user.user_id
                 
         current_datetime_utc = timezone.now()
@@ -119,6 +119,8 @@ def create_billdesk_order(request):
             
             # Make the POST request
             response = requests.post(post_url, data=token, headers=headers)
+            
+            print(token)
 
             # # Return the entire content as a JSON response
             # json_response = {
