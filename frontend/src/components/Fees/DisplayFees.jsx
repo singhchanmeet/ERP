@@ -1,8 +1,10 @@
 // DisplayFees.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const DisplayFees = () => {
+  const navigate = useNavigate();
   const [fees, setFees] = useState({});
   const [selectedFees, setSelectedFees] = useState({});
   const [totalAmount, setTotalAmount] = useState(0.0);
@@ -10,7 +12,7 @@ const DisplayFees = () => {
 
   useEffect(() => {
     // Fetch data from the server
-    axios.get('http://localhost:8000/fee/display/', {
+    axios.get('https://admin.erp.mait.ac.in/fee/display/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -51,7 +53,7 @@ const DisplayFees = () => {
 
     // Send POST request with authorization header
     try {
-      const response = await axios.post('http://localhost:8000/fee/create_billdesk_order/', postData, {
+      const response = await axios.post('https://admin.erp.mait.ac.in/fee/create_billdesk_order/', postData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -60,7 +62,13 @@ const DisplayFees = () => {
       // Handle response based on status
       if (response.status === 200) {
         console.log(response.data);
-        // Additional logic for successful response
+      
+        const { merchantId, bdOrderId, authToken } = response.data; // Directly destructure properties
+        sessionStorage.setItem('merchantId', merchantId);
+        sessionStorage.setItem('bdOrderId', bdOrderId);
+        sessionStorage.setItem('authToken', authToken);
+      
+        navigate('/pay-fee');
       } else {
         console.error(response.data);
         // Additional logic for other response statuses

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const StudentState = (props) => {
   const navigate = useNavigate();
-  const host = 'http://localhost:8000';
+  const host = 'https://admin.erp.mait.ac.in';
   const studentDetailsInitial = []; // Rename 'creds' to 'studentDetails'
   const [studentDetails, setStudentDetails] = useState(studentDetailsInitial);
 

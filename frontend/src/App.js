@@ -11,6 +11,7 @@ import InfraForm from './components/Infra/InfraForm';
 import ManagingDashboard from './components/Infra/ManagingDashboard';
 import InfraData from './components/Infra/InfraData';
 import DisplayFees from './components/Fees/DisplayFees';
+import BilldeskPayment from './components/Fees/BilldeskPayment';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/infra-data" element={<InfraData />} />
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
                     <Route path="/display-fee" element={<DisplayFees />} />
+                    <Route path="/pay-fee" element={<BilldeskPayment />} />
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />

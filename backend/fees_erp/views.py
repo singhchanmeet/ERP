@@ -119,8 +119,6 @@ def create_billdesk_order(request):
             
             # Make the POST request
             response = requests.post(post_url, data=token, headers=headers)
-            
-            print(token)
 
             # # Return the entire content as a JSON response
             # json_response = {
@@ -158,3 +156,25 @@ def create_billdesk_order(request):
             
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
+
+
+@csrf_exempt
+def billdesk_order_callback(request):
+    
+    decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
+    
+    new_transaction = BilldeskTransactions.objects.create(order_id=decoded_response.get('orderid', ''), transaction_id=decoded_response.get('transactionid', ''),
+                            transaction_amount=decoded_response.get('amount', ''), transaction_status=decoded_response.get('transaction_error_type', ''),
+                            payment_method=decoded_response.get('payment_method_type', ''), transaction_response=decoded_response)
+    
+    new_transaction.save()
+    
+    response = {
+        "Transaction ID " : decoded_response.get('transactionid', ''),
+        "Order ID" : decoded_response.get('orderid', ''),
+        "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
+        "Transaction Time" : decoded_response.get('transaction_date', '')
+    }
+
+    return JsonResponse(response)
