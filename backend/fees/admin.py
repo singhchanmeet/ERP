@@ -35,6 +35,11 @@ class BilldeskTransactionsAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-admin.site.register(Fees, FeesAdmin)
-admin.site.register(BilldeskOrders, BilldeskOrdersAdmin)
-admin.site.register(BilldeskTransactions, BilldeskTransactionsAdmin)
+# admin.site.register(Fees, FeesAdmin)
+# admin.site.register(BilldeskOrders, BilldeskOrdersAdmin)
+# admin.site.register(BilldeskTransactions, BilldeskTransactionsAdmin)
+
+
+"""
+Just uncomment the admin registration lines if you want it to work independently
+"""

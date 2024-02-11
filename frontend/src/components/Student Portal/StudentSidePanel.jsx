@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DisplayFees from '../Fees/DisplayFees';
 
 const StudentSidePanel = () => {
     const handleButtonClick = () => {

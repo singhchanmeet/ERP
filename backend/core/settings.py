@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'groups',
     'batches',
     'infrastructure',
-    'fees',     # this is the old fees app  which works independently from erp
+    'fees',     # this is the old fees app  which works independently from erp (just prefix urls with '/fee')
     'fees_erp', # this is the main fees app integrated with the whole erp project
 ]
 

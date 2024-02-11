@@ -10,6 +10,7 @@ import InfraLogin from './components/Infra/InfraLogin';
 import InfraForm from './components/Infra/InfraForm';
 import ManagingDashboard from './components/Infra/ManagingDashboard';
 import InfraData from './components/Infra/InfraData';
+import DisplayFees from './components/Fees/DisplayFees';
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/infra-form" element={<InfraForm />} />
                     <Route path="/infra-data" element={<InfraData />} />
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
+                    <Route path="/display-fee" element={<DisplayFees />} />
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />
