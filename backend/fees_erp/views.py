@@ -9,6 +9,7 @@ from student.models import Student
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
+from django.template import loader
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -170,11 +171,23 @@ def billdesk_order_callback(request):
     
     new_transaction.save()
     
-    response = {
+    context = {
         "Transaction ID " : decoded_response.get('transactionid', ''),
         "Order ID" : decoded_response.get('orderid', ''),
         "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
         "Transaction Time" : decoded_response.get('transaction_date', '')
     }
 
-    return JsonResponse(response)
+    # return JsonResponse(context)
+    
+    # Render the HTML content using the template
+    template = loader.get_template('fees_erp/bill.html')
+    html_content = template.render(context)
+
+    # Create an HTTP response with the HTML content
+    response = HttpResponse(html_content, content_type='text/html')
+
+    # Set the Content-Disposition header to prompt for download
+    response['Content-Disposition'] = 'attachment; filename="bill.html"'
+
+    return response
