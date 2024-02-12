@@ -172,10 +172,12 @@ def billdesk_order_callback(request):
     new_transaction.save()
     
     context = {
-        "Transaction ID " : decoded_response.get('transactionid', ''),
-        "Order ID" : decoded_response.get('orderid', ''),
-        "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
-        "Transaction Time" : decoded_response.get('transaction_date', '')
+        "TransactionID " : decoded_response.get('transactionid', ''),
+        "OrderID" : decoded_response.get('orderid', ''),
+        "TransactionStatus" : decoded_response.get('transaction_error_type', '').upper(),
+        "TransactionTime" : decoded_response.get('transaction_date', ''),
+        "TransactionAmount" : decoded_response.get('amount', ''),
+        "PaymentMethod" : decoded_response.get('payment_method_type', '')
     }
 
     return render(request, 'fees_erp/bill.html', context)
