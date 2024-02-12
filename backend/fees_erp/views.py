@@ -178,16 +178,4 @@ def billdesk_order_callback(request):
         "Transaction Time" : decoded_response.get('transaction_date', '')
     }
 
-    # return JsonResponse(context)
-    
-    # Render the HTML content using the template
-    template = loader.get_template('fees_erp/bill.html')
-    html_content = template.render(context)
-
-    # Create an HTTP response with the HTML content
-    response = HttpResponse(html_content, content_type='text/html')
-
-    # Set the Content-Disposition header to prompt for download
-    response['Content-Disposition'] = 'attachment; filename="bill.html"'
-
-    return response
+    return render(request, 'fees_erp/bill.html', context)
