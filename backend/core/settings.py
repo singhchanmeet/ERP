@@ -22,10 +22,10 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('ALLOWED_HOST_1'), env('ALLOWED_HOST_2'), env('ALLOWED_HOST_3'),]
+ALLOWED_HOSTS = [env('ALLOWED_HOST_1'), env('ALLOWED_HOST_2'), env('ALLOWED_HOST_3'),env('ALLOWED_HOST_4'),]
 
 # The domains that are allowed to make requests
-CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'), env('CORS_ALLOWED_ORIGIN_2'), env('CORS_ALLOWED_ORIGIN_3')]
+CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'), env('CORS_ALLOWED_ORIGIN_2'), env('CORS_ALLOWED_ORIGIN_3'), env('CORS_ALLOWED_ORIGIN_4')]
 
 
 # Application definition
@@ -59,8 +59,8 @@ REST_FRAMEWORK = {
 
 # JWT settings : https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=90),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,

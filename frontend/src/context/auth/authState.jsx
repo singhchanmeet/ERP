@@ -4,26 +4,19 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthState = (props) => {
-  // Use destructuring to extract navigate from the useNavigate hook
   const navigate = useNavigate();
 
-  const host = "https://admin.erp.mait.ac.in";
+  const host = "http://localhost:8000";
 
-  // Use useState initializers to fetch tokens from localStorage
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem("accessToken") || null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshToken, setRefreshToken] = useState(() => localStorage.getItem("refreshToken") || null);
 
-  // Function to handle the login process
   const handleLogin = () => {
     const microsoftLoginUrl = `${host}/auth/sign_in`;
     window.location.href = microsoftLoginUrl;
   };
-
-
-
-  // Function to handle user logout
   const logoutUser = useCallback(() => {
     const microsoftLogoutUrl = `${host}/auth/sign_out`;
     window.location.href = microsoftLogoutUrl;
@@ -34,17 +27,44 @@ const AuthState = (props) => {
     navigate("/login");
   }, [navigate]);
 
-  // Context value to be provided to the components
+  const updateTokens = useCallback(async () => {
+    try {
+      const response = await axios.post(`${host}/token/refresh/`, { refresh: refreshToken });
+      const { access, refresh } = response.data;
+      setAccessToken(access);
+      setRefreshToken(refresh);
+      localStorage.setItem("accessToken",access );
+      localStorage.setItem("refreshToken", refresh);
+    } catch (error) {
+      const response = await axios.post(`${host}/token/refresh/`, { refresh: refreshToken });
+      const { access, refresh } = response.data;
+      setAccessToken(access);
+      setRefreshToken(refresh);
+      localStorage.setItem("accessToken",access );
+      localStorage.setItem("refreshToken", refresh);
+    }
+  }, [refreshToken, logoutUser]);
+
+
+  useEffect(() => {
+    if (refreshToken) {
+      const interval = setInterval(() => {
+        updateTokens();
+      }, 1000 *60* 4); // Refresh every 4 minutes
+      return () => clearInterval(interval);
+    }
+  }, [refreshToken, updateTokens]);
+
   const contextValue = {
     accessToken: accessToken,
     refreshToken: refreshToken,
     handleLogin,
     logoutUser,
+    updateTokens,
   };
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {/* Render the child components when loading is false */}
       {props.children}
     </AuthContext.Provider>
   );

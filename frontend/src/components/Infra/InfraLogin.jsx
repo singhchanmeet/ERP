@@ -21,7 +21,7 @@ const InfraLogin = () => {
 
     const handleInfraLogin = async () => {
         try {
-            const response = await axios.post('https://admin.erp.mait.ac.in/student/login/', {
+            const response = await axios.post('http://localhost:8000/student/login/', {
                 user_id,
                 password,
             });

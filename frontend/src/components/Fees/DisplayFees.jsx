@@ -12,7 +12,7 @@ const DisplayFees = () => {
 
   useEffect(() => {
     // Fetch data from the server
-    axios.get('https://admin.erp.mait.ac.in/fee/display/', {
+    axios.get('http://localhost:8000/fee/display/', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -53,7 +53,7 @@ const DisplayFees = () => {
 
     // Send POST request with authorization header
     try {
-      const response = await axios.post('https://admin.erp.mait.ac.in/fee/create_billdesk_order/', postData, {
+      const response = await axios.post('http://localhost:8000/fee/create_billdesk_order/', postData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
