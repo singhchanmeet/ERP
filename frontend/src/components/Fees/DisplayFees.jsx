@@ -9,10 +9,10 @@ const DisplayFees = () => {
   const [selectedFees, setSelectedFees] = useState({});
   const [totalAmount, setTotalAmount] = useState(0.0);
   const accessToken = localStorage.getItem('accessToken');
-
+  const host = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     // Fetch data from the server
-    axios.get('http://localhost:8000/fee/display/', {
+    axios.get(`${host}/fee/display/`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -53,7 +53,7 @@ const DisplayFees = () => {
 
     // Send POST request with authorization header
     try {
-      const response = await axios.post('http://localhost:8000/fee/create_billdesk_order/', postData, {
+      const response = await axios.post(`${host}/fee/create_billdesk_order/`, postData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },

@@ -11,10 +11,11 @@ const EmployeeNavbar = () => {
   const { logoutUser } = context;
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const host = process.env.REACT_APP_BACKEND_URL;
   const accessToken = localStorage.getItem('accessToken');
   useEffect(() => {
     // Fetch the user details from your API
-    axios.get('http://localhost:8000/user-details/', {
+    axios.get(`${host}/user-details/`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
         'Content-Type': 'application/json', // Adjust headers as needed

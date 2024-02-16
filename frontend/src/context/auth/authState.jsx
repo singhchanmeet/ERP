@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AuthState = (props) => {
   const navigate = useNavigate();
 
-  const host = "http://localhost:8000";
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem("accessToken") || null);
   const [user, setUser] = useState(null);

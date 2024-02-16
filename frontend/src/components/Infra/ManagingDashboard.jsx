@@ -8,9 +8,10 @@ const ManagingDashboard = ({ user }) => {
     const accessToken = localStorage.getItem('accessToken');
     const [formFilled, setFormFilled] = useState(false);
     const [student, setStudent] = useState(null);
+    const host = process.env.REACT_APP_BACKEND_URL;
     const [selectedFile, setSelectedFile] = useState(null);
     useEffect(() => {
-        axios.get('http://localhost:8000/student/personal-details/', {
+        axios.get(`${host}/student/personal-details/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ const ManagingDashboard = ({ user }) => {
         formData.append('excel_file', selectedFile);
 
         try {
-            const response = await axios.post('http://localhost:8000/infra/handle-excel/', formData, {
+            const response = await axios.post(`${host}/infra/handle-excel/`, formData, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -91,7 +92,7 @@ const ManagingDashboard = ({ user }) => {
                         <p className='mb-4'>
                             To efficiently upload bulk data, please download the provided Excel template. Ensure your data follows the requested format before proceeding with the upload.
                         </p>
-                        <a href='http://localhost:8000/serve-static/infra-template.xlsx' className='text-blue-500 underline mb-6 inline-block'>
+                        <a href={`${host}/serve-static/infra-template.xlsx`} className='text-blue-500 underline mb-6 inline-block'>
                             Download Excel Template
                         </a>
                         <form onSubmit={handleSubmit}>

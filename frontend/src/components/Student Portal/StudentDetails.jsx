@@ -7,10 +7,11 @@ const StudentDetails = () => {
     const [studentData, setStudentData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const host = process.env.REACT_APP_BACKEND_URL;
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/student/personal-details/', {
+        axios.get(`${host}/student/personal-details/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',

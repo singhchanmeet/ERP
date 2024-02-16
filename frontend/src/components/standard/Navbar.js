@@ -19,10 +19,10 @@ const Navbar = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const accessToken = localStorage.getItem('accessToken');
-
+    const host = process.env.REACT_APP_BACKEND_URL;
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('http://localhost:8000/user-details/', {
+        axios.get(`${host}/user-details/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',

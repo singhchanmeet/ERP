@@ -18,10 +18,10 @@ const InfraLogin = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const context = useContext(AuthContext);
     const { handleLogin } = context;
-
+    const host = process.env.REACT_APP_BACKEND_URL;
     const handleInfraLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/student/login/', {
+            const response = await axios.post(`${host}/student/login/`, {
                 user_id,
                 password,
             });

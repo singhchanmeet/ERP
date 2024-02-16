@@ -51,7 +51,7 @@ const InfraForm = () => {
         const file = e.target.files[0];
         setFormData((prevData) => ({ ...prevData, invoice: file }));
     };
-
+    const host = process.env.REACT_APP_BACKEND_URL;
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -61,7 +61,7 @@ const InfraForm = () => {
                 formDataToSend.append(key, value);
             });
 
-            const response = await axios.post('http://localhost:8000/infra/submit-form/', formDataToSend, {
+            const response = await axios.post(`${host}/infra/submit-form/`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -104,7 +104,7 @@ const InfraForm = () => {
 
     useEffect(() => {
         // Fetch the user details from your API
-        axios.get('http://localhost:8000/user-details/', {
+        axios.get(`${host}/user-details/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json', // Adjust headers as needed
@@ -121,7 +121,7 @@ const InfraForm = () => {
             });
     }, [accessToken]);
     useEffect(() => {
-        axios.get('http://localhost:8000/infra/dropdown-data/')
+        axios.get(`${host}/infra/dropdown-data/`)
             .then((response) => {
                 setDropdownData(response.data);
                 setLoadingDropdown(false);

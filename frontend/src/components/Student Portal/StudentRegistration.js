@@ -8,10 +8,10 @@ function StudentRegistration() {
     const [contact_number, setContactNo] = useState('');
     const [password, setPassword] = useState('');
     const role = 'STUDENT';
-
+    const host = process.env.REACT_APP_BACKEND_URL;
     const handleRegister = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/student/register/', {
+            const response = await axios.post(`${host}/student/register/`, {
                 user_id,
                 name,
                 email,

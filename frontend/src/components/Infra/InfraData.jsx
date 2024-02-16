@@ -8,9 +8,9 @@ const InfraData = () => {
     const [checkboxes, setCheckboxes] = useState([]);
     const [loading, setLoading] = useState(true);
     const tableRef = useRef(null);
-
+    const host = process.env.REACT_APP_BACKEND_URL;
     useEffect(() => {
-        axios.get('http://localhost:8000/infra/all-data/', {
+        axios.get(`${host}/infra/all-data/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
