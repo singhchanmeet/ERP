@@ -12,6 +12,7 @@ import ManagingDashboard from './components/Infra/ManagingDashboard';
 import InfraData from './components/Infra/InfraData';
 import DisplayFees from './components/Fees/DisplayFees';
 import BilldeskPayment from './components/Fees/BilldeskPayment';
+import ImportantDetails from './components/Student Portal/DetailsForms/ImportantDetails';
 
 function App() {
     return (
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/infra-data" element={<InfraData />} />
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
                     <Route path="/display-fee" element={<DisplayFees />} />
+                    <Route path="/impdetails" element={<ImportantDetails />} />
                     <Route path="/pay-fee" element={<BilldeskPayment />} />
                     {/* Add more routes as needed */}
                 </Routes>

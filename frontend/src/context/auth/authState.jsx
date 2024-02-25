@@ -50,7 +50,7 @@ const AuthState = (props) => {
     if (refreshToken) {
       const interval = setInterval(() => {
         updateTokens();
-      }, 1000 *60* 4); // Refresh every 4 minutes
+      }, 1000 *20); // Refresh every 4 minutes
       return () => clearInterval(interval);
     }
   }, [refreshToken, updateTokens]);

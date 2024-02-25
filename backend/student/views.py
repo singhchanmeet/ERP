@@ -226,12 +226,12 @@ class StudentOtherDetailsView(APIView):
     
     def post(self, request):       
         
-        batch, created = Batches.objects.get_or_create(batch=request.data.get('batch'))
-        group, created = Groups.objects.get_or_create(group_name=request.data.get('group'))
-        branch, created = Branches.objects.get_or_create(branch=request.data.get('branch'))
+        batch = Batches.objects.get(batch=request.data.get('batch'))
+        group = Groups.objects.get(group_name=request.data.get('group'))
+        branch = Branches.objects.get(branch=request.data.get('branch'))
         is_lateral_entry = request.data.get('is_lateral_entry')
         
-        print(request.user.user_id)
+        # print(request.user.user_id)
         
         # Get the student using the current user's user_id
         student = Student.objects.get(student_id=request.user)
@@ -245,5 +245,20 @@ class StudentOtherDetailsView(APIView):
         student.save()
         
         return Response({'message': 'Details submitted successfully'}, status=status.HTTP_200_OK)
+    
+    # For fetching important other details of student
+    def get(self, request):
+        student_id = request.user.id
+        student = Student.objects.filter(student_id=student_id).first()
+        
+        if student:
+            serializer = StudentSerializer(student)
+            serialized_data = serializer.data
+            serialized_data.pop('student_id', None)
+            return Response(serialized_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Student details not found'}, status=status.HTTP_204_NO_CONTENT)
+
+        
         
        

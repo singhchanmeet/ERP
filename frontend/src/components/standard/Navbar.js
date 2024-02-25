@@ -18,10 +18,10 @@ const navigation = [
 const Navbar = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const accessToken = localStorage.getItem('accessToken');
     const host = process.env.REACT_APP_BACKEND_URL;
     useEffect(() => {
         // Fetch the user details from your API
+        const accessToken = localStorage.getItem('accessToken');
         axios.get(`${host}/user-details/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
@@ -36,7 +36,7 @@ const Navbar = () => {
                 console.error('Error fetching user data:', error);
                 setIsLoading(false); // Set loading to false in case of an error
             });
-    }, [accessToken]);
+    }, []);
 
     if (isLoading) {
         // Show a loading state or spinner
