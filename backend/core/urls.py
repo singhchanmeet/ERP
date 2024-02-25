@@ -15,6 +15,9 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('employee/', include('employee.urls')),
     path('infra/', include('infrastructure.urls')),
+    path('batches/', include('batches.urls')),
+    path('branches/', include('branches.urls')),
+    path('groups/', include('groups.urls')),
     # path('fee/', include('fees.urls')),      # old fees app which works independent from erp (billdesk s2s url has the prefix '/fee')
     path('fee/', include('fees_erp.urls')),        # main fees app which is integrated 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static('serve-static', document_root='serve-static')   #for serving static files (like admin panel css) and media files (uploaded by user)
