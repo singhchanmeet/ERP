@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from authentication.models import User
 from batches.models import Batches
+from branches.models import Branches
+from groups.models import Groups
 from rest_framework.permissions import IsAuthenticated
 from . serializers import StudentSerializer, StudentDetailsSerializer
 from authentication.serializers import UserSerializer
@@ -11,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import redirect
 import jwt
-from . models import StudentDetails
+from . models import StudentDetails, Student
 from . permissions import IsStudent
 
 import environ
@@ -20,7 +22,7 @@ env = environ.Env()
 environ.Env.read_env() 
 
 
-
+# for registering student
 class StudentRegister(APIView):
 
     #To register a student without MS teams, a post request will be sent from frontend
@@ -43,7 +45,7 @@ class StudentRegister(APIView):
                 'name': request.data['name'],
                 'email': request.data['email'],
                 'contact_number': request.data['contact_number'],
-                'batch': Batches.objects.filter(batch = f'20{int(request.data["user_id"][-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
+                # 'batch': Batches.objects.filter(batch = f'20{int(request.data["user_id"][-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
                 'ip_address': request.META.get('REMOTE_ADDR')
             }
 
@@ -89,7 +91,7 @@ class StudentRegister(APIView):
                 'student_id': student_id,   #foreign key
                 'name': full_name,
                 'email': request.identity_context_data._id_token_claims['preferred_username'],
-                'batch': Batches.objects.filter(batch = f'20{int(enrollment_id[-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
+                # 'batch': Batches.objects.filter(batch = f'20{int(enrollment_id[-2:])+4}').first(),     # example: 20{22+4} = 20{26} = 2026
                 'ip_address': request.META.get('REMOTE_ADDR')
             }
 
@@ -107,7 +109,7 @@ class StudentRegister(APIView):
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
-
+# for logging in student
 class StudentLogin(TokenObtainPairView):
 
     #To login a student without MS teams, a post request will be sent from frontend
@@ -172,7 +174,8 @@ class StudentLogin(TokenObtainPairView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-        
+       
+# for all personal details of student
 class StudentDetailsView(APIView):
 
     # only authenticated students can access this view
@@ -214,3 +217,33 @@ class StudentDetailsView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Student details not found'}, status=status.HTTP_204_NO_CONTENT)
+        
+        
+# for details of student like batch, branch, group etc
+class StudentOtherDetailsView(APIView):
+    
+    permission_classes = (IsAuthenticated,)
+    
+    def post(self, request):       
+        
+        batch, created = Batches.objects.get_or_create(batch=request.data.get('batch'))
+        group, created = Groups.objects.get_or_create(group_name=request.data.get('group'))
+        branch, created = Branches.objects.get_or_create(branch=request.data.get('branch'))
+        is_lateral_entry = request.data.get('is_lateral_entry')
+        
+        print(request.user.user_id)
+        
+        # Get the student using the current user's user_id
+        student = Student.objects.get(student_id=request.user)
+        
+        student.batch = batch
+        student.branch = branch
+        student.group = group
+        student.is_lateral_entry = is_lateral_entry
+
+        # Save the changes
+        student.save()
+        
+        return Response({'message': 'Details submitted successfully'}, status=status.HTTP_200_OK)
+        
+       

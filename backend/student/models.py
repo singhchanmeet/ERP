@@ -1,6 +1,8 @@
 from django.db import models
 from authentication.models import User
 from batches.models import Batches
+from branches.models import Branches
+from groups.models import Groups
 from django.utils.html import mark_safe
 from . import utils
 
@@ -11,7 +13,12 @@ class Student(models.Model):
     name = models.CharField(max_length=75)
     email = models.EmailField(max_length=50)
     contact_number = models.CharField(max_length=15, blank=True)
-    batch = models.ForeignKey(Batches, on_delete=models.SET_NULL, null=True, db_column='batch')
+    
+    batch = models.ForeignKey(Batches, on_delete=models.SET_NULL, null=True, db_column='batch', blank=True)
+    branch = models.ForeignKey(Branches, on_delete=models.SET_NULL, null=True, db_column='branch', blank=True)
+    group = models.ForeignKey(Groups, on_delete=models.SET_NULL, null=True, db_column='group', blank=True)
+    is_lateral_entry = models.BooleanField(default=False, blank=True)
+    
     ip_address = models. GenericIPAddressField(blank=True, null=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 

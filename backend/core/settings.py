@@ -22,10 +22,10 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('ALLOWED_HOST_1'), env('ALLOWED_HOST_2'), env('ALLOWED_HOST_3'),env('ALLOWED_HOST_4'),]
+ALLOWED_HOSTS = [env('ALLOWED_HOST_1'), env('ALLOWED_HOST_2'), env('ALLOWED_HOST_3'),]
 
 # The domains that are allowed to make requests
-CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'), env('CORS_ALLOWED_ORIGIN_2'), env('CORS_ALLOWED_ORIGIN_3'), env('CORS_ALLOWED_ORIGIN_4')]
+CORS_ALLOWED_ORIGINS = [env('CORS_ALLOWED_ORIGIN_1'), env('CORS_ALLOWED_ORIGIN_2'), env('CORS_ALLOWED_ORIGIN_3')]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 'counsellor',
     'groups',
     'batches',
+    'branches',
     'infrastructure',
     'fees',     # this is the old fees app  which works independently from erp (just prefix urls with '/fee')
     'fees_erp', # this is the main fees app integrated with the whole erp project
