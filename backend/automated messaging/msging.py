@@ -2,6 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from twilio.rest import Client
+
 # Email configuration
 def send_email():
     smtp_server = 'smtp.office365.com'
