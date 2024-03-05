@@ -86,7 +86,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 
 
 admin.site.site_header = "MAIT - ERP"

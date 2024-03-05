@@ -13,6 +13,7 @@ import InfraData from './components/Infra/InfraData';
 import DisplayFees from './components/Fees/DisplayFees';
 import BilldeskPayment from './components/Fees/BilldeskPayment';
 import ImportantDetails from './components/Student Portal/DetailsForms/ImportantDetails';
+import SplitPayment from './components/Fees/SplitPayment';
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/student/register" element={<ComingSoon />} />
                     <Route path="/student/admission" element={<ComingSoon />} />
                     <Route path="/student-details-form" element={<DetailsForm />} />
+                    <Route path="/impdetails" element={<ImportantDetails />} />
                     <Route path="/employee-details-form" element={<EmployeeDetailsForm />} />
                     <Route path="/student-details" element={<StudentDetails />} />
                     <Route path="/call_back" element={<MicrosoftLoginCallback />} />
@@ -36,8 +38,8 @@ function App() {
                     <Route path="/infra-form" element={<InfraForm />} />
                     <Route path="/infra-data" element={<InfraData />} />
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
+                    <Route path="/split-payment" element={<SplitPayment />} />
                     <Route path="/display-fee" element={<DisplayFees />} />
-                    <Route path="/impdetails" element={<ImportantDetails />} />
                     <Route path="/pay-fee" element={<BilldeskPayment />} />
                     {/* Add more routes as needed */}
                 </Routes>

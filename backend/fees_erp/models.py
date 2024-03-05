@@ -1,5 +1,25 @@
 from django.db import models
 from batches.models import Batches
+from authentication.models import User
+
+
+class SplitPayment(models.Model):
+    
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, db_column='student')
+    application = models.TextField()
+    document1 = models.FileField(blank=True, upload_to='student/fees')
+    document2 = models.FileField(blank=True, upload_to='student/fees')
+    document3 = models.FileField(blank=True, upload_to='student/fees')
+    
+    allow_split_payment = models.BooleanField(default=False)
+    
+    
+    class Meta:
+        db_table = 'split_payment_approval'  
+        verbose_name_plural = "Split Payment Approval"
+
+
+
 
 class Fees(models.Model):
 

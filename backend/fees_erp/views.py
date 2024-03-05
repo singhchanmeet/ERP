@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from student.permissions import IsStudent
-from . models import Fees, BilldeskOrders, BilldeskTransactions
+from . models import Fees, SplitPayment, BilldeskOrders, BilldeskTransactions
+from . serializers import SplitPaymentSerializer
 from student.models import Student
 
 from django.shortcuts import render, redirect, HttpResponse
@@ -72,7 +73,44 @@ class FeesDisplay(APIView):
         
         else:
             return Response({'error': 'fees for batch not found'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+# view for the whole request panel for paying in parts
+class SplitPaymentView(APIView):
+    
+    permission_classes = (IsAuthenticated, )
+    
+    def post(self, request) :
         
+        # appending the student to request data for saving
+        request.data._mutable = True
+        request.data['student'] = request.user.pk
+        request.data._mutable = False
+        
+        serializer = SplitPaymentSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response ({'message': 'Record created successfully'}, status=status.HTTP_201_CREATED)
+        
+        else: 
+            return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+    def get(self, request):
+
+        student = request.user
+        student = SplitPayment.objects.filter(student=student).first()
+
+        if student:
+            serializer = SplitPaymentSerializer(student)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Student details not found'}, status=status.HTTP_204_NO_CONTENT)
+
+
+# to create billdesk orders
 @api_view(['POST'])
 def create_billdesk_order(request):
     
@@ -158,8 +196,7 @@ def create_billdesk_order(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-
-
+# billdesk order callback
 @csrf_exempt
 def billdesk_order_callback(request):
     

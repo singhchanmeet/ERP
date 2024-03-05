@@ -1,6 +1,10 @@
 from django.contrib import admin
-from . models import Fees, BilldeskOrders, BilldeskTransactions
+from . models import Fees, SplitPayment, BilldeskOrders, BilldeskTransactions
 from import_export.admin import ExportActionMixin
+
+class SplitPaymentAdmin(ExportActionMixin, admin.ModelAdmin):
+    list_display = ['student', 'application', 'allow_split_payment']
+    list_editable = ['allow_split_payment']
 
 class FeesAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ['batch', 'total_fee']
@@ -36,6 +40,7 @@ class BilldeskTransactionsAdmin(admin.ModelAdmin):
         return False
 
 admin.site.register(Fees, FeesAdmin)
+admin.site.register(SplitPayment, SplitPaymentAdmin)
 admin.site.register(BilldeskOrders, BilldeskOrdersAdmin)
 admin.site.register(BilldeskTransactions, BilldeskTransactionsAdmin)
 
