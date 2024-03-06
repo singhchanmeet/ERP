@@ -15,6 +15,8 @@ import BilldeskPayment from './components/Fees/BilldeskPayment';
 import ImportantDetails from './components/Student Portal/DetailsForms/ImportantDetails';
 import SplitPayment from './components/Fees/SplitPayment';
 import FeesComponent from './components/Fees/FeesComponent';
+import FeeHistory from './components/Fees/FeeHistory';
+import FeesStructure from './components/Fees/FeesStructure';
 
 function App() {
     return (
@@ -41,6 +43,8 @@ function App() {
                     <Route path="/manage-infra" element={<ManagingDashboard />} />
                     <Route path="/split-payment" element={<SplitPayment />} />
                     <Route path="/display-fee" element={<DisplayFees />} />
+                    <Route path="/fee-history" element={<FeeHistory />} />
+                    <Route path="/fee-structure" element={<FeesStructure />} />
                     <Route path="/pay-fee" element={<BilldeskPayment />} />
                     <Route path="/fee-comp" element={<FeesComponent />} />
                     {/* Add more routes as needed */}

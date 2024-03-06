@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Transactions - Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-table th,
+        .pdf-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .pdf-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .pdf-button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #f2f2f2;
+            border: 2px solid #000;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .pdf-button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        #REPORT-PDF h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #REPORT-PDF h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- Checkboxes for column visibility -->
+        <label for="enrollment_number_checkbox">Enrollment Number</label>
+        <input type="checkbox" id="enrollment_number_checkbox" class="checkbox" checked>
+        <label for="batch_checkbox">Batch</label>
+        <input type="checkbox" id="batch_checkbox" class="checkbox" checked>
+        <label for="group_checkbox">Group</label>
+        <input type="checkbox" id="group_checkbox" class="checkbox" checked>
+        <label for="branch_checkbox">Branch</label>
+        <input type="checkbox" id="branch_checkbox" class="checkbox" checked>
+        <label for="order_id_checkbox">Order ID</label>
+        <input type="checkbox" id="order_id_checkbox" class="checkbox" checked>
+        <label for="transaction_id_checkbox">Transaction ID</label>
+        <input type="checkbox" id="transaction_id_checkbox" class="checkbox" checked>
+        <label for="transaction_time_checkbox">Transaction Time</label>
+        <input type="checkbox" id="transaction_time_checkbox" class="checkbox" checked>
+        <label for="transaction_amount_checkbox">Transaction Amount</label>
+        <input type="checkbox" id="transaction_amount_checkbox" class="checkbox" checked>
+        <label for="transaction_status_checkbox">Transaction Status</label>
+        <input type="checkbox" id="transaction_status_checkbox" class="checkbox" checked>
+        <label for="payment_method_checkbox">Payment Method</label>
+        <input type="checkbox" id="payment_method_checkbox" class="checkbox" checked>
+
+        <!-- Print PDF button -->
+        <button class="pdf-button" onclick="printPageArea('REPORT-PDF')">Print PDF</button>
+    </div>
+    <br>
+    <div id="REPORT-PDF">
+        <!-- Report title and date range -->
+        <h2>
+            {% if report_type %}
+                {{ report_type }} 
+            {% endif %}
+        </h2>
+        <h3>
+            {% if start_date and end_date %}
+                ({{ start_date|date:"F d, Y" }} - {{ end_date|date:"F d, Y" }})
+            {% endif %}
+        </h3>
+        
+        <!-- Table for student data -->
+        <table class="pdf-table">
+            <thead>
+                <tr id="heading_row">
+                    <th id="enrollment_number_heading">Enrollment Number</th>
+                    <th id="batch_heading">Batch</th>
+                    <th id="group_heading">Group</th>
+                    <th id="branch_heading">Branch</th>
+                    <th id="order_id_heading">ORDER ID</th>
+                    <th id="transaction_id_heading">Transaction ID</th>
+                    <th id="transaction_time_heading">Transaction Time</th>
+                    <th id="transaction_amount_heading">Transaction Amount</th>
+                    <th id="transaction_status_heading">Transaction Status</th>
+                    <th id="payment_method_heading">Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in all_students %}
+                <tr>
+                    <td id="enrollment_number_data">{{ student.enrollment_number }}</td>
+                    <td id="batch_data">{{ student.batch }}</td>
+                    <td id="group_data">{{ student.group }}</td>
+                    <td id="branch_data">{{ student.branch }}</td>
+                    <td id="order_id_data">{{ student.order_id }}</td>
+                    <td id="transaction_id_data">{{ student.transaction_id }}</td>
+                    <td id="transaction_time_data">{{ student.transaction_time }}</td>
+                    <td id="transaction_amount_data">{{ student.transaction_amount }}</td>
+                    <td id="transaction_status_data">{{ student.transaction_status }}</td>
+                    <td id="payment_method_data">{{ student.payment_method }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript for checkbox functionality and printing -->
+    <script>
+        const checkboxes = document.querySelectorAll('.checkbox');
+        const headings = document.querySelectorAll('th');
+        const dataCells = document.querySelectorAll('td');
+
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    headings[index].style.display = 'table-cell';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'table-cell';
+                        }
+                    });
+                } else {
+                    headings[index].style.display = 'none';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+
+        function printPageArea(areaID) {
+            const printContent = document.getElementById(areaID).innerHTML;
+            const originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            document.title = 'Student Transactions Report';
+
+            // Restore display of hidden fields after printing (if needed)
+            checkboxes.forEach((checkbox, index) => {
+                if (!checkbox.checked) {
+                    headings[index].style.display = 'table-cell';
+                    dataCells.forEach(cell => {
+                        if (cell.cellIndex === index) {
+                            cell.style.display = 'table-cell';
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

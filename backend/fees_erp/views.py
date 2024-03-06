@@ -266,4 +266,38 @@ class StudentFeesView(APIView):
 
         return Response(data, status=status.HTTP_200_OK)
     
+       
+       
+class FeesPaid(APIView) :
+    
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
         
+        user = request.user
+        
+        is_split_payment = SplitPayment.objects.filter(student=user)
+        
+        if len(is_split_payment) == 1:
+            
+            has_paid_full = StudentFees.objects.filter(student=user)
+            
+            # applied for split payment and paid full
+            if len(has_paid_full) == 2:
+                return Response({'split':True,'paid':True}, status=status.HTTP_200_OK)
+            # applied for split payment and paid half
+            elif len(has_paid_full) == 1:
+                return Response({'split':True,'paid':'half'}, status=status.HTTP_200_OK)
+            # applied for split payment and not paid at all
+            else:
+                return Response({'split':True,'paid':False}, status=status.HTTP_200_OK)
+        else :
+            
+            has_paid_full = StudentFees.objects.filter(student=user)
+            
+            # not applied for split and paid full
+            if len(has_paid_full) == 1:
+                return Response({'split':False,'paid':True}, status=status.HTTP_200_OK)
+            # not applied for split and paid full
+            else:
+                return Response({'split':False,'paid':False}, status=status.HTTP_200_OK)

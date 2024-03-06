@@ -51,19 +51,23 @@ const FeesComponent = () => {
                         <h1 className="text-2xl font-bold mb-4">Fees Management</h1>
                         <div className="flex flex-col gap-4">
                         <Link to={'/display-fee'}>
-                                <button
-                                    type="submit"
-                                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                >
-                                    Pay Fees
-                                </button>
-                            </Link>
+                            <button
+                                type="submit"
+                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            >
+                                Pay Fees
+                            </button>
+                        </Link>
+                        <Link to={'/fee-history'}>
                             <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                                 Past Transactions
                             </button>
+                        </Link>
+                        <Link to={'/fee-structure'}>
                             <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                 View Fees Structure
                             </button>
+                        </Link>
                         </div>
                     </div>
                 </div>
