@@ -16,12 +16,11 @@ const StudentNavbar = () => {
     // Fetch the user details from your API
     axios.get(`${host}/user-details/`, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`, // Add the token to the 'Authorization' header
-        'Content-Type': 'application/json', // Adjust headers as needed
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json', 
       },
     })
       .then((response) => {
-        // Assuming the API response contains user data
         setUser(response.data);
       })
       .catch((error) => {
@@ -81,7 +80,7 @@ const StudentNavbar = () => {
                     <Link to="/attendance" className="hover:underline">Attendance</Link>
                   </li>
                   <li className="mb-2">
-                    <Link to='/display-fee' className="hover:underline">Fees</Link>
+                    <Link to='/fee-comp' className="hover:underline">Fees</Link>
                   </li>
                 </ul>
                 <button
