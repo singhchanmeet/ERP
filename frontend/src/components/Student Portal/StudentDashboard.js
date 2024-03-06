@@ -11,7 +11,6 @@ const StudentDashboard = ({ user }) => {
   const [formFilled, setFormFilled] = useState(false);
   const [student, setStudent] = useState(null);
   const [detailsExist, setDetailsExist] = useState(false)
-  const navigate = useNavigate()
 
   const fetchDetails = async () => {
     try {
@@ -24,8 +23,11 @@ const StudentDashboard = ({ user }) => {
       })
       const data = await response.json()
       // Check if all required details exist in the response
+      console.log(data);
       if (response.ok) {
-        setDetailsExist(true)
+        if(response.data.batch){
+          setDetailsExist(true)
+        }
       }
     } catch (error) {
       console.error('Error fetching details:', error)
@@ -60,7 +62,7 @@ const StudentDashboard = ({ user }) => {
       .catch((error) => {
         console.error('Error fetching user data:', error);
       });
-    fetchDetails()
+    fetchDetails();
   }, [accessToken, formFilled]);
   console.log(`details ${detailsExist}`)
   return (
