@@ -4,9 +4,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from student.permissions import IsStudent
-from . models import Fees, SplitPayment, BilldeskOrders, BilldeskTransactions
+from . models import Fees, SplitPayment, StudentFees, BilldeskOrders, BilldeskTransactions
 from . serializers import SplitPaymentSerializer
 from student.models import Student
+from authentication.models import User
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
@@ -196,7 +197,10 @@ def create_billdesk_order(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
 
-# billdesk order callback
+
+
+
+# billdesk order callback, after successful payment
 @csrf_exempt
 def billdesk_order_callback(request):
     
@@ -207,6 +211,29 @@ def billdesk_order_callback(request):
                             payment_method=decoded_response.get('payment_method_type', ''), transaction_response=decoded_response)
     
     new_transaction.save()
+    
+    
+    # saving final student fee record if the transaction is successful
+    if (decoded_response.get('transaction_error_type', '') == 'success'):
+        
+        enrollment_number =  decoded_response.get('orderid', '')[:11]
+        user = User.objects.get(user_id=enrollment_number)
+        student = Student.objects.get(student_id=user)
+        batch = student.batch.pk
+        branch = student.branch.pk
+        group = student.group.pk
+        
+        new_fee = StudentFees.objects.create(student=user.pk, enrollment_number=enrollment_number,
+                                             batch=batch, group=group, branch=branch, order_id=decoded_response.get('orderid', ''),
+                                             transaction_id=decoded_response.get('transactionid', ''),
+                                            transaction_amount=decoded_response.get('amount', ''), 
+                                            transaction_status=decoded_response.get('transaction_error_type', ''),
+                                            payment_method=decoded_response.get('payment_method_type', ''))
+        
+        new_fee.save()       
+    
+    
+    
     
     context = {
         "TransactionID " : decoded_response.get('transactionid', ''),
