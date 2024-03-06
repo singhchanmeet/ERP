@@ -219,11 +219,11 @@ def billdesk_order_callback(request):
         enrollment_number =  decoded_response.get('orderid', '')[:11]
         user = User.objects.get(user_id=enrollment_number)
         student = Student.objects.get(student_id=user)
-        batch = student.batch.pk
-        branch = student.branch.pk
-        group = student.group.pk
+        batch = student.batch
+        branch = student.branch
+        group = student.group
         
-        new_fee = StudentFees.objects.create(student=user.pk, enrollment_number=enrollment_number,
+        new_fee = StudentFees.objects.create(student=user, enrollment_number=enrollment_number,
                                              batch=batch, group=group, branch=branch, order_id=decoded_response.get('orderid', ''),
                                              transaction_id=decoded_response.get('transactionid', ''),
                                             transaction_amount=decoded_response.get('amount', ''), 
