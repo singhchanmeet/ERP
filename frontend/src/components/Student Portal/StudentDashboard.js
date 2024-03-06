@@ -25,7 +25,7 @@ const StudentDashboard = ({ user }) => {
       // Check if all required details exist in the response
       console.log(data);
       if (response.ok) {
-        if(response.data.batch){
+        if(data.batch !== null && data.branch !== null && data.group !== null){
           setDetailsExist(true)
         }
       }

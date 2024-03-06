@@ -35,7 +35,7 @@ const ImportantDetails = () => {
             try {
                 const response = await fetch(`${host}/groups/get-all/`)
                 const data = await response.json()
-                setGroups(data.groups ? data.groups.slice(1) : []) // Use data.groups if it exists, otherwise use an empty array
+                setGroups(data.groups ? data.groups : [])
             } catch (error) {
                 console.error('Error fetching groups:', error)
             }
@@ -45,7 +45,7 @@ const ImportantDetails = () => {
             try {
                 const response = await fetch(`${host}/branches/get-all/`)
                 const data = await response.json()
-                setBranches(data.branches ? data.branches.slice(1) : []) // Use data.branches if it exists, otherwise use an empty array
+                setBranches(data.branches ? data.branches : [])
             } catch (error) {
                 console.error('Error fetching branches:', error)
             }
@@ -55,7 +55,7 @@ const ImportantDetails = () => {
             try {
                 const response = await fetch(`${host}/batches/get-all/`)
                 const data = await response.json()
-                setBatches(data.batches ? data.batches.slice(1) : []) // Use data.batches if it exists, otherwise use an empty array
+                setBatches(data.batches ? data.batches : [])
             } catch (error) {
                 console.error('Error fetching batches:', error)
             }
@@ -94,7 +94,7 @@ const ImportantDetails = () => {
                 }),
             })
             if (response.ok) {
-                // Handle successful submission, maybe show a success message
+                
                 setDetailsExist(true)
                 navigate('/dashboard')
             } else {
