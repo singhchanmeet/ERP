@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from student.permissions import IsStudent
 from . models import Fees, SplitPayment, StudentFees, BilldeskOrders, BilldeskTransactions
-from . serializers import SplitPaymentSerializer
+from . serializers import SplitPaymentSerializer, StudentFeesSerializer
 from student.models import Student
 from authentication.models import User
 
@@ -245,3 +245,25 @@ def billdesk_order_callback(request):
     }
 
     return render(request, 'fees_erp/bill.html', context)
+
+
+
+class StudentFeesView(APIView):
+    
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        
+        user = request.user
+        fees = StudentFees.objects.filter(student = request.user)
+        
+        data = []
+        
+        for fee in fees:
+
+            serializer = StudentFeesSerializer(fee)
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_200_OK)
+    
+        
