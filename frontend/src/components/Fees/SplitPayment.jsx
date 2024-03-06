@@ -55,7 +55,7 @@ const SplitPayment = () => {
       if (response.status === 201) {
         console.log(response.data);
         // Additional logic if needed
-
+        alert('Application Submitted Successfully');
         // Redirect to the DisplayFees component after successful submission
         navigate('/display-fee');
       } else {
@@ -74,7 +74,7 @@ const SplitPayment = () => {
       <form className="max-w-md mx-auto" onSubmit={handleFormSubmit}>
         <div className="mb-4">
           <label htmlFor="application" className="block text-sm font-medium text-gray-700">
-            Application
+            Application*
           </label>
           <input
             type="text"
