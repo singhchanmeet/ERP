@@ -63,7 +63,7 @@ const DisplayFees = () => {
       },
     })
       .then(response => {
-        if (response.status === 200 && response.data.paid) {
+        if (response.status === 200 && response.data.paid === true) {
           // Fees are paid for this year
           setFeesPaid(true);
         } else {
