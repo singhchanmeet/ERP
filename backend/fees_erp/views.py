@@ -283,7 +283,7 @@ class FeesPaid(APIView) :
             has_paid_full = StudentFees.objects.filter(student=user)
             
             # applied for split payment and paid full
-            if len(has_paid_full) == 2:
+            if len(has_paid_full) >= 2:
                 return Response({'split':True,'paid':True}, status=status.HTTP_200_OK)
             # applied for split payment and paid half
             elif len(has_paid_full) == 1:
@@ -296,8 +296,9 @@ class FeesPaid(APIView) :
             has_paid_full = StudentFees.objects.filter(student=user)
             
             # not applied for split and paid full
-            if len(has_paid_full) == 1:
+            if len(has_paid_full) >= 1:
                 return Response({'split':False,'paid':True}, status=status.HTTP_200_OK)
             # not applied for split and paid full
             else:
                 return Response({'split':False,'paid':False}, status=status.HTTP_200_OK)
+            
