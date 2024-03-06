@@ -52,7 +52,7 @@ const StudentDetails = () => {
                         <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details</p>
                         <br /><div>
 
-                            <img className='w-[150px]' src={`http://localhost:8000${studentData.passport_photograph}`} alt="Passport Photograph" />
+                            <img className='w-[150px]' src={`${host}${studentData.passport_photograph}`} alt="Passport Photograph" />
                         </div>
                         <div>
                             <div class="px-4 sm:px-0">
