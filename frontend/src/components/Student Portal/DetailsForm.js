@@ -10,45 +10,45 @@ const DetailsForm = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const [studentDetails, setStudentDetails] = useState({
-    enrollment_number: '',
-    ipu_registration_number: '',
-    name: '',
-    dob: '',
+    enrollment_number: ' ',
+    ipu_registration_number: ' ',
+    name: ' ',
+    dob: ' ',
     full_address: '',
     email: '',
     mobile_number: '',
     gender: '',
     category: '',
-    region: '',
-    father_name: '',
-    mother_name: '',
-    father_qualification: '',
-    mother_qualification: '',
-    father_occupation: '',
-    mother_occupation: '',
-    father_job_designation: '',
-    mother_job_designation: '',
-    father_business_type: '',
-    mother_business_type: '',
-    father_mobile_number: '',
-    mother_mobile_number: '',
-    father_office_address: '',
-    mother_office_address: '',
-    guardian_name: '',
-    board_12th: '',
+    region: ' ',
+    father_name: ' ',
+    mother_name: ' ',
+    father_qualification: ' ',
+    mother_qualification: ' ',
+    father_occupation: ' ',
+    mother_occupation: ' ',
+    father_job_designation:  ' ',
+    mother_job_designation: ' ',
+    father_business_type: ' ',
+    mother_business_type: ' ',
+    father_mobile_number: ' ',
+    mother_mobile_number: ' ',
+    father_office_address: ' ',
+    mother_office_address: ' ',
+    guardian_name: ' ',
+    board_12th: ' ',
     year_of_12th: null,
     rollno_12th: null,
     school_12th: '',
     aggregate_12th: null,
-    board_10th: '',
+    board_10th: ' ',
     year_of_10th: null,
     rollno_10th: null,
-    school_10th: '',
+    school_10th: ' ',
     aggregate_10th: null,
     jee_rank: null,
     jee_percentile: null,
-    jee_rollno: '',
-    special_achievements: '',
+    jee_rollno: ' ',
+    special_achievements: ' ',
     passport_photograph: null, // For file/image upload, use 'null' or initialize with a default value as needed.
     marksheet_10th: null,
     marksheet_12th: null,
@@ -353,7 +353,7 @@ const DetailsForm = () => {
                         type="text"
                         name="name"
                         id="name"
-                        value={studentDetails.name}
+                        value={studentDetails.name || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
@@ -370,7 +370,7 @@ const DetailsForm = () => {
                         type="date"
                         name="dob"
                         placeholder="Date of Birth"
-                        value={studentDetails.dob}
+                        value={studentDetails.dob || ""}
                         onChange={handleInputChange}
                         id="dob"
                         required
@@ -390,7 +390,7 @@ const DetailsForm = () => {
                         type="email"
                         name="email"
                         placeholder="Email"
-                        value={studentDetails.email}
+                        value={studentDetails.email || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
@@ -407,7 +407,7 @@ const DetailsForm = () => {
                         type="text"
                         name="full_address"
                         placeholder="Full Address"
-                        value={studentDetails.full_address}
+                        value={studentDetails.full_address || ""}
                         onChange={handleInputChange}
                         id="full_address"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
@@ -424,7 +424,7 @@ const DetailsForm = () => {
                         type="text"
                         name="mobile_number"
                         placeholder="Mobile Number"
-                        value={studentDetails.mobile_number}
+                        value={studentDetails.mobile_number || ""}
                         onChange={handleInputChange}
                         id="mobile_number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -443,7 +443,7 @@ const DetailsForm = () => {
                         type="text"
                         name="gender"
                         placeholder="Gender"
-                        value={studentDetails.gender}
+                        value={studentDetails.gender || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         required
@@ -466,7 +466,7 @@ const DetailsForm = () => {
                         type="text"
                         name="category"
                         placeholder="Category"
-                        value={studentDetails.category}
+                        value={studentDetails.category || ""}
                         id='category'
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -493,7 +493,7 @@ const DetailsForm = () => {
                         type="text"
                         name="region"
                         placeholder="Region"
-                        value={studentDetails.region}
+                        value={studentDetails.region || ""}
                         id='region'
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -527,7 +527,6 @@ const DetailsForm = () => {
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
                 <div>
-
                   <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange} placeholder="Father's name" />
                   {formErrors.father_name && <p className="error text-red-600 text-sm ">{formErrors.father_name}</p>}
                 </div>
@@ -696,7 +695,7 @@ const DetailsForm = () => {
                     <input
                       type='text'
                       name="board_10th"
-                      value={studentDetails.board_10th}
+                      value={studentDetails.board_10th || ""}
                       onChange={handleInputChange}
                       placeholder="10th Board"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -711,7 +710,7 @@ const DetailsForm = () => {
                   <div className="mt-2">
                     <input
                       name="year_of_10th"
-                      value={studentDetails.year_of_10th}
+                      value={studentDetails.year_of_10th || ""}
                       onChange={handleInputChange}
                       placeholder="Year of Passing (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -727,7 +726,7 @@ const DetailsForm = () => {
 
                     <input
                       name="rollno_10th"
-                      value={studentDetails.rollno_10th}
+                      value={studentDetails.rollno_10th || ""}
                       onChange={handleInputChange}
                       placeholder="10th Roll Number"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -743,7 +742,7 @@ const DetailsForm = () => {
 
                     <input
                       name="school_10th"
-                      value={studentDetails.school_10th}
+                      value={studentDetails.school_10th || ""}
                       onChange={handleInputChange}
                       placeholder="School Name (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -759,7 +758,7 @@ const DetailsForm = () => {
 
                     <input
                       name="aggregate_10th"
-                      value={studentDetails.aggregate_10th}
+                      value={studentDetails.aggregate_10th || ""}
                       onChange={handleInputChange}
                       placeholder="Aggregate (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -780,7 +779,7 @@ const DetailsForm = () => {
 
                     <input
                       name="board_12th"
-                      value={studentDetails.board_12th}
+                      value={studentDetails.board_12th || ""}
                       onChange={handleInputChange}
                       placeholder="12th Board"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -797,7 +796,7 @@ const DetailsForm = () => {
 
                     <input
                       name="year_of_12th"
-                      value={studentDetails.year_of_12th}
+                      value={studentDetails.year_of_12th || ""}
                       onChange={handleInputChange}
                       placeholder="Year of Passing (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -813,7 +812,7 @@ const DetailsForm = () => {
 
                     <input
                       name="rollno_12th"
-                      value={studentDetails.rollno_12th}
+                      value={studentDetails.rollno_12th || ""}
                       onChange={handleInputChange}
                       placeholder="12th Roll Number"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -829,7 +828,7 @@ const DetailsForm = () => {
 
                     <input
                       name="school_12th"
-                      value={studentDetails.school_12th}
+                      value={studentDetails.school_12th || ""}
                       onChange={handleInputChange}
                       placeholder="School Name (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -846,7 +845,7 @@ const DetailsForm = () => {
 
                     <input
                       name="aggregate_12th"
-                      value={studentDetails.aggregate_12th}
+                      value={studentDetails.aggregate_12th || ""}
                       onChange={handleInputChange}
                       placeholder="Aggregate (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -1282,7 +1281,7 @@ const DetailsForm = () => {
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
                   {studentDetails.passport_photograph ? (
-                    <p>Uploaded File: {studentDetails.passport_photograph.name}</p>
+                    <p>Uploaded File: {studentDetails.passport_photograph}</p>
                   ) : (
                     <p>Not uploaded</p>
                   )}

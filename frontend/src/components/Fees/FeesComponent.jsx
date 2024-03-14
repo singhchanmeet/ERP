@@ -1,15 +1,41 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import StudentSidePanel from '../Student Portal/StudentSidePanel';
 
 const FeesComponent = () => {
+    const navigate = useNavigate();
+    const [detailsExist, setDetailsExist] = useState(false);
     const [feesStatus, setFeesStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const host = process.env.REACT_APP_BACKEND_URL;
     const accessToken = localStorage.getItem('accessToken');
     const [studentData, setStudentData] = useState(null);
+    const fetchDetails = async () => {
+        try {
+            const response = await fetch(`${host}/student/other-details/`, {
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            // Check if all required details exist in the response
+            if (response.ok) {
+                if (data.batch !== null && data.branch !== null && data.group !== null) {
+                    setDetailsExist(true);
+                } else {
+                    // Navigate to "/impdetails" if details don't exist
+                    navigate("/impdetails");
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching details:', error);
+            navigate("/impdetails");
+        }
+    };
     useEffect(() => {
         axios.get(`${host}/fee/paid/`, {
             headers: {
@@ -26,11 +52,8 @@ const FeesComponent = () => {
             .finally(() => {
                 setLoading(false);
             });
+        fetchDetails();
     }, [accessToken]);
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
     if (error) {
         return <p>Error: {error}</p>;
     }
@@ -73,8 +96,8 @@ const FeesComponent = () => {
                         <h1 className='text-xl '>Fees Status</h1>
                         {feesStatus && (
                             <p className={`text-lg font-semibold ${feesStatus.paid === 'half' ? 'text-yellow-500' :
-                                    feesStatus.paid ? 'text-green-500' :
-                                        'text-red-500'
+                                feesStatus.paid ? 'text-green-500' :
+                                    'text-red-500'
                                 }`}>
                                 {feesStatus.split ? 'Applied for split payment' : ' '} -
                                 {feesStatus.paid === 'half' ? 'Paid half' : feesStatus.paid ? 'Paid full' : 'Not paid'}

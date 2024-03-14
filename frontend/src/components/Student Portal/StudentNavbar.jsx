@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars } from 'react-icons/fa'; // Import the hamburger icon
-import { FaTimes } from 'react-icons/fa'; // Import the close icon
+import { FaBars } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import AuthContext from '../../context/auth/authContext';
 import maitlogomain from '../../assets/maitlogomain.png'
 import axios from 'axios';
