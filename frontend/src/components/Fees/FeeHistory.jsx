@@ -5,7 +5,7 @@ import axios from 'axios';
 const FeeHistory = () => {
   const [feeHistory, setFeeHistory] = useState([]);
   const accessToken = localStorage.getItem('accessToken');
-  const host = 'https://admin.erp.mait.ac.in'; // Replace with your actual backend URL
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     // Fetch fee payment history from the server
