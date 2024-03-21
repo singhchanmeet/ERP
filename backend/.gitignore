@@ -6,6 +6,7 @@ media/
 error.log/
 error.log
 /error.log
+.env
 
 authentication/__pycache__/
 authentication/migrations/__pycache__/
