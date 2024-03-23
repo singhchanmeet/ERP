@@ -15,8 +15,10 @@ import BilldeskPayment from './components/Fees/BilldeskPayment';
 import ImportantDetails from './components/Student Portal/DetailsForms/ImportantDetails';
 import SplitPayment from './components/Fees/SplitPayment';
 import FeesComponent from './components/Fees/FeesComponent';
+import FeesComponentAdmin from './components/FeesAdmin/FeesComponentAdmin';
 import FeeHistory from './components/Fees/FeeHistory';
 import FeesStructure from './components/Fees/FeesStructure';
+import AccountsLogin from './components/FeesAdmin/AccountsLogin';
 
 function App() {
     return (
@@ -47,6 +49,8 @@ function App() {
                     <Route path="/fee-structure" element={<FeesStructure />} />
                     <Route path="/pay-fee" element={<BilldeskPayment />} />
                     <Route path="/fee-comp" element={<FeesComponent />} />
+                    <Route path="/fee-comp-admin" element={<FeesComponentAdmin />} />
+                    <Route path="/fee-admin-login" element={<AccountsLogin />} />
                     {/* Add more routes as needed */}
                 </Routes>
                 <Footer />
