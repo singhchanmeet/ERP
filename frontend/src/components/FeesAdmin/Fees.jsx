@@ -2,7 +2,7 @@ import React from 'react'
 
 function Fees() {
   return (
-    <div>Fees</div>
+    <div>Add Batchwise Fees</div>
   )
 }
 
