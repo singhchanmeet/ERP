@@ -17,12 +17,13 @@ import SplitPayment from './components/Fees/SplitPayment';
 import FeesComponent from './components/Fees/FeesComponent';
 import FeeHistory from './components/Fees/FeeHistory';
 import FeesStructure from './components/Fees/FeesStructure';
+import NotFound from './components/standard/NotFound';
 
 function App() {
     return (
         <Router>
             <AuthState>
-                <Navbar/>
+                {/* <Navbar/> */}
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/dashboard" element={<Dashboard />} />
@@ -48,6 +49,7 @@ function App() {
                     <Route path="/pay-fee" element={<BilldeskPayment />} />
                     <Route path="/fee-comp" element={<FeesComponent />} />
                     {/* Add more routes as needed */}
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
             </AuthState>
