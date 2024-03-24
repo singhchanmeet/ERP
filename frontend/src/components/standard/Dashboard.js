@@ -3,6 +3,7 @@ import axios from 'axios';
 import StudentDashboard from '../Student Portal/StudentDashboard';
 import EmployeeDashboard from '../Employee Portal/EmployeeDashboard';
 import ErrorPage from './ErrorPage';
+import Navbar from './Navbar';
 const Dashboard = ({ loggedin, handleLogout }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,6 +41,7 @@ const Dashboard = ({ loggedin, handleLogout }) => {
 
   return (
     <div className=''>
+      <Navbar user={user} loggedin={loggedin} handleLogout={handleLogout} />
       {/* <h2 className='text-2xl py-3 ml-10 font-mono'>Welcome,<span className=' font-semibold text-red-600'> {user.username}!</span></h2> */}
       {/* Render the appropriate dashboard based on the user's role */}
       {userRole === 'STUDENT' && <StudentDashboard user={user} loggedin={loggedin} handleLogout={handleLogout} />}
