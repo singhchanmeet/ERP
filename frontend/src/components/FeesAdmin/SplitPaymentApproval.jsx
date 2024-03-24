@@ -34,7 +34,7 @@ function SplitPaymentApproval() {
       const accessToken = localStorage.getItem('accessToken');
       const host = process.env.REACT_APP_BACKEND_URL;
       await axios.post(
-        `https://admin.erp.mait.ac.in/fee/split-payment/${studentId}/approve/`,
+        `https://admin.erp.mait.ac.in/fee/split-payment/`,
         {},
         {
           headers: {
