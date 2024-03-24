@@ -26,7 +26,7 @@ const DetailsForm = () => {
     mother_qualification: ' ',
     father_occupation: ' ',
     mother_occupation: ' ',
-    father_job_designation:  ' ',
+    father_job_designation: ' ',
     mother_job_designation: ' ',
     father_business_type: ' ',
     mother_business_type: ' ',
@@ -310,8 +310,14 @@ const DetailsForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setStudentDetails({ ...studentDetails, [name]: value });
+    if (name === 'mobile_number' || name === 'father_mobile_number' || name === 'mother_mobile_number') {
+      const newValue = value.slice(0, 10); // Limit to first 10 digits
+      setStudentDetails({ ...studentDetails, [name]: newValue });
+    } else {
+      setStudentDetails({ ...studentDetails, [name]: value });
+    }
   };
+
   const handleFileInputChange = (event, fieldName) => {
     const file = event.target.files[0];
 
@@ -421,11 +427,16 @@ const DetailsForm = () => {
                     </label>
                     <div className="mt-2">
                       <input
-                        type="text"
+                        type="number"
                         name="mobile_number"
                         placeholder="Mobile Number"
-                        value={studentDetails.mobile_number || ""}
+                        value={studentDetails.mobile_number}
                         onChange={handleInputChange}
+                        onKeyPress={(e) => {
+                          if (e.target.value.length >= 10) {
+                            e.preventDefault();
+                          }
+                        }}
                         id="mobile_number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         required
@@ -545,6 +556,7 @@ const DetailsForm = () => {
                   <InputField
                     name="father_mobile_number"
                     value={studentDetails.father_mobile_number}
+                    type= "number"
                     onChange={handleInputChange}
                     placeholder="Father's Mobile Number"
                   />
@@ -638,6 +650,7 @@ const DetailsForm = () => {
                   <InputField
                     name="mother_mobile_number"
                     value={studentDetails.mother_mobile_number}
+                    type="number"
                     onChange={handleInputChange}
                     placeholder="Mother's Mobile Number"
                   />
@@ -711,6 +724,7 @@ const DetailsForm = () => {
                     <input
                       name="year_of_10th"
                       value={studentDetails.year_of_10th || ""}
+                      type= "number"
                       onChange={handleInputChange}
                       placeholder="Year of Passing (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -726,6 +740,7 @@ const DetailsForm = () => {
 
                     <input
                       name="rollno_10th"
+                      type='number'
                       value={studentDetails.rollno_10th || ""}
                       onChange={handleInputChange}
                       placeholder="10th Roll Number"
@@ -757,6 +772,7 @@ const DetailsForm = () => {
                   <div className="mt-2">
 
                     <input
+                    type='number'
                       name="aggregate_10th"
                       value={studentDetails.aggregate_10th || ""}
                       onChange={handleInputChange}
@@ -796,6 +812,7 @@ const DetailsForm = () => {
 
                     <input
                       name="year_of_12th"
+                      type='number'
                       value={studentDetails.year_of_12th || ""}
                       onChange={handleInputChange}
                       placeholder="Year of Passing (12th)"
@@ -811,6 +828,7 @@ const DetailsForm = () => {
                   <div className="mt-2">
 
                     <input
+                      type='number'
                       name="rollno_12th"
                       value={studentDetails.rollno_12th || ""}
                       onChange={handleInputChange}
@@ -846,6 +864,7 @@ const DetailsForm = () => {
                     <input
                       name="aggregate_12th"
                       value={studentDetails.aggregate_12th || ""}
+                      type='number'
                       onChange={handleInputChange}
                       placeholder="Aggregate (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -876,6 +895,7 @@ const DetailsForm = () => {
               <div>
                 <InputField
                   name="jee_rank"
+                  type="number"
                   value={studentDetails.jee_rank}
                   onChange={handleInputChange}
                   placeholder="JEE Rank"
@@ -886,6 +906,7 @@ const DetailsForm = () => {
               <div>
                 <InputField
                   name="jee_percentile"
+                  type= "number"
                   value={studentDetails.jee_percentile}
                   onChange={handleInputChange}
                   placeholder="JEE Percentile(upto 4 decimals)"
@@ -894,6 +915,7 @@ const DetailsForm = () => {
               </div>
               <div>
                 <InputField
+                type="number"
                   name="jee_rollno"
                   value={studentDetails.jee_rollno}
                   onChange={handleInputChange}
@@ -1070,7 +1092,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="mobile_number" className="text-lg font-semibold">Mobile Number:</label>
                   <input
-                    type="text"
+                    type="number"
                     id="mobile_number"
                     name="mobile_number"
                     placeholder="Mobile Number"
@@ -1214,7 +1236,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="aggregate_12th" className="text-lg font-semibold">Aggregate (12th):</label>
                   <input
-                    type="text"
+                    type="number"
                     id="aggregate_12th"
                     name="aggregate_12th"
                     placeholder="Aggregate (12th)"
@@ -1250,7 +1272,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="jee_rollno" className="text-lg font-semibold">JEE Roll Number:</label>
                   <input
-                    type="text"
+                    type="number"
                     id="jee_rollno"
                     name="jee_rollno"
                     placeholder="JEE Roll Number"
