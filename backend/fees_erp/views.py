@@ -2,13 +2,13 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from student.permissions import IsStudent
 from . models import Fees, SplitPayment, StudentFees, BilldeskOrders, BilldeskTransactions
-from . serializers import SplitPaymentSerializer, StudentFeesSerializer
+from . serializers import SplitPaymentSerializer, StudentFeesSerializer,FeesSerializer,billdeskorderSerializer,billdesktransactionSerializer
 from student.models import Student
 from authentication.models import User
-
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.template import loader
@@ -302,3 +302,25 @@ class FeesPaid(APIView) :
             else:
                 return Response({'split':False,'paid':False}, status=status.HTTP_200_OK)
             
+            
+class feesAdminPanel(viewsets.ReadOnlyModelViewSet):
+    queryset=Fees.objects.all()
+    serializer_class=FeesSerializer
+    
+class studentFeesAdminPanel(viewsets.ModelViewSet):
+    queryset=StudentFees.objects.all()
+    serializer_class=StudentFeesSerializer
+    
+    
+class splitpayment(viewsets.ModelViewSet):
+    queryset=SplitPayment.objects.all()
+    serializer_class=SplitPaymentSerializer
+        
+class BilldeskOrdersFunc(viewsets.ReadOnlyModelViewSet):
+  queryset=BilldeskOrders.objects.all()
+  serializer_class=billdeskorderSerializer
+    
+class BilldeskTransactionsFunc(viewsets.ReadOnlyModelViewSet):
+    queryset=BilldeskTransactions.objects.all()
+    serializer_class=billdesktransactionSerializer
+    
