@@ -303,7 +303,7 @@ class FeesPaid(APIView) :
                 return Response({'split':False,'paid':False}, status=status.HTTP_200_OK)
             
             
-class feesAdminPanel(viewsets.ReadOnlyModelViewSet):
+class feesAdminPanel(viewsets.ModelViewSet):
     queryset=Fees.objects.all()
     serializer_class=FeesSerializer
     
