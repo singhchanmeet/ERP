@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BilldeskOrders from './BilldeskOrders';
@@ -9,38 +8,16 @@ import SubmittedFees from './SubmittedFees';
 import Loading from '../Loading';
 
 const FeesComponentAdmin = () => {
-  const [feesStatus, setFeesStatus] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const host = process.env.REACT_APP_BACKEND_URL;
-  const accessToken = localStorage.getItem('accessToken');
   const [selectedComponent, setSelectedComponent] = useState(null);
   useEffect(() => {
-    axios.get(`${host}/fee/paid/`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => {
-        setFeesStatus(response.data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [accessToken]);
+    setLoading(false);
+  });
   if (loading) {
     return (
       <>
-        <Loading/>
+        <Loading />
       </>);
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
   }
 
   return (
@@ -60,14 +37,19 @@ const FeesComponentAdmin = () => {
                   <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('BilldeskTransactions')}>Billdesk Transactions</button>
                 </li>
                 <li className="mb-2">
-                  <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('Fees')}>Fees</button>
+                  <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('Fees')}>Add Batchwise Fees</button>
                 </li>
                 <li className="mb-2">
                   <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('SplitPaymentApproval')}>Split Payment Approval</button>
                 </li>
                 <li className="mb-2">
-                  <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('SubmittedFees')}>Submitted Fees</button>
+                  <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('SubmittedFees')}>See Submitted Fees</button>
                 </li>
+                <Link to={'/fee-comp'}>
+                  <li className="mb-2">
+                    <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100">Logout</button>
+                  </li>
+                </Link>
               </ul>
             </div>
           </div>
@@ -78,10 +60,37 @@ const FeesComponentAdmin = () => {
             {selectedComponent === 'SplitPaymentApproval' && <SplitPaymentApproval />}
             {selectedComponent === 'SubmittedFees' && <SubmittedFees />}
             {selectedComponent === null && (
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold mb-4">Welcome, Admin</h2>
-                <p className="text-lg m-2">Select an option from menu to get started.</p>
-              </div>
+              <>
+                <div className="text-center">
+                  <h2 className="text-4xl font-semibold mb-4">Welcome, Admin</h2>
+                  <p className="text-lg m-5">Select an option from menu to get started.</p>
+                </div>
+                <div className='grid grid-cols-2 gap-4'>
+                  <div onClick={() => setSelectedComponent('BilldeskOrders')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
+                    <h3 className="text-lg font-semibold mb-2">Billdesk Orders →</h3>
+                    <p className="text-sm">View all Billdesk orders.</p>
+                  </div>
+                  <div onClick={() => setSelectedComponent('BilldeskTransactions')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
+                    <h3 className="text-lg font-semibold mb-2">Billdesk Transactions →</h3>
+                    <p className="text-sm">View successful transactions on billdesk.</p>
+                  </div>
+                  <div onClick={() => setSelectedComponent('Fees')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
+                    <h3 className="text-lg font-semibold mb-2">Add Batchwise Fees →</h3>
+                    <p className="text-sm">Manage and add fees as per batch.</p>
+                  </div>
+                  <div onClick={() => setSelectedComponent('SplitPaymentApproval')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
+                    <h3 className="text-lg font-semibold mb-2">Split Payment Approval →</h3>
+                    <p className="text-sm">Approve or remove split payments requests.</p>
+                  </div>
+                  <div onClick={() => setSelectedComponent('SubmittedFees')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
+                    <h3 className="text-lg font-semibold mb-2">View Submitted Fees →</h3>
+                    <p className="text-sm">See final submitted fees details.</p>
+                  </div>
+                  <Link to={'/fee-comp'} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105 flex items-center justify-center">
+                    <h3 className="text-lg font-semibold mb-2">Logout →</h3>
+                  </Link>
+                </div>
+              </>
             )}
           </div>
         </div>
