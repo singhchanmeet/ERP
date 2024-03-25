@@ -90,6 +90,11 @@ const FeesComponent = () => {
                                     View Fees Structure
                                 </button>
                             </Link>
+                            <Link to={'/fee-admin-login'}>
+                                <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                                    Accounts Admin Login
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     <div className='w-96'>
