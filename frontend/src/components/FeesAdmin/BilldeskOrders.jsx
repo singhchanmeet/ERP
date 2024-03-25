@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loading from '../Loading';
 
 function BilldeskOrders() {
   const [orders, setOrders] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [sortBy, setSortBy] = useState('asc');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const fetchOrders = async () => {
@@ -58,35 +67,39 @@ function BilldeskOrders() {
         value={filterText}
         onChange={handleFilterChange}
       />
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-              ORDER ID
-            </th>
-            <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-              BD ORDER ID
-            </th>
-            <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-              ORDER AMOUNT
-            </th>
-            <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-              ORDER TIME
-              {sortBy === 'asc' ? ' ↑' : ' ↓'}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.map((order, index) => (
-            <tr key={order.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
-              <td className="border border-gray-300 px-4 py-2">{order.order_id}</td>
-              <td className="border border-gray-300 px-4 py-2">{order.bd_order_id}</td>
-              <td className="border border-gray-300 px-4 py-2">{order.order_amount}</td>
-              <td className="border border-gray-300 px-4 py-2">{formatTime(order.order_time)}</td>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                ORDER ID
+              </th>
+              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                BD ORDER ID
+              </th>
+              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                ORDER AMOUNT
+              </th>
+              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                ORDER TIME
+                {sortBy === 'asc' ? ' ↑' : ' ↓'}
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredOrders.map((order, index) => (
+              <tr key={order.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                <td className="border border-gray-300 px-4 py-2">{order.order_id}</td>
+                <td className="border border-gray-300 px-4 py-2">{order.bd_order_id}</td>
+                <td className="border border-gray-300 px-4 py-2">{order.order_amount}</td>
+                <td className="border border-gray-300 px-4 py-2">{formatTime(order.order_time)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        )}
     </div>
   );
 }
