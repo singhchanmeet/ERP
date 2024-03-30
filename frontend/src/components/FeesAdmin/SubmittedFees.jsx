@@ -12,11 +12,12 @@ function SubmittedFees() {
   const [groups, setGroups] = useState([]);
   const [batches, setBatches] = useState([]);
   const [branches, setBranches] = useState([]);
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const feesResponse = await axios.get('https://admin.erp.mait.ac.in/fee/feerouterstudentfees/');
+        const feesResponse = await axios.get(`${host}/fee/feerouterstudentfees/`);
         setFees(feesResponse.data);
         setLoading(false);
       } catch (error) {
@@ -27,9 +28,9 @@ function SubmittedFees() {
 
     const fetchGroupsBatchesBranches = async () => {
       try {
-        const groupsResponse = await axios.get('https://admin.erp.mait.ac.in/groups/get-all/');
-        const batchesResponse = await axios.get('https://admin.erp.mait.ac.in/batches/get-all/');
-        const branchesResponse = await axios.get('https://admin.erp.mait.ac.in/branches/get-all/');
+        const groupsResponse = await axios.get(`${host}/groups/get-all/`);
+        const batchesResponse = await axios.get(`${host}/batches/get-all/`);
+        const branchesResponse = await axios.get(`${host}/branches/get-all/`);
 
         setGroups(groupsResponse.data.groups || []);
         setBatches(batchesResponse.data.batches || []);

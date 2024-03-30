@@ -6,11 +6,12 @@ const SplitPaymentRequests = () => {
   const [splitPayments, setSplitPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://admin.erp.mait.ac.in/fee/feeroutersplitpayment/');
+        const response = await axios.get(`${host}/fee/feeroutersplitpayment/`);
         const dataWithStudentNames = await Promise.all(
           response.data.map(async (payment) => {
             return { ...payment };

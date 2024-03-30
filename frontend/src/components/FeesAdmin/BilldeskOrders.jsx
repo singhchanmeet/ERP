@@ -7,6 +7,7 @@ function BilldeskOrders() {
   const [filterText, setFilterText] = useState('');
   const [sortBy, setSortBy] = useState('asc');
   const [isLoading, setIsLoading] = useState(true);
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     fetchOrders();
@@ -21,7 +22,7 @@ function BilldeskOrders() {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('https://admin.erp.mait.ac.in/fee/feerouterbilldeskorder/');
+      const response = await axios.get(`${host}/fee/feerouterbilldeskorder/`);
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);

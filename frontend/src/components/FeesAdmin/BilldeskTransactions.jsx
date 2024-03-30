@@ -7,6 +7,7 @@ function BilldeskTransactions() {
   const [filterText, setFilterText] = useState('');
   const [sortBy, setSortBy] = useState('asc');
   const [isLoading, setIsLoading] = useState(true);
+  const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     fetchTransactions();
@@ -21,7 +22,7 @@ function BilldeskTransactions() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get('https://admin.erp.mait.ac.in/fee/feerouterbilldesktransaction/');
+      const response = await axios.get(`${host}/fee/feerouterbilldesktransaction/`);
       setTransactions(response.data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
