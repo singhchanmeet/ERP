@@ -27,35 +27,40 @@ const AccountsLogin = () => {
     };
 
     return (
-        <form onSubmit={handleLogin} className='m-5'>
-            <div>
-                <div className='text-xl my-2'>
-                    <label htmlFor="username">User Name:</label>
+        <>
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                Sign In to Accounts Admin Portal
+            </h2>
+            <form onSubmit={handleLogin} className='m-5 grid grid-cols-1 place-items-center '>
+                <div>
+                    <div className='text-xl my-2'>
+                        <label htmlFor="username">User Name:</label>
+                    </div>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        id='username'
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    id='username'
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <div>
-                <div className='text-xl my-2'>
-                    <label htmlFor="password">Password:</label>
+                <div>
+                    <div className='text-xl my-2'>
+                        <label htmlFor="password">Password:</label>
+                    </div>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        id='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    id='password'
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <button type="submit" className="bg-purple-500 my-3 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
-                Login
-            </button>
-        </form>
+                <button type="submit" className="bg-purple-500 my-3 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                    Login
+                </button>
+            </form>
+        </>
     );
 };
 
