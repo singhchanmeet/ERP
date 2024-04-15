@@ -7,6 +7,8 @@ function BilldeskOrders() {
   const [filterText, setFilterText] = useState('');
   const [sortBy, setSortBy] = useState('asc');
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ordersPerPage] = useState(10);
   const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -31,6 +33,7 @@ function BilldeskOrders() {
 
   const handleFilterChange = (event) => {
     setFilterText(event.target.value);
+    setCurrentPage(1);
   };
 
   const handleSortByOrderTime = () => {
@@ -44,6 +47,7 @@ function BilldeskOrders() {
     });
     setOrders(sortedOrders);
     setSortBy(sortBy === 'asc' ? 'desc' : 'asc');
+    setCurrentPage(1);
   };
 
   const formatTime = (timeString) => {
@@ -58,6 +62,11 @@ function BilldeskOrders() {
     order.order_time.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-2xl font-bold mb-4">Billdesk Orders</h1>
@@ -71,36 +80,47 @@ function BilldeskOrders() {
       {isLoading ? (
         <Loading />
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-                ORDER ID
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-                BD ORDER ID
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-                ORDER AMOUNT
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
-                ORDER TIME
-                {sortBy === 'asc' ? ' ↑' : ' ↓'}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.map((order, index) => (
-              <tr key={order.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
-                <td className="border border-gray-300 px-4 py-2">{order.order_id}</td>
-                <td className="border border-gray-300 px-4 py-2">{order.bd_order_id}</td>
-                <td className="border border-gray-300 px-4 py-2">{order.order_amount}</td>
-                <td className="border border-gray-300 px-4 py-2">{formatTime(order.order_time)}</td>
+        <>
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                  ORDER ID
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                  BD ORDER ID
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                  ORDER AMOUNT
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByOrderTime}>
+                  ORDER TIME
+                  {sortBy === 'asc' ? ' ↑' : ' ↓'}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        )}
+            </thead>
+            <tbody>
+              {currentOrders.map((order, index) => (
+                <tr key={order.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                  <td className="border border-gray-300 px-4 py-2">{order.order_id}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.bd_order_id}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.order_amount}</td>
+                  <td className="border border-gray-300 px-4 py-2">{formatTime(order.order_time)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-end mt-4">
+            <ul className="flex">
+              {Array.from({ length: Math.ceil(filteredOrders.length / ordersPerPage) }).map((_, index) => (
+                <li key={index} className="cursor-pointer bg-gray-200 px-3 py-1 border border-gray-300 mx-1" onClick={() => paginate(index + 1)}>
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
     </div>
   );
 }
