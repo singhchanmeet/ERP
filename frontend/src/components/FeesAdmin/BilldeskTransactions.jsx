@@ -7,6 +7,8 @@ function BilldeskTransactions() {
   const [filterText, setFilterText] = useState('');
   const [sortBy, setSortBy] = useState('asc');
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [transactionsPerPage] = useState(10);
   const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -31,6 +33,7 @@ function BilldeskTransactions() {
 
   const handleFilterChange = (event) => {
     setFilterText(event.target.value);
+    setCurrentPage(1);
   };
 
   const handleSortByTransactionTime = () => {
@@ -44,6 +47,7 @@ function BilldeskTransactions() {
     });
     setTransactions(sortedTransactions);
     setSortBy(sortBy === 'asc' ? 'desc' : 'asc');
+    setCurrentPage(1);
   };
 
   const formatTime = (timeString) => {
@@ -60,6 +64,11 @@ function BilldeskTransactions() {
     transaction.transaction_time.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  const indexOfLastTransaction = currentPage * transactionsPerPage;
+  const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+  const currentTransactions = filteredTransactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-2xl font-bold mb-4">Completed Billdesk Transactions</h1>
@@ -73,43 +82,54 @@ function BilldeskTransactions() {
       {isLoading ? (
         <Loading />
       ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                ORDER ID
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                TRANSACTION ID
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                TRANSACTION AMOUNT
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                TRANSACTION STATUS
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                PAYMENT METHOD
-              </th>
-              <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
-                TRANSACTION TIME
-                {sortBy === 'asc' ? ' ↑' : ' ↓'}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTransactions.map((transaction, index) => (
-              <tr key={transaction.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
-                <td className="border border-gray-300 px-4 py-2">{transaction.order_id}</td>
-                <td className="border border-gray-300 px-4 py-2">{transaction.transaction_id}</td>
-                <td className="border border-gray-300 px-4 py-2">{transaction.transaction_amount}</td>
-                <td className="border border-gray-300 px-4 py-2">{transaction.transaction_status}</td>
-                <td className="border border-gray-300 px-4 py-2">{transaction.payment_method}</td>
-                <td className="border border-gray-300 px-4 py-2">{formatTime(transaction.transaction_time)}</td>
+        <>
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  ORDER ID
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  TRANSACTION ID
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  TRANSACTION AMOUNT
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  TRANSACTION STATUS
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  PAYMENT METHOD
+                </th>
+                <th className="border border-gray-300 px-4 py-2 cursor-pointer" onClick={handleSortByTransactionTime}>
+                  TRANSACTION TIME
+                  {sortBy === 'asc' ? ' ↑' : ' ↓'}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentTransactions.map((transaction, index) => (
+                <tr key={transaction.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
+                  <td className="border border-gray-300 px-4 py-2">{transaction.order_id}</td>
+                  <td className="border border-gray-300 px-4 py-2">{transaction.transaction_id}</td>
+                  <td className="border border-gray-300 px-4 py-2">{transaction.transaction_amount}</td>
+                  <td className="border border-gray-300 px-4 py-2">{transaction.transaction_status}</td>
+                  <td className="border border-gray-300 px-4 py-2">{transaction.payment_method}</td>
+                  <td className="border border-gray-300 px-4 py-2">{formatTime(transaction.transaction_time)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-end mt-4">
+            <ul className="flex">
+              {Array.from({ length: Math.ceil(filteredTransactions.length / transactionsPerPage) }).map((_, index) => (
+                <li key={index} className="cursor-pointer px-3 py-1 bg-gray-200 border border-gray-300 mx-1" onClick={() => paginate(index + 1)}>
+                  {index + 1}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
     </div>
   );
