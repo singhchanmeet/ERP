@@ -85,6 +85,14 @@ const Fees = () => {
                     <p>Total Fee: {fee.total_fee}</p>
                   </div>
                 ))}
+              <div className='flex justify-center gap-10'>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:scale-110">
+                  Edit
+                </button>
+                <button className="bg-red-500 text-white px-4 py-2 rounded hover:scale-110">
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         )}
