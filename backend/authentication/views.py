@@ -2,8 +2,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
-from rest_framework import status
+from rest_framework import status,viewsets,permissions
 from .serializers import UserSerializer
+from . permissions import accounts_department
 from django.http import HttpResponse
 from . models import User
 from student.views import StudentRegister, StudentLogin
@@ -84,3 +85,18 @@ def handle_ms_login(request):
             
     #some error  
     return Response({'error': 'Unexpected User ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class accounts(APIView):
+
+    # only authenticated users can access this view
+    permission_classes = (accounts_department,)
+
+    # For fetching details of the logged in user, whether student or employee or admin
+    def get(self, request):
+
+        user = request.user
+        serializer_data = UserSerializer(user).data
+       
+        return Response(serializer_data, status=status.HTTP_200_OK)
