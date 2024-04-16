@@ -47,42 +47,41 @@ const Fees = () => {
         ))}
         {showModal && selectedBatch && (
           <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-50">
-            <div className="bg-white p-8 w-96 rounded-lg">
+            <div className="bg-white p-8 w-1/3 rounded-lg">
               <div className="flex justify-between mb-4">
-                <h2 className="text-xl font-semibold">Fees for Batch {selectedBatch}</h2>
+                <h2 className="text-2xl font-semibold">Fees for Batch {selectedBatch}</h2>
                 <button className="text-red-500" onClick={closeModal}>
-                  Close
+                &#10060;
                 </button>
               </div>
               {feesData
                 .filter((fee) => fee.batch === selectedBatch)
                 .map((fee) => (
-                  <div key={fee.id} className="mb-4">
+                  <div key={fee.id} className="mb-4 text-xl">
                     <p>
-                      Tuition Fee: {fee.display_tution_fee ? fee.tution_fee : 'hidden'}
+                      Tuition Fee: <span className=' font-semibold'>{fee.display_tution_fee ? fee.tution_fee : ' ---'}</span>
                     </p>
                     <p>
-                      Activity Fee: {fee.display_activity_fee ? fee.activity_fee : 'hidden'}
+                      Activity Fee: <span className=' font-semibold'> {fee.display_activity_fee ? fee.activity_fee : ' ---'}</span>
                     </p>
                     <p>
-                      University Fee: {fee.display_university_fee ? fee.university_fee : 'hidden'}
+                      University Fee: <span className=' font-semibold'> {fee.display_university_fee ? fee.university_fee : ' ---'}</span>
                     </p>
                     <p>
-                      Security Fee: {fee.display_security_fee ? fee.security_fee : 'hidden'}
+                      Security Fee: <span className=' font-semibold'> {fee.display_security_fee ? fee.security_fee : ' ---'}</span>
                     </p>
                     <p>
-                      College Magazine Fee: {fee.display_college_magazine ? fee.college_magazine : 'hidden'}
+                      College Magazine Fee: <span className=' font-semibold'> {fee.display_college_magazine ? fee.college_magazine : ' ---'}</span>
                     </p>
                     <p>
-                      Rechecking Fee: {fee.display_rechecking_fee ? fee.rechecking_fee : 'hidden'}
+                      Rechecking Fee: <span className=' font-semibold'> {fee.display_rechecking_fee ? fee.rechecking_fee : ' ---'}</span>
                     </p>
-                    <p>Fine: {fee.display_fine ? fee.fine : 'hidden'}</p>
+                    <p>Fine: <span className=' font-semibold'> {fee.display_fine ? fee.fine : ' ---'}</span></p>
                     <p>
-                      Institute ALumni Contribution:{' '}
-                      {fee.display_institute_alumni_contribution ? fee.institute_alumni_contribution : 'hidden'}
+                      Institute Alumni Contribution: <span className=' font-semibold'> {fee.display_institute_alumni_contribution ? fee.institute_alumni_contribution : ' ---'}</span>
                     </p>
-                    <p>Book Bank: {fee.display_book_bank ? fee.book_bank : 'hidden'}</p>
-                    <p>Total Fee: {fee.total_fee}</p>
+                    <p>Book Bank: <span className=' font-semibold'> {fee.display_book_bank ? fee.book_bank : ' ---'}</span></p>
+                    <p>Total Fee: <span className=' font-semibold'> {fee.total_fee}</span></p>
                   </div>
                 ))}
               <div className='flex justify-center gap-10'>
