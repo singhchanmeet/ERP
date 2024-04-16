@@ -9,6 +9,7 @@ const navigation = [
     { name: 'Home', href: '#' },
     { name: 'Student', href: '#' },
     { name: 'Infrastructure', href: '/infra-login' },
+    { name: 'Accounts', href: '/fee-admin-login' },
     { name: 'About', href: '#' },
 ];
 

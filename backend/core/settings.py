@@ -142,6 +142,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 
 DATABASES = {
+<<<<<<< HEAD
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -163,6 +164,22 @@ DATABASES = {
     #     'NAME': BASE_DIR / "db.sqlite3",
     # }
 
+=======
+    # 'default': {
+    #     'ENGINE': env('DATABASE_ENGINE'),
+    #     'NAME': env('DATABASE_NAME'),
+    #     'USER': env('DATABASE_USER'),
+    #     'PASSWORD': env('DATABASE_PASSWORD'),
+    #     'HOST': env('DATABASE_HOST'),
+    #     'PORT': env('DATABASE_PORT'),
+    #     'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
+>>>>>>> 3a44d5453cf19ab9ce63630d70681eccef568232
 
 
 # Password validation
