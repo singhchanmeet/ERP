@@ -69,38 +69,12 @@ function SubmittedFees() {
     (filteredBranch ? fee.branch === filteredBranch : true)
   );
 
-  const handleGeneratePDF = () => {
+  const handleDownloadPDF = () => {
     const doc = new jsPDF();
-    const tableRows = [];
-    const tableColumns = [
-      { title: 'ID', dataKey: 'id' },
-      { title: 'Enrollment Number', dataKey: 'enrollment_number' },
-      { title: 'Group', dataKey: 'group' },
-      { title: 'Batch', dataKey: 'batch' },
-      { title: 'Branch', dataKey: 'branch' },
-      { title: 'Transaction ID', dataKey: 'transaction_id' },
-      { title: 'Transaction Amount', dataKey: 'transaction_amount' },
-      { title: 'Transaction Status', dataKey: 'transaction_status' },
-    ];
-
-    filteredFees.forEach((fee) => {
-      tableRows.push({
-        id: fee.id,
-        enrollment_number: fee.enrollment_number,
-        group: fee.group,
-        batch: fee.batch,
-        branch: fee.branch,
-        transaction_id: fee.transaction_id,
-        transaction_amount: fee.transaction_amount,
-        transaction_status: fee.transaction_status,
-      });
-    });
-
     doc.autoTable({
-      head: [tableColumns.map((col) => col.title)],
-      body: tableRows,
+      head: [['ID', 'Enrollment Number', 'Group', 'Batch', 'Branch', 'Transaction ID', 'Transaction Amount', 'Transaction Status']],
+      body: filteredFees.map((fee) => [fee.id, fee.enrollment_number, fee.group, fee.batch, fee.branch, fee.transaction_id, fee.transaction_amount, fee.transaction_status]),
     });
-
     doc.save('submitted_fees.pdf');
   };
 
@@ -186,9 +160,9 @@ function SubmittedFees() {
           ))}
         </tbody>
       </table>
-      <button onClick={handleGeneratePDF} className="px-4 py-2 m-5 bg-blue-500 text-white rounded-md">
-          Generate PDF
-        </button>
+      <button onClick={handleDownloadPDF} className="px-4 py-2 m-5 bg-blue-500 text-white rounded-md">
+        Download PDF
+      </button>
     </div>
   );
 }
