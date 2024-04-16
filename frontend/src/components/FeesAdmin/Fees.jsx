@@ -96,6 +96,9 @@ const Fees = () => {
           </div>
         )}
       </div>
+        <button className="px-4 py-2 m-5 bg-purple-500 hover:bg-purple-400 text-white rounded-md">
+        Add a batch fee
+      </button>
     </>
   );
 };
