@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BilldeskOrders from './BilldeskOrders';
 import BilldeskTransactions from './BilldeskTransactions';
 import Fees from './Fees';
@@ -10,11 +10,17 @@ import Loading from '../Loading';
 const FeesComponentAdmin = () => {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/fee-admin-login');
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); 
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -48,11 +54,11 @@ const FeesComponentAdmin = () => {
                   <li className="mb-2">
                     <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('SubmittedFees')}>See Submitted Fees</button>
                   </li>
-                  <Link to={'/fee-comp'}>
+                  <button onClick={handleLogout}>
                     <li className="mb-2">
                       <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100">Logout</button>
                     </li>
-                  </Link>
+                  </button>
                 </ul>
               </div>
             </div>
@@ -89,9 +95,9 @@ const FeesComponentAdmin = () => {
                       <h3 className="text-lg font-semibold mb-2">View Submitted Fees →</h3>
                       <p className="text-sm">See final submitted fees details.</p>
                     </div>
-                    <Link to={'/fee-comp'} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105 flex items-center justify-center">
+                    <button onClick={handleLogout} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105 flex items-center justify-center" >
                       <h3 className="text-lg font-semibold mb-2">Logout →</h3>
-                    </Link>
+                    </button>
                   </div>
                 </>
               )}
