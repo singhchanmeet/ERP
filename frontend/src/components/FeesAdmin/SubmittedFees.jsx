@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loading from '../Loading';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 function SubmittedFees() {
   const [fees, setFees] = useState([]);
@@ -67,6 +69,41 @@ function SubmittedFees() {
     (filteredBranch ? fee.branch === filteredBranch : true)
   );
 
+  const handleGeneratePDF = () => {
+    const doc = new jsPDF();
+    const tableRows = [];
+    const tableColumns = [
+      { title: 'ID', dataKey: 'id' },
+      { title: 'Enrollment Number', dataKey: 'enrollment_number' },
+      { title: 'Group', dataKey: 'group' },
+      { title: 'Batch', dataKey: 'batch' },
+      { title: 'Branch', dataKey: 'branch' },
+      { title: 'Transaction ID', dataKey: 'transaction_id' },
+      { title: 'Transaction Amount', dataKey: 'transaction_amount' },
+      { title: 'Transaction Status', dataKey: 'transaction_status' },
+    ];
+
+    filteredFees.forEach((fee) => {
+      tableRows.push({
+        id: fee.id,
+        enrollment_number: fee.enrollment_number,
+        group: fee.group,
+        batch: fee.batch,
+        branch: fee.branch,
+        transaction_id: fee.transaction_id,
+        transaction_amount: fee.transaction_amount,
+        transaction_status: fee.transaction_status,
+      });
+    });
+
+    doc.autoTable({
+      head: [tableColumns.map((col) => col.title)],
+      body: tableRows,
+    });
+
+    doc.save('submitted_fees.pdf');
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -74,13 +111,15 @@ function SubmittedFees() {
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Submitted Fees</h1>
-      <input
-        type="text"
-        placeholder="Search by Enrollment Number"
-        className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
-        value={searchText}
-        onChange={handleSearch}
-      />
+      <div className="flex justify-between mb-4">
+        <input
+          type="text"
+          placeholder="Search by Enrollment Number"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+          value={searchText}
+          onChange={handleSearch}
+        />
+      </div>
       <div className="flex justify-around mb-4">
         <select
           className="px-10 py-2 border border-gray-300 rounded-md "
@@ -147,6 +186,9 @@ function SubmittedFees() {
           ))}
         </tbody>
       </table>
+      <button onClick={handleGeneratePDF} className="px-4 py-2 m-5 bg-blue-500 text-white rounded-md">
+          Generate PDF
+        </button>
     </div>
   );
 }
