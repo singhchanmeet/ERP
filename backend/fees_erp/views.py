@@ -307,25 +307,25 @@ class FeesPaid(APIView) :
 class feesAdminPanel(viewsets.ModelViewSet):
     queryset=Fees.objects.all()
     serializer_class=FeesSerializer
-    permission_classes = [accounts_department]
+    permission_classes = [IsAuthenticated,accounts_department]
     
 class studentFeesAdminPanel(viewsets.ModelViewSet):
     queryset=StudentFees.objects.all()
     serializer_class=StudentFeesSerializer
-    permission_classes = [accounts_department]
+    permission_classes = [IsAuthenticated,accounts_department]
     
 class splitpayment(viewsets.ModelViewSet):
     queryset=SplitPayment.objects.all()
     serializer_class=SplitPaymentSerializer
-    permission_classes = (accounts_department,)
+    permission_classes = (IsAuthenticated,accounts_department,)
         
 class BilldeskOrdersFunc(viewsets.ReadOnlyModelViewSet):
   queryset=BilldeskOrders.objects.all()
   serializer_class=billdeskorderSerializer
-  permission_classes = [accounts_department]
+  permission_classes = [IsAuthenticated,accounts_department]
     
 class BilldeskTransactionsFunc(viewsets.ReadOnlyModelViewSet):
     queryset=BilldeskTransactions.objects.all()
     serializer_class=billdesktransactionSerializer
-    permission_classes = [accounts_department]
+    permission_classes = [IsAuthenticated,accounts_department]
     
