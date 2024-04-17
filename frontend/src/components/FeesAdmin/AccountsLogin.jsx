@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import maitlogomain from '../../assets/maitlogomain.png';
 
 const AccountsLogin = () => {
-    const [username, setUsername] = useState('');
+    const [user_id, setUser_id] = useState('');
     const [password, setPassword] = useState('');
     const host = process.env.REACT_APP_BACKEND_URL;
 
@@ -20,18 +20,21 @@ const AccountsLogin = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.get(`${host}/endpoint-with-accounts-role-credentials`, {
-                username,
+            const response = await axios.post(`${host}/student/login/`, {
+                user_id,
                 password,
             });
-            const { token, role } = response.data;
+            const accessToken = response.data.access;
+            const refreshToken = response.data.refresh;
+            // const role = response.data.role;
 
-            if (role === 'ACCOUNTS') {
-                localStorage.setItem('token', token);
+            // if (role === 'ACCOUNTS' && role === 'Accounts') {
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
                 navigate('/fee-comp-admin');
-            } else {
-                alert('You are not authorized to login.');
-            }
+            // } else {
+                // alert('You are not authorized to login.');
+            // }
         } catch (error) {
             alert('Login failed. Please check your credentials.');
         }
@@ -57,14 +60,14 @@ const AccountsLogin = () => {
             <form onSubmit={handleLogin} className='m-5 grid grid-cols-1 place-items-center'>
                 <div>
                     <div className='text-xl my-2'>
-                        <label htmlFor="username">User Name:</label>
+                        <label htmlFor="user_id">User Name:</label>
                     </div>
                     <input
                         type="text"
                         placeholder="Username"
-                        value={username}
-                        id='username'
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={user_id}
+                        id='user_id'
+                        onChange={(e) => setUser_id(e.target.value)}
                     />
                 </div>
                 <div>
