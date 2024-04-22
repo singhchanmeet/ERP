@@ -12,7 +12,7 @@ from django.utils import timezone
 # Create your views here.
 
 class AllPlacementRecords(ModelViewSet):
-    authentication_classes =[BasicAuthentication]
+    # authentication_classes =[BasicAuthentication]
     permission_classes =[IsAuthenticated, WriteByPlacement ]
     serializer_class = PlacementSerializer
     queryset = Placements.objects.all()
@@ -21,7 +21,7 @@ class AllPlacementRecords(ModelViewSet):
 
 
 class ViewAnnouncement(ModelViewSet):
-    authentication_classes = [BasicAuthentication]
+    # authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = AnnouncementSerializer
     queryset = Announcement.objects.all()
@@ -34,7 +34,7 @@ class ViewAnnouncement(ModelViewSet):
 
 
 class PastPlacementRecords(ModelViewSet):
-    authentication_classes = [BasicAuthentication]
+    # authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
     queryset = Placements.objects.filter(date__lte=timezone.now())  
@@ -42,7 +42,7 @@ class PastPlacementRecords(ModelViewSet):
 
     
 class ActivePlacementRecords(ModelViewSet):
-    authentication_classes = [BasicAuthentication]
+    # authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
     queryset = Placements.objects.filter(date__gt=timezone.now()) 
