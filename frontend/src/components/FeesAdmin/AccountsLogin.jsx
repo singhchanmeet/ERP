@@ -14,6 +14,7 @@ const AccountsLogin = () => {
         { name: 'Student', href: '#' },
         { name: 'Infrastructure', href: '/infra-login' },
         { name: 'Accounts', href: '/fee-admin-login' },
+        { name: 'Placement', href: '/placement-login' },
         { name: 'About', href: '#' },
     ];
 
