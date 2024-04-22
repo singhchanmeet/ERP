@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'rest_framework.authtoken',
     'corsheaders',
     'authentication',
     'student',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'infrastructure',
     'fees',     # this is the old fees app  which works independently from erp (just prefix urls with '/fee')
     'fees_erp', # this is the main fees app integrated with the whole erp project
+    'placement' 
 ]
 
 # Telling Django to use the JWT method for authentication
@@ -158,9 +160,9 @@ DATABASES = {
         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
     },
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / "db.sqlite3",
-    # }
+    #      'ENGINE': 'django.db.backends.sqlite3',
+    #      'NAME': BASE_DIR / "db.sqlite3",
+    #  }
 }
 
 

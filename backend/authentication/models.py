@@ -47,6 +47,7 @@ class User(AbstractUser):
         ADMIN = "ADMIN" , 'Admin'
         STUDENT = "STUDENT" , 'Student'
         EMPLOYEE = "EMPLOYEE" , 'Employee'
+        PLACEMENTOFFICER="PLACEMENTOFFICER","placementofficer"
 
     # fields coming from parent class AbstractUSer that will be used as-it-is in our custom User model are :
     # email, groups, user_permissions, is_superuser, is_staff, is_active, last_login, date_joined
@@ -59,7 +60,7 @@ class User(AbstractUser):
     # adding these new fields to our custom User model:
     user_id = models.CharField(max_length=32, unique=True, db_index=True)   #db_index is for faster queries
     name = models.CharField(max_length=50)
-    role = models.CharField(max_length=8, choices=Role.choices)
+    role = models.CharField(max_length=64, choices=Role.choices)
     is_teams_user = models.BooleanField(default=False, help_text=_("Is the user logged in via Microsoft Teams?"))
 
     # overriding the password field from AbstractUser because it can be blank in case of MS teams 
