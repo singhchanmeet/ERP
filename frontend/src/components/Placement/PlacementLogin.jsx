@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import maitlogomain from '../../assets/maitlogomain.png';
 
-const AccountsLogin = () => {
+const PlacementLogin = () => {
     const [user_id, setUser_id] = useState('');
     const [password, setPassword] = useState('');
     const host = process.env.REACT_APP_BACKEND_URL;
@@ -91,4 +91,4 @@ const AccountsLogin = () => {
     );
 };
 
-export default AccountsLogin;
+export default PlacementLogin;
