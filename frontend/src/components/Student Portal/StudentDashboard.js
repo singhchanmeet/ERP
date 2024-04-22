@@ -11,7 +11,6 @@ const StudentDashboard = ({ user }) => {
   const [formFilled, setFormFilled] = useState(false);
   const [student, setStudent] = useState(null);
   const [detailsExist, setDetailsExist] = useState(false)
-  const navigate = useNavigate()
 
   const fetchDetails = async () => {
     try {
@@ -25,7 +24,9 @@ const StudentDashboard = ({ user }) => {
       const data = await response.json()
       // Check if all required details exist in the response
       if (response.ok) {
-        setDetailsExist(true)
+        if(data.batch !== null && data.branch !== null && data.group !== null){
+          setDetailsExist(true)
+        }
       }
     } catch (error) {
       console.error('Error fetching details:', error)
@@ -60,7 +61,7 @@ const StudentDashboard = ({ user }) => {
       .catch((error) => {
         console.error('Error fetching user data:', error);
       });
-    fetchDetails()
+    fetchDetails();
   }, [accessToken, formFilled]);
   console.log(`details ${detailsExist}`)
   return (
@@ -119,8 +120,8 @@ const StudentDashboard = ({ user }) => {
                       To proceed further, Please fill the form below.
                     </h1>
                   </div>
-                  <div class="mt-10">
-                    <Link to={detailsExist ? '/student-details-form' : '/impdetails'}><button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to proceed</button></Link>
+                  <div className="mt-10">
+                    <Link to={detailsExist ? '/student-details-form' : '/impdetails'}><button type="submit" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to proceed</button></Link>
                   </div>
 
                 </div>

@@ -23,15 +23,7 @@ const BilldeskPayment = () => {
           const jsonObj = JSON.parse(jsonStr);
           console.log(jsonObj);
           console.log(jsonObj.orderid);
-          let htm = '';
-          htm += '<div>Transaction Id: ' + jsonObj.transactionid + ' </div>';
-          htm += '<div>Auth Status: ' + jsonObj.auth_status + ' </div>';
-          htm += '<div>Transaction Date: ' + jsonObj.transaction_date + ' </div>';
-          htm += '<div>Payment Method Type: ' + jsonObj.payment_method_type + ' </div>';
-          htm += '<div>Amount: ' + jsonObj.charge_amount + ' </div>';
-          htm += '<div>Bank Ref No.: ' + jsonObj.bank_ref_no + ' </div>';
-          htm += '<div>Error code: ' + jsonObj.transaction_error_code + ' </div>';
-          htm += '<div>Error desc: ' + jsonObj.transaction_error_desc + ' </div>';
+          let htm = 'Successful Transaction';
           document.getElementById('result').innerHTML = htm;
           hideSpinner();
         } else if (responseXHR.status === 400) {
@@ -57,7 +49,7 @@ const BilldeskPayment = () => {
     window.loadBillDeskSdk(configRef.current);
   };
 
-  
+
   // Initialize config outside of the useEffect
   const config = {
     responseHandler,
@@ -123,9 +115,9 @@ const BilldeskPayment = () => {
         />
       </Helmet>
 
-      <div className="jumbotron">
-        <h1>BillDesk SDK</h1>
-        <a href="#" onClick={loadBillDeskSdk} className="btn btn-lg btn-primary" role="button">
+      <div className="jumbotron w-80 mx-auto">
+        <h1 className='text-4xl'>BillDesk Payment Gateway</h1>
+        <a href="#" onClick={loadBillDeskSdk} className="btn btn-lg text-lg border p-2 mt-4" role="button">
           Pay Now »
         </a>
       </div>
@@ -134,7 +126,9 @@ const BilldeskPayment = () => {
           <span className="sr-only">Loading...</span>
         </div>
       </div>
-      <div id="result" className="jumbotron mt-3"></div>
+      <div id="result" className="  text-green-500 text-xl font-semibold jumbotron mt-3">
+
+      </div>
     </div>
   );
 };

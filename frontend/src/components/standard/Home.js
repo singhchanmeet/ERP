@@ -9,6 +9,7 @@ const navigation = [
     { name: 'Home', href: '#' },
     { name: 'Student', href: '#' },
     { name: 'Infrastructure', href: '/infra-login' },
+    { name: 'Accounts', href: '/fee-admin-login' },
     { name: 'About', href: '#' },
 ];
 
@@ -75,11 +76,11 @@ function Home() {
                                     ))}
                                 </div>
                                 <div className="py-6">
-                                    <a onClick={handleLogin}
+                                    <Link onClick={handleLogin}
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-orange-100 hover:bg-gray-700"
                                     >
                                         Log in
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

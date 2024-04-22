@@ -2,6 +2,7 @@
 # For example the view for alloting groups to students
 
 from groups.models import StudentGroups, Groups
+from student.models import Student
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib import admin
@@ -35,6 +36,9 @@ def handle_group_allotment(request):
             student_id=student,
             student_name=student.name
         )
+        student_object = Student.objects.get(student_id=student)
+        student_object.group = group
+        student_object.save()
 
     messages.add_message(request, messages.INFO, f'{len(list_from_string)} students were allotted the group {group_name}')
     return redirect('/admin/student/student/')

@@ -1,6 +1,49 @@
 from django.db import models
 from batches.models import Batches
+from authentication.models import User
+from batches.models import Batches
+from groups.models import Groups
+from branches.models import Branches
 
+# for split payment application and approval
+class SplitPayment(models.Model):
+    
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, db_column='student')
+    application = models.TextField()
+    document1 = models.FileField(blank=True, upload_to='student/fees')
+    document2 = models.FileField(blank=True, upload_to='student/fees')
+    document3 = models.FileField(blank=True, upload_to='student/fees')
+    
+    allow_split_payment = models.BooleanField(default=False)
+    
+    
+    class Meta:
+        db_table = 'split_payment_approval'  
+        verbose_name_plural = "Split Payment Approval"
+
+# for mapping fees with student,  his batch,group,branch etc.
+class StudentFees(models.Model):
+    student = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, db_column='student')
+    
+    enrollment_number = models.CharField(max_length=25)
+    batch = models.ForeignKey(Batches, on_delete=models.SET_NULL, null=True, db_column='batch')
+    group = models.ForeignKey(Groups, on_delete=models.SET_NULL, null=True, db_column='group')
+    branch = models.ForeignKey(Branches, on_delete=models.SET_NULL, null=True, db_column='branch')
+    
+    order_id = models.CharField(max_length=25)
+    transaction_id = models.CharField(max_length=25)
+    transaction_amount = models.CharField(max_length=12)
+    transaction_status = models.CharField(max_length=25)
+    payment_method = models.CharField(max_length=25)
+    transaction_time = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'student_fees'  
+        verbose_name_plural = "Student Fees"
+    
+       
+
+# for displaying fees batch wise
 class Fees(models.Model):
 
     batch = models.OneToOneField(Batches, on_delete=models.SET_NULL, null=True, db_column='batch')
@@ -53,7 +96,7 @@ class Fees(models.Model):
     class Meta:
         db_table = 'erp_fees'  
         verbose_name_plural = "Fees"
-
+    
 
 
 class BilldeskOrders(models.Model):

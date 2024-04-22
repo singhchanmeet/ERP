@@ -96,8 +96,8 @@ const EmployeeDashboard = ({user}) => {
                 {/* <div class="mt-10">
                   <Link to={'/employee-details-form'}><button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to proceed</button></Link>
                 </div> */}
-                <div class="mt-10">
-                  <Link to={'/manage-infra'}><button type="submit" class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to manage Infrastructure</button></Link>
+                <div className="mt-10">
+                  <Link to={'/manage-infra'}><button type="submit" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Click here to manage Infrastructure</button></Link>
                 </div> 
 
               </div>

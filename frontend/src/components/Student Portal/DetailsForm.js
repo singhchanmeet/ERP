@@ -10,45 +10,45 @@ const DetailsForm = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const [studentDetails, setStudentDetails] = useState({
-    enrollment_number: '',
-    ipu_registration_number: '',
-    name: '',
-    dob: '',
+    enrollment_number: ' ',
+    ipu_registration_number: ' ',
+    name: ' ',
+    dob: ' ',
     full_address: '',
     email: '',
     mobile_number: '',
     gender: '',
     category: '',
-    region: '',
-    father_name: '',
-    mother_name: '',
-    father_qualification: '',
-    mother_qualification: '',
-    father_occupation: '',
-    mother_occupation: '',
-    father_job_designation: '',
-    mother_job_designation: '',
-    father_business_type: '',
-    mother_business_type: '',
-    father_mobile_number: '',
-    mother_mobile_number: '',
-    father_office_address: '',
-    mother_office_address: '',
-    guardian_name: '',
-    board_12th: '',
+    region: ' ',
+    father_name: ' ',
+    mother_name: ' ',
+    father_qualification: ' ',
+    mother_qualification: ' ',
+    father_occupation: ' ',
+    mother_occupation: ' ',
+    father_job_designation: ' ',
+    mother_job_designation: ' ',
+    father_business_type: ' ',
+    mother_business_type: ' ',
+    father_mobile_number: ' ',
+    mother_mobile_number: ' ',
+    father_office_address: ' ',
+    mother_office_address: ' ',
+    guardian_name: ' ',
+    board_12th: ' ',
     year_of_12th: null,
     rollno_12th: null,
     school_12th: '',
     aggregate_12th: null,
-    board_10th: '',
+    board_10th: ' ',
     year_of_10th: null,
     rollno_10th: null,
-    school_10th: '',
+    school_10th: ' ',
     aggregate_10th: null,
     jee_rank: null,
     jee_percentile: null,
-    jee_rollno: '',
-    special_achievements: '',
+    jee_rollno: ' ',
+    special_achievements: ' ',
     passport_photograph: null, // For file/image upload, use 'null' or initialize with a default value as needed.
     marksheet_10th: null,
     marksheet_12th: null,
@@ -310,8 +310,14 @@ const DetailsForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setStudentDetails({ ...studentDetails, [name]: value });
+    if (name === 'mobile_number' || name === 'father_mobile_number' || name === 'mother_mobile_number') {
+      const newValue = value.slice(0, 10); // Limit to first 10 digits
+      setStudentDetails({ ...studentDetails, [name]: newValue });
+    } else {
+      setStudentDetails({ ...studentDetails, [name]: value });
+    }
   };
+
   const handleFileInputChange = (event, fieldName) => {
     const file = event.target.files[0];
 
@@ -353,7 +359,7 @@ const DetailsForm = () => {
                         type="text"
                         name="name"
                         id="name"
-                        value={studentDetails.name}
+                        value={studentDetails.name || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
@@ -370,7 +376,7 @@ const DetailsForm = () => {
                         type="date"
                         name="dob"
                         placeholder="Date of Birth"
-                        value={studentDetails.dob}
+                        value={studentDetails.dob || ""}
                         onChange={handleInputChange}
                         id="dob"
                         required
@@ -390,7 +396,7 @@ const DetailsForm = () => {
                         type="email"
                         name="email"
                         placeholder="Email"
-                        value={studentDetails.email}
+                        value={studentDetails.email || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
                       />
@@ -407,7 +413,7 @@ const DetailsForm = () => {
                         type="text"
                         name="full_address"
                         placeholder="Full Address"
-                        value={studentDetails.full_address}
+                        value={studentDetails.full_address || ""}
                         onChange={handleInputChange}
                         id="full_address"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
@@ -421,11 +427,16 @@ const DetailsForm = () => {
                     </label>
                     <div className="mt-2">
                       <input
-                        type="text"
+                        type="number"
                         name="mobile_number"
                         placeholder="Mobile Number"
                         value={studentDetails.mobile_number}
                         onChange={handleInputChange}
+                        onKeyPress={(e) => {
+                          if (e.target.value.length >= 10) {
+                            e.preventDefault();
+                          }
+                        }}
                         id="mobile_number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         required
@@ -443,7 +454,7 @@ const DetailsForm = () => {
                         type="text"
                         name="gender"
                         placeholder="Gender"
-                        value={studentDetails.gender}
+                        value={studentDetails.gender || ""}
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         required
@@ -466,7 +477,7 @@ const DetailsForm = () => {
                         type="text"
                         name="category"
                         placeholder="Category"
-                        value={studentDetails.category}
+                        value={studentDetails.category || ""}
                         id='category'
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -493,7 +504,7 @@ const DetailsForm = () => {
                         type="text"
                         name="region"
                         placeholder="Region"
-                        value={studentDetails.region}
+                        value={studentDetails.region || ""}
                         id='region'
                         onChange={handleInputChange}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -527,7 +538,6 @@ const DetailsForm = () => {
               <br />
               <div className='flex gap-x-5 gap-y-10 flex-wrap '>
                 <div>
-
                   <InputField name='father_name' value={studentDetails.father_name} onChange={handleInputChange} placeholder="Father's name" />
                   {formErrors.father_name && <p className="error text-red-600 text-sm ">{formErrors.father_name}</p>}
                 </div>
@@ -546,6 +556,7 @@ const DetailsForm = () => {
                   <InputField
                     name="father_mobile_number"
                     value={studentDetails.father_mobile_number}
+                    type= "number"
                     onChange={handleInputChange}
                     placeholder="Father's Mobile Number"
                   />
@@ -639,6 +650,7 @@ const DetailsForm = () => {
                   <InputField
                     name="mother_mobile_number"
                     value={studentDetails.mother_mobile_number}
+                    type="number"
                     onChange={handleInputChange}
                     placeholder="Mother's Mobile Number"
                   />
@@ -696,7 +708,7 @@ const DetailsForm = () => {
                     <input
                       type='text'
                       name="board_10th"
-                      value={studentDetails.board_10th}
+                      value={studentDetails.board_10th || ""}
                       onChange={handleInputChange}
                       placeholder="10th Board"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -711,7 +723,8 @@ const DetailsForm = () => {
                   <div className="mt-2">
                     <input
                       name="year_of_10th"
-                      value={studentDetails.year_of_10th}
+                      value={studentDetails.year_of_10th || ""}
+                      type= "number"
                       onChange={handleInputChange}
                       placeholder="Year of Passing (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -727,7 +740,8 @@ const DetailsForm = () => {
 
                     <input
                       name="rollno_10th"
-                      value={studentDetails.rollno_10th}
+                      type='number'
+                      value={studentDetails.rollno_10th || ""}
                       onChange={handleInputChange}
                       placeholder="10th Roll Number"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -743,7 +757,7 @@ const DetailsForm = () => {
 
                     <input
                       name="school_10th"
-                      value={studentDetails.school_10th}
+                      value={studentDetails.school_10th || ""}
                       onChange={handleInputChange}
                       placeholder="School Name (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -758,8 +772,9 @@ const DetailsForm = () => {
                   <div className="mt-2">
 
                     <input
+                    type='number'
                       name="aggregate_10th"
-                      value={studentDetails.aggregate_10th}
+                      value={studentDetails.aggregate_10th || ""}
                       onChange={handleInputChange}
                       placeholder="Aggregate (10th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -780,7 +795,7 @@ const DetailsForm = () => {
 
                     <input
                       name="board_12th"
-                      value={studentDetails.board_12th}
+                      value={studentDetails.board_12th || ""}
                       onChange={handleInputChange}
                       placeholder="12th Board"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -797,7 +812,8 @@ const DetailsForm = () => {
 
                     <input
                       name="year_of_12th"
-                      value={studentDetails.year_of_12th}
+                      type='number'
+                      value={studentDetails.year_of_12th || ""}
                       onChange={handleInputChange}
                       placeholder="Year of Passing (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -812,8 +828,9 @@ const DetailsForm = () => {
                   <div className="mt-2">
 
                     <input
+                      type='number'
                       name="rollno_12th"
-                      value={studentDetails.rollno_12th}
+                      value={studentDetails.rollno_12th || ""}
                       onChange={handleInputChange}
                       placeholder="12th Roll Number"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -829,7 +846,7 @@ const DetailsForm = () => {
 
                     <input
                       name="school_12th"
-                      value={studentDetails.school_12th}
+                      value={studentDetails.school_12th || ""}
                       onChange={handleInputChange}
                       placeholder="School Name (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -846,7 +863,8 @@ const DetailsForm = () => {
 
                     <input
                       name="aggregate_12th"
-                      value={studentDetails.aggregate_12th}
+                      value={studentDetails.aggregate_12th || ""}
+                      type='number'
                       onChange={handleInputChange}
                       placeholder="Aggregate (12th)"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -877,6 +895,7 @@ const DetailsForm = () => {
               <div>
                 <InputField
                   name="jee_rank"
+                  type="number"
                   value={studentDetails.jee_rank}
                   onChange={handleInputChange}
                   placeholder="JEE Rank"
@@ -887,6 +906,7 @@ const DetailsForm = () => {
               <div>
                 <InputField
                   name="jee_percentile"
+                  type= "number"
                   value={studentDetails.jee_percentile}
                   onChange={handleInputChange}
                   placeholder="JEE Percentile(upto 4 decimals)"
@@ -895,6 +915,7 @@ const DetailsForm = () => {
               </div>
               <div>
                 <InputField
+                type="number"
                   name="jee_rollno"
                   value={studentDetails.jee_rollno}
                   onChange={handleInputChange}
@@ -1071,7 +1092,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="mobile_number" className="text-lg font-semibold">Mobile Number:</label>
                   <input
-                    type="text"
+                    type="number"
                     id="mobile_number"
                     name="mobile_number"
                     placeholder="Mobile Number"
@@ -1215,7 +1236,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="aggregate_12th" className="text-lg font-semibold">Aggregate (12th):</label>
                   <input
-                    type="text"
+                    type="number"
                     id="aggregate_12th"
                     name="aggregate_12th"
                     placeholder="Aggregate (12th)"
@@ -1251,7 +1272,7 @@ const DetailsForm = () => {
                 <div>
                   <label htmlFor="jee_rollno" className="text-lg font-semibold">JEE Roll Number:</label>
                   <input
-                    type="text"
+                    type="number"
                     id="jee_rollno"
                     name="jee_rollno"
                     placeholder="JEE Roll Number"
@@ -1282,7 +1303,7 @@ const DetailsForm = () => {
                     className="w-full p-2 mb-2 rounded border border-gray-300"
                   />
                   {studentDetails.passport_photograph ? (
-                    <p>Uploaded File: {studentDetails.passport_photograph.name}</p>
+                    <p>Uploaded File: {studentDetails.passport_photograph}</p>
                   ) : (
                     <p>Not uploaded</p>
                   )}

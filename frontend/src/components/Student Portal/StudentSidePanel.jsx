@@ -31,6 +31,9 @@ const StudentSidePanel = () => {
                 <li className="mb-2">
                     <Link className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={handleButtonClick}>Attendance</Link>
                 </li>
+                <li className="mb-2">
+                    <Link className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" to={'/fee-comp'}>Fees</Link>
+                </li>
             </ul>
         </div>
     );

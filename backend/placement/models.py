@@ -76,8 +76,7 @@ class Announcement(models.Model):
     desc = models.TextField()
     docs = models.FileField(upload_to='assets/' , null=True )
     date = models.DateTimeField(default= timezone.now)
-    # hidden = models.BooleanField(default=False)  # New field
-    # archived = models.BooleanField(default=False) 
+    archive = models.BooleanField(default=False) 
 
     def __str__(self) -> str:
         return self.title

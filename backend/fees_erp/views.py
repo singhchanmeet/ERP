@@ -2,11 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from authentication. permissions import accounts_department
 from student.permissions import IsStudent
-from . models import Fees, BilldeskOrders, BilldeskTransactions
+from . models import Fees, SplitPayment, StudentFees, BilldeskOrders, BilldeskTransactions
+from . serializers import SplitPaymentSerializer, StudentFeesSerializer,FeesSerializer,billdeskorderSerializer,billdesktransactionSerializer
 from student.models import Student
-
+from authentication.models import User
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.template import loader
@@ -72,7 +75,44 @@ class FeesDisplay(APIView):
         
         else:
             return Response({'error': 'fees for batch not found'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+# view for the whole request panel for paying in parts
+class SplitPaymentView(APIView):
+    
+    permission_classes = (IsAuthenticated, )
+    
+    def post(self, request) :
         
+        # appending the student to request data for saving
+        request.data._mutable = True
+        request.data['student'] = request.user.pk
+        request.data._mutable = False
+        
+        serializer = SplitPaymentSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response ({'message': 'Record created successfully'}, status=status.HTTP_201_CREATED)
+        
+        else: 
+            return Response (serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+    def get(self, request):
+
+        student = request.user
+        student = SplitPayment.objects.filter(student=student).first()
+
+        if student:
+            serializer = SplitPaymentSerializer(student)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Student details not found'}, status=status.HTTP_204_NO_CONTENT)
+
+
+# to create billdesk orders
 @api_view(['POST'])
 def create_billdesk_order(request):
     
@@ -160,6 +200,8 @@ def create_billdesk_order(request):
 
 
 
+
+# billdesk order callback, after successful payment
 @csrf_exempt
 def billdesk_order_callback(request):
     
@@ -171,6 +213,29 @@ def billdesk_order_callback(request):
     
     new_transaction.save()
     
+    
+    # saving final student fee record if the transaction is successful
+    if (decoded_response.get('transaction_error_type', '') == 'success'):
+        
+        enrollment_number =  decoded_response.get('orderid', '')[:11]
+        user = User.objects.get(user_id=enrollment_number)
+        student = Student.objects.get(student_id=user)
+        batch = student.batch
+        branch = student.branch
+        group = student.group
+        
+        new_fee = StudentFees.objects.create(student=user, enrollment_number=enrollment_number,
+                                             batch=batch, group=group, branch=branch, order_id=decoded_response.get('orderid', ''),
+                                             transaction_id=decoded_response.get('transactionid', ''),
+                                            transaction_amount=decoded_response.get('amount', ''), 
+                                            transaction_status=decoded_response.get('transaction_error_type', ''),
+                                            payment_method=decoded_response.get('payment_method_type', ''))
+        
+        new_fee.save()       
+    
+    
+    
+    
     context = {
         "TransactionID " : decoded_response.get('transactionid', ''),
         "OrderID" : decoded_response.get('orderid', ''),
@@ -181,3 +246,86 @@ def billdesk_order_callback(request):
     }
 
     return render(request, 'fees_erp/bill.html', context)
+
+
+
+class StudentFeesView(APIView):
+    
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        
+        user = request.user
+        fees = StudentFees.objects.filter(student = request.user)
+        
+        data = []
+        
+        for fee in fees:
+
+            serializer = StudentFeesSerializer(fee)
+            data.append(serializer.data)
+
+        return Response(data, status=status.HTTP_200_OK)
+    
+       
+       
+class FeesPaid(APIView) :
+    
+    permission_classes = (IsAuthenticated,)
+    
+    def get(self, request):
+        
+        user = request.user
+        
+        is_split_payment = SplitPayment.objects.filter(student=user)
+        
+        if len(is_split_payment) == 1:
+            
+            has_paid_full = StudentFees.objects.filter(student=user)
+            
+            # applied for split payment and paid full
+            if len(has_paid_full) >= 2:
+                return Response({'split':True,'paid':True}, status=status.HTTP_200_OK)
+            # applied for split payment and paid half
+            elif len(has_paid_full) == 1:
+                return Response({'split':True,'paid':'half'}, status=status.HTTP_200_OK)
+            # applied for split payment and not paid at all
+            else:
+                return Response({'split':True,'paid':False}, status=status.HTTP_200_OK)
+        else :
+            
+            has_paid_full = StudentFees.objects.filter(student=user)
+            
+            # not applied for split and paid full
+            if len(has_paid_full) >= 1:
+                return Response({'split':False,'paid':True}, status=status.HTTP_200_OK)
+            # not applied for split and paid full
+            else:
+                return Response({'split':False,'paid':False}, status=status.HTTP_200_OK)
+            
+            
+class feesAdminPanel(viewsets.ModelViewSet):
+    queryset=Fees.objects.all()
+    serializer_class=FeesSerializer
+    permission_classes = [IsAuthenticated,accounts_department]
+    
+class studentFeesAdminPanel(viewsets.ModelViewSet):
+    queryset=StudentFees.objects.all()
+    serializer_class=StudentFeesSerializer
+    permission_classes = [IsAuthenticated,accounts_department]
+    
+class splitpayment(viewsets.ModelViewSet):
+    queryset=SplitPayment.objects.all()
+    serializer_class=SplitPaymentSerializer
+    permission_classes = (IsAuthenticated,accounts_department,)
+        
+class BilldeskOrdersFunc(viewsets.ReadOnlyModelViewSet):
+  queryset=BilldeskOrders.objects.all()
+  serializer_class=billdeskorderSerializer
+  permission_classes = [IsAuthenticated,accounts_department]
+    
+class BilldeskTransactionsFunc(viewsets.ReadOnlyModelViewSet):
+    queryset=BilldeskTransactions.objects.all()
+    serializer_class=billdesktransactionSerializer
+    permission_classes = [IsAuthenticated,accounts_department]
+    
