@@ -1,9 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function PlacementAnnouncement() {
+  const [announcements, setAnnouncements] = useState([]);
+  const [loggedInUserRole, setLoggedInUserRole] = useState('');
+  const host = process.env.REACT_APP_BACKEND_URL;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const headers = { Authorization: `Bearer ${accessToken}` };
+        
+        // Fetch user role
+        const userRoleResponse = await axios.get(`${host}/user-details/`, { headers });
+        setLoggedInUserRole(userRoleResponse.data.role);
+
+        // Fetch announcements
+        const announcementsResponse = await axios.get(`${host}/placements/announcement/`, { headers });
+        setAnnouncements(announcementsResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [host]); // Dependency added to ensure useEffect runs on host change
+
+  const handleDeleteAnnouncement = async (id) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      await axios.delete(`${host}/placements/announcement/${id}/`, { headers });
+      setAnnouncements(announcements.filter((announcement) => announcement.id !== id));
+    } catch (error) {
+      console.error('Error deleting announcement:', error);
+    }
+  };
+
   return (
-    <div>PlacementAnnouncement</div>
-  )
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-4xl font-semibold mb-4">Announcements</h2>
+      <div className="my-4">
+        <table className="table-auto w-full border-collapse border border-gray-800">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-800 px-4 py-2">Title</th>
+              <th className="border border-gray-800 px-4 py-2">Description</th>
+              <th className="border border-gray-800 px-4 py-2">Date</th>
+              <th className="border border-gray-800 px-4 py-2">Documents</th>
+              <th className="border border-gray-800 px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {announcements.map((announcement) => (
+              <tr key={announcement.id}>
+                <td className="border border-gray-800 px-4 py-2">{announcement.title}</td>
+                <td className="border border-gray-800 px-4 py-2">{announcement.desc}</td>
+                <td className="border border-gray-800 px-4 py-2">{new Date(announcement.date).toLocaleString()}</td>
+                <td className="border border-gray-800 px-4 py-2">
+                  <a href={announcement.docs} target="_blank" rel="noopener noreferrer">View Documents</a>
+                </td>
+                <td className="border border-gray-800 px-4 py-2">
+                  <button
+                    onClick={() => handleDeleteAnnouncement(announcement.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
-export default PlacementAnnouncement
+export default PlacementAnnouncement;

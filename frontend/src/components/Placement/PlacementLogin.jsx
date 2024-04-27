@@ -6,6 +6,7 @@ import maitlogomain from '../../assets/maitlogomain.png';
 const PlacementLogin = () => {
     const [user_id, setUser_id] = useState('');
     const [password, setPassword] = useState('');
+    const [loggedInUserRole, setLoggedInUserRole] = useState('');
     const host = process.env.REACT_APP_BACKEND_URL;
 
     const navigate = useNavigate();
@@ -27,11 +28,16 @@ const PlacementLogin = () => {
             });
             const accessToken = response.data.access;
             const refreshToken = response.data.refresh;
-            const role = response.data.role;
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
 
-            if (role === 'placementofficer' && role === 'PLACEMENTOFFICER') {
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
+            const roleResponse = await axios.get(`${host}/user-details/`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const userRole = roleResponse.data.role;
+            setLoggedInUserRole(userRole);
+
+            if (userRole === 'placementofficer' || userRole === 'PLACEMENTOFFICER') {
                 navigate('/placement-dashboard');
             } else {
                 alert('You are not authorized to login.');
