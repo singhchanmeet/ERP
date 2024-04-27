@@ -12,11 +12,9 @@ function PlacementAnnouncement() {
         const accessToken = localStorage.getItem('accessToken');
         const headers = { Authorization: `Bearer ${accessToken}` };
         
-        // Fetch user role
         const userRoleResponse = await axios.get(`${host}/user-details/`, { headers });
         setLoggedInUserRole(userRoleResponse.data.role);
 
-        // Fetch announcements
         const announcementsResponse = await axios.get(`${host}/placements/announcement/`, { headers });
         setAnnouncements(announcementsResponse.data);
       } catch (error) {
@@ -25,7 +23,7 @@ function PlacementAnnouncement() {
     };
 
     fetchData();
-  }, [host]); // Dependency added to ensure useEffect runs on host change
+  }, [host]);
 
   const handleDeleteAnnouncement = async (id) => {
     try {

@@ -82,6 +82,9 @@ const StudentNavbar = () => {
                   <li className="mb-2">
                     <Link to='/fee-comp' className="hover:underline">Fees</Link>
                   </li>
+                  <li className="mb-2">
+                    <Link to='/placement-student' className="hover:underline">Placement</Link>
+                  </li>
                 </ul>
                 <button
                   onClick={logoutUser}

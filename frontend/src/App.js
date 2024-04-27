@@ -19,8 +19,9 @@ import FeesComponentAdmin from './components/FeesAdmin/FeesComponentAdmin';
 import FeeHistory from './components/Fees/FeeHistory';
 import FeesStructure from './components/Fees/FeesStructure';
 import AccountsLogin from './components/FeesAdmin/AccountsLogin';
-import PlacementDashboard from './components/Placement/PlacementDashboard';
-import PlacementLogin from './components/Placement/PlacementLogin';
+import PlacementDashboard from './components/PlacementAdmin/PlacementDashboard';
+import PlacementLogin from './components/PlacementAdmin/PlacementLogin';
+import PlacementStudent from './components/Placement/PlacementStudent';
 import NotFound from './components/standard/NotFound';
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
                     <Route path="/fee-admin-login" element={<AccountsLogin />} />
                     <Route path="/placement-login" element={<PlacementLogin />} />
                     <Route path="/placement-dashboard" element={<PlacementDashboard />} />
+                    <Route path="/placement-student" element={<PlacementStudent />} />
                     {/* Add more routes as needed */}
                     <Route path="*" element={<NotFound />} />
                 </Routes>

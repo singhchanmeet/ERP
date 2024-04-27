@@ -20,7 +20,7 @@ const PlacementLogin = () => {
     ];
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
         try {
             const response = await axios.post(`${host}/student/login/`, {
                 user_id,
@@ -62,7 +62,7 @@ const PlacementLogin = () => {
                 </div>
             </nav>
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Sign in to Placement Portal
+                Sign in to Placement Admin Portal
             </h2>
             <form onSubmit={handleLogin} className='m-5 grid grid-cols-1 place-items-center'>
                 <div>

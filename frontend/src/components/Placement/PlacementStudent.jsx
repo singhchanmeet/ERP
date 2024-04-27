@@ -7,7 +7,7 @@ import PlacementPast from './PlacementPast';
 import PlacementActive from './PlacementActive';
 import PlacementAnnouncement from './PlacementAnnouncement';
 
-const PlacementDashboard = () => {
+const PlacementStudent = () => {
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
@@ -49,7 +49,7 @@ const PlacementDashboard = () => {
             <div className='bg-slate-300 h-[100%]'>
                 <div className="p-5 w-[90%] m-auto">
                     <div className="mb-8 inline-block">
-                        <Link to={'/placement-dashboard'} onClick={() => setSelectedComponent(null)}>
+                        <Link to={'/placement-student'} onClick={() => setSelectedComponent(null)}>
                             <h1 className="text-xl hover:bg-gray-100 text-blue-900 w-fit p-2 rounded font-semibold bg-gray-200">Placements Dashboard</h1>
                         </Link>
                     </div>
@@ -72,9 +72,7 @@ const PlacementDashboard = () => {
                                         <li className="mb-2">
                                             <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All Announcements</button>
                                         </li>
-                                        <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={handleLogout}>Logout</button>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -86,13 +84,13 @@ const PlacementDashboard = () => {
                                 {selectedComponent === null && <PlacementAll />}
                             </div>
                             {selectedComponent !== 'AnnouncementsPlacements' && (
-                                    <div className="w-96 bg-gray-200 p-4 relative">
-                                        <h2 className="text-2xl font-bold mb-4">Announcements</h2>
-                                        test <br /> hi <br /> there
-                                        <div className="absolute inset-x-0 bottom-0 flex justify-end mb-1">
-                                            <button className="py-2 px-4 text-blue-900 hover:underline font-semibold" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All...</button>
-                                        </div>
+                                <div className="w-96 bg-gray-200 p-4 relative">
+                                    <h2 className="text-2xl font-bold mb-4">Announcements</h2>
+                                    test <br /> hi <br /> there
+                                    <div className="absolute inset-x-0 bottom-0 flex justify-end mb-1">
+                                        <button className="py-2 px-4 text-blue-900 hover:underline font-semibold" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All...</button>
                                     </div>
+                                </div>
                             )}
                         </div>
                     )}
@@ -102,4 +100,4 @@ const PlacementDashboard = () => {
     );
 };
 
-export default PlacementDashboard;
+export default PlacementStudent;
