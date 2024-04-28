@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import maitlogomain from '../../assets/maitlogomain.png';
 
-const AccountsLogin = () => {
+const PlacementLogin = () => {
     const [user_id, setUser_id] = useState('');
     const [password, setPassword] = useState('');
+    const [loggedInUserRole, setLoggedInUserRole] = useState('');
     const host = process.env.REACT_APP_BACKEND_URL;
 
     const navigate = useNavigate();
@@ -27,15 +28,20 @@ const AccountsLogin = () => {
             });
             const accessToken = response.data.access;
             const refreshToken = response.data.refresh;
-            // const role = response.data.role;
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
 
-            // if (role === 'ACCOUNTS' && role === 'Accounts') {
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken);
-                navigate('/fee-comp-admin');
-            // } else {
-                // alert('You are not authorized to login.');
-            // }
+            const roleResponse = await axios.get(`${host}/user-details/`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            const userRole = roleResponse.data.role;
+            setLoggedInUserRole(userRole);
+
+            if (userRole === 'placementofficer' || userRole === 'PLACEMENTOFFICER') {
+                navigate('/placement-dashboard');
+            } else {
+                alert('You are not authorized to login.');
+            }
         } catch (error) {
             alert('Login failed. Please check your credentials.');
         }
@@ -56,7 +62,7 @@ const AccountsLogin = () => {
                 </div>
             </nav>
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Sign In to Accounts Admin Portal
+                Sign in to Placement Portal
             </h2>
             <form onSubmit={handleLogin} className='m-5 grid grid-cols-1 place-items-center'>
                 <div>
@@ -91,4 +97,4 @@ const AccountsLogin = () => {
     );
 };
 
-export default AccountsLogin;
+export default PlacementLogin;
