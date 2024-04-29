@@ -16,3 +16,5 @@ student/migrations/__pycache__/
 
 employee/__pycache__/
 employee/migrations/__pycache__/
+sshkey
+sshkey.pub
