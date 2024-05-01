@@ -50,11 +50,11 @@ const PlacementDashboard = () => {
                         <div className='grid grid-cols-2 gap-4 m-10'>
                             <div onClick={() => setSelectedComponent('AllPlacements')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
                                 <h3 className="text-lg font-semibold mb-2">All Placements →</h3>
-                                <p className="text-sm">View all placements.</p>
+                                <p className="text-sm">Add, edit & delete placement details.</p>
                             </div>
                             <div onClick={() => setSelectedComponent('ArchivedPlacements')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
                                 <h3 className="text-lg font-semibold mb-2">Archived Placements →</h3>
-                                <p className="text-sm">View only archived placements.</p>
+                                <p className="text-sm">Archive already added placements.</p>
                             </div>
                             <div onClick={() => setSelectedComponent('AnnouncementsPlacement')} className="bg-gray-200 p-4 hover:bg-gray-100 cursor-pointer rounded-lg hover:scale-105">
                                 <h3 className="text-lg font-semibold mb-2">Annoucements →</h3>

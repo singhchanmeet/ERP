@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function PlacementAnnouncement() {
   const [announcements, setAnnouncements] = useState([]);
-  const [loggedInUserRole, setLoggedInUserRole] = useState('');
   const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -11,9 +10,6 @@ function PlacementAnnouncement() {
       try {
         const accessToken = localStorage.getItem('accessToken');
         const headers = { Authorization: `Bearer ${accessToken}` };
-        
-        const userRoleResponse = await axios.get(`${host}/user-details/`, { headers });
-        setLoggedInUserRole(userRoleResponse.data.role);
 
         const announcementsResponse = await axios.get(`${host}/placements/announcement/`, { headers });
         setAnnouncements(announcementsResponse.data);
@@ -25,15 +21,9 @@ function PlacementAnnouncement() {
     fetchData();
   }, [host]);
 
-  const handleDeleteAnnouncement = async (id) => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const headers = { Authorization: `Bearer ${accessToken}` };
-      await axios.delete(`${host}/placements/announcement/${id}/`, { headers });
-      setAnnouncements(announcements.filter((announcement) => announcement.id !== id));
-    } catch (error) {
-      console.error('Error deleting announcement:', error);
-    }
+  const getFileNameFromPath = path => {
+    const parts = path.split('/');
+    return parts[parts.length - 1];
   };
 
   return (
@@ -47,7 +37,6 @@ function PlacementAnnouncement() {
               <th className="border border-gray-800 px-4 py-2">Description</th>
               <th className="border border-gray-800 px-4 py-2">Date</th>
               <th className="border border-gray-800 px-4 py-2">Documents</th>
-              <th className="border border-gray-800 px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -57,16 +46,20 @@ function PlacementAnnouncement() {
                 <td className="border border-gray-800 px-4 py-2">{announcement.desc}</td>
                 <td className="border border-gray-800 px-4 py-2">{new Date(announcement.date).toLocaleString()}</td>
                 <td className="border border-gray-800 px-4 py-2">
-                  <a href={announcement.docs} target="_blank" rel="noopener noreferrer">View Documents</a>
+                  {announcement.docs ? (
+                    <a
+                      href={announcement.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline hover:text-blue-700"
+                    >
+                      {getFileNameFromPath(announcement.docs)}
+                    </a>
+                  ) : (
+                    <span>Not Available</span>
+                  )}
                 </td>
-                <td className="border border-gray-800 px-4 py-2">
-                  <button
-                    onClick={() => handleDeleteAnnouncement(announcement.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+
               </tr>
             ))}
           </tbody>
