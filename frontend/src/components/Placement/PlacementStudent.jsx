@@ -6,10 +6,13 @@ import PlacementAll from './PlacementAll';
 import PlacementPast from './PlacementPast';
 import PlacementActive from './PlacementActive';
 import PlacementAnnouncement from './PlacementAnnouncement';
+import axios from 'axios';
 
 const PlacementStudent = () => {
+    const host = process.env.REACT_APP_BACKEND_URL;
     const [selectedComponent, setSelectedComponent] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [announcements, setAnnouncements] = useState([]);
     const navigate = useNavigate();
     const navigation = [
         { name: 'Home', href: '/' },
@@ -24,6 +27,21 @@ const PlacementStudent = () => {
         localStorage.removeItem('token');
         navigate('/placement-login');
     };
+
+    useEffect(() => {
+        const fetchAnnouncements = async () => {
+            try {
+                const response = await axios.get(`${host}/placements/announcement/`);
+                setAnnouncements(response.data);
+                // console.log(response.data)
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
+            }
+        };
+
+        fetchAnnouncements();
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -72,7 +90,6 @@ const PlacementStudent = () => {
                                         <li className="mb-2">
                                             <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All Announcements</button>
                                         </li>
-                                        
                                     </ul>
                                 </div>
                             </div>
@@ -85,8 +102,17 @@ const PlacementStudent = () => {
                             </div>
                             {selectedComponent !== 'AnnouncementsPlacements' && (
                                 <div className="w-96 bg-gray-200 p-4 relative">
-                                    <h2 className="text-2xl font-bold mb-4">Announcements</h2>
-                                    test <br /> hi <br /> there
+                                    <h2 className="text-2xl font-bold mb-6">Announcements</h2>
+                                    {announcements && announcements.length > 0 ? (
+                                        announcements.map((announcement) => (
+                                            <div key={announcement.id}>
+                                                <h3 className="text-lg font-semibold">{announcement.title}</h3>
+                                                <hr className="my-2 border-gray-400" />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>No announcements available.</p>
+                                    )}
                                     <div className="absolute inset-x-0 bottom-0 flex justify-end mb-1">
                                         <button className="py-2 px-4 text-blue-900 hover:underline font-semibold" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All...</button>
                                     </div>
