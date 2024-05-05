@@ -21,7 +21,6 @@ function AnnouncementsPlacement() {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, [host]);
 
