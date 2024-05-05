@@ -27,7 +27,7 @@ function PlacementAnnouncement() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pb-8">
       <h2 className="text-4xl font-semibold mb-4">Announcements</h2>
       <div className="my-4">
         <table className="table-auto w-full border-collapse border border-gray-800">

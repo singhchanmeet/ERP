@@ -112,13 +112,13 @@ const PlacementStudent = () => {
                                     <ul>
                                         <li className='mb-2 '></li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100 mx-auto" onClick={() => setSelectedComponent('AllPlacements')}>Explore</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AllPlacements')}>All Opportunities</button>
                                         </li>
                                         <li className="mb-2">
                                             <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('ActivePlacements')}>Active Opportunities</button>
                                         </li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('PastPlacements')}>Past openings</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('PastPlacements')}>Past Opportunities</button>
                                         </li>
                                         <li className="mb-2">
                                             <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>Announcements</button>

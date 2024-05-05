@@ -24,7 +24,7 @@ function PlacementAll() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pb-8">
       <h2 className="text-4xl font-semibold mb-4">All openings</h2>
       <div className="flex flex-wrap gap-10">
         {placements.filter(placement => !placement.archive).map(placement => (

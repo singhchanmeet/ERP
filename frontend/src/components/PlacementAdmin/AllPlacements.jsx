@@ -1,11 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
+
+function AddEditModal({ isOpen, onRequestClose, onSave, placement }) {
+  const [formData, setFormData] = useState({ ...placement });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+
+  return (
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <h2>{placement ? 'Edit Placement' : 'Add Placement'}</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="company_name"
+          value={formData.company_name}
+          onChange={handleInputChange}
+          placeholder="Company Name"
+          className="mr-2"
+        />
+        <input
+          type="text"
+          name="pkg_offered"
+          value={formData.pkg_offered}
+          onChange={handleInputChange}
+          placeholder="Package Offered"
+          className="mr-2"
+        />
+        <input
+          type="text"
+          name="role"
+          value={formData.role}
+          onChange={handleInputChange}
+          placeholder="Role"
+          className="mr-2"
+        />
+        <input
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          placeholder="Description"
+          className="mr-2"
+        />
+        <button type="submit">{placement ? 'Update' : 'Add'}</button>
+      </form>
+      <button onClick={onRequestClose}>Close</button>
+    </Modal>
+  );
+}
 
 function AllPlacements() {
   const [placements, setPlacements] = useState([]);
   const [loggedInUserRole, setLoggedInUserRole] = useState('');
-  const [formData, setFormData] = useState({ company_name: '', pkg_offered: '', role: '', description: '' });
   const [editingPlacement, setEditingPlacement] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -16,7 +73,6 @@ function AllPlacements() {
 
         const userRoleResponse = await axios.get(`${host}/user-details/`, { headers });
         setLoggedInUserRole(userRoleResponse.data.role);
-        console.log(userRoleResponse.data.role)
 
         const placementsResponse = await axios.get(`${host}/placements/all-placements/`, { headers });
         setPlacements(placementsResponse.data);
@@ -38,81 +94,37 @@ function AllPlacements() {
     }
   };
 
-  const handleAddPlacement = async () => {
+  const handleSavePlacement = async (formData) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const headers = { Authorization: `Bearer ${accessToken}` };
-      await axios.post(`${host}/placements/all-placements/`, formData, { headers });
-      setFormData({ company_name: '', pkg_offered: '', role: '', description: '' });
-    } catch (error) {
-      console.error('Error adding placement:', error);
-    }
-  };
 
-  const handleEditPlacement = async () => {
-    if (!editingPlacement) return;
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const headers = { Authorization: `Bearer ${accessToken}` };
-      await axios.patch(`${host}/placements/all-placements/${editingPlacement.id}/`, formData, { headers });
-      setEditingPlacement(null);
-      setFormData({ company_name: '', pkg_offered: '', role: '', description: '' });
-    } catch (error) {
-      console.error('Error editing placement:', error);
-    }
-  };
+      if (editingPlacement) {
+        await axios.patch(`${host}/placements/all-placements/${editingPlacement.id}/`, formData, { headers });
+        setEditingPlacement(null);
+      } else {
+        await axios.post(`${host}/placements/all-placements/`, formData, { headers });
+      }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+      setModalIsOpen(false);
+      setPlacements([...placements, formData]); // Add the new placement to the list
+    } catch (error) {
+      console.error('Error saving placement:', error);
+    }
   };
 
   const handleEditClick = (placement) => {
     setEditingPlacement(placement);
-    setFormData(placement);
+    setModalIsOpen(true);
   };
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">All Placements</h1>
+      <h1 className="text-3xl font-bold my-10">All Placements</h1>
       {loggedInUserRole === 'PLACEMENTOFFICER' && (
-        <div className="mb-4">
-          <form onSubmit={handleAddPlacement}>
-            <input
-              type="text"
-              name="company_name"
-              value={formData.company_name}
-              onChange={handleInputChange}
-              placeholder="Company Name"
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="pkg_offered"
-              value={formData.pkg_offered}
-              onChange={handleInputChange}
-              placeholder="Package Offered"
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              placeholder="Role"
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              placeholder="Description"
-              className="mr-2"
-            />
-            <button type="submit" className="bg-blue-500 text-white px-2 py-1 rounded-md">Add</button>
-          </form>
-        </div>
+        <button onClick={() => setModalIsOpen(true)} className="bg-blue-500 text-white px-2 py-1 rounded-md mb-4">
+          Add Placement Details
+        </button>
       )}
       <div className="grid grid-cols-3 gap-4">
         {placements.map((placement) => (
@@ -140,43 +152,12 @@ function AllPlacements() {
           </div>
         ))}
       </div>
-      {/* Edit Placement Form */}
-      {editingPlacement && (
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold mb-2">Edit Placement</h2>
-          <form onSubmit={handleEditPlacement}>
-            <input
-              type="text"
-              name="company_name"
-              value={formData.company_name}
-              onChange={handleInputChange}
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="pkg_offered"
-              value={formData.pkg_offered}
-              onChange={handleInputChange}
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              className="mr-2"
-            />
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              className="mr-2"
-            />
-            <button type="submit" className="bg-green-500 text-white px-2 py-1 rounded-md">Update</button>
-          </form>
-        </div>
-      )}
+      <AddEditModal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        onSave={handleSavePlacement}
+        placement={editingPlacement}
+      />
     </div>
   );
 }

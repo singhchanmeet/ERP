@@ -24,7 +24,7 @@ function PlacementPast() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pb-8">
       <h2 className="text-4xl font-semibold mb-4">Past Placements</h2>
       <div className="flex flex-wrap gap-4">
         {pastPlacements.map(placement => (
