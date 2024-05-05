@@ -27,7 +27,10 @@ const PlacementStudent = () => {
         localStorage.removeItem('token');
         navigate('/placement-login');
     };
-
+    const getFileNameFromPath = path => {
+        const parts = path.split('/');
+        return parts[parts.length - 1];
+    };
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
@@ -42,6 +45,35 @@ const PlacementStudent = () => {
 
         fetchAnnouncements();
     }, []);
+
+    const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const AnnouncementModal = ({ announcement, onClose }) => (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div className="bg-white p-8 max-w-md rounded-lg">
+                <h2 className="text-xl font-semibold mb-4">{announcement.title}</h2>
+                <p className="mb-4">{announcement.desc}</p>
+                <p>Document Attached: </p>
+                <>
+                    {announcement.docs ? (
+                        <a
+                            href={announcement.docs}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline hover:text-blue-700"
+                        >
+                            {getFileNameFromPath(announcement.docs)}
+                        </a>
+                    ) : (
+                        <span>Not Available</span>
+                    )}
+                </>
+                <br />
+                <button className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onClick={onClose}>Close</button>
+            </div>
+        </div>
+    );
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -67,8 +99,8 @@ const PlacementStudent = () => {
             <div className='bg-slate-300 h-[100%]'>
                 <div className="p-5 w-[90%] m-auto">
                     <div className="mb-8 inline-block">
-                        <Link to={'/placement-student'} onClick={() => setSelectedComponent(null)}>
-                            <h1 className="text-xl hover:bg-gray-100 text-blue-900 w-fit p-2 rounded font-semibold bg-gray-200">Placements Dashboard</h1>
+                        <Link to={'/dashboard'} onClick={() => setSelectedComponent(null)}>
+                            <h1 className="text-xl hover:bg-gray-100 text-blue-900 w-fit p-2 rounded font-semibold bg-gray-200">Dashboard</h1>
                         </Link>
                     </div>
                     {isLoading ? (
@@ -78,17 +110,18 @@ const PlacementStudent = () => {
                             <div>
                                 <div className="bg-gray-200 p-4">
                                     <ul>
+                                        <li className='mb-2 '></li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AllPlacements')}>All Placements</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100 mx-auto" onClick={() => setSelectedComponent('AllPlacements')}>Explore</button>
                                         </li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('ActivePlacements')}>Active Placements</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('ActivePlacements')}>Active Opportunities</button>
                                         </li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('PastPlacements')}>Past Placements</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('PastPlacements')}>Past openings</button>
                                         </li>
                                         <li className="mb-2">
-                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All Announcements</button>
+                                            <button className="block py-2 px-4 text-blue-900 font-semibold rounded hover:bg-gray-100" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>Announcements</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -102,17 +135,25 @@ const PlacementStudent = () => {
                             </div>
                             {selectedComponent !== 'AnnouncementsPlacements' && (
                                 <div className="w-96 bg-gray-200 p-4 relative">
-                                    <h2 className="text-2xl font-bold mb-6">Announcements</h2>
+                                    <h2 className="text-2xl font-semibold mb-6">Announcements</h2>
                                     {announcements && announcements.length > 0 ? (
                                         announcements.map((announcement) => (
-                                            <div key={announcement.id}>
-                                                <h3 className="text-lg font-semibold">{announcement.title}</h3>
+                                            <div key={announcement.id} onClick={() => {
+                                                setSelectedAnnouncement(announcement);
+                                                setIsModalOpen(true);
+                                            }}>
+                                                <h3 className="text-lg font-semibold cursor-pointer hover:underline">{announcement.title}</h3>
                                                 <hr className="my-2 border-gray-400" />
                                             </div>
                                         ))
+
                                     ) : (
                                         <p>No announcements available.</p>
                                     )}
+                                    {isModalOpen && selectedAnnouncement && (
+                                        <AnnouncementModal announcement={selectedAnnouncement} onClose={() => setIsModalOpen(false)} />
+                                    )}
+
                                     <div className="absolute inset-x-0 bottom-0 flex justify-end mb-1">
                                         <button className="py-2 px-4 text-blue-900 hover:underline font-semibold" onClick={() => setSelectedComponent('AnnouncementsPlacements')}>View All...</button>
                                     </div>

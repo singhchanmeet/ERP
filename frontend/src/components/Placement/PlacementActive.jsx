@@ -26,7 +26,7 @@ function PlacementActive() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-4xl font-semibold mb-4">Active Placements</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex flex-wrap gap-5">
         {activePlacements.map(placement => (
           <div key={placement.id} className="bg-white p-4 rounded shadow-md">
             <h3 className="text-lg font-semibold">Company: {placement.company_name}</h3>

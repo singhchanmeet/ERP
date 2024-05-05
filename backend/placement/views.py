@@ -12,7 +12,7 @@ from django.utils import timezone
 # Create your views here.
 
 class AllPlacementRecords(ModelViewSet):
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     permission_classes =[ WriteByPlacement ]
     # authentication_classes =[BasicAuthentication]
     # permission_classes =[IsAuthenticated, WriteByPlacement ]
@@ -21,7 +21,7 @@ class AllPlacementRecords(ModelViewSet):
 
 class ViewAnnouncement(ModelViewSet):
     # authentication_classes = [BasicAuthentication]
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     permission_classes = [WriteByPlacement]
     # permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = AnnouncementSerializer
@@ -36,7 +36,7 @@ class ViewAnnouncement(ModelViewSet):
 
 class PastPlacementRecords(ModelViewSet):
     # authentication_classes = [BasicAuthentication]
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     permission_classes = [ WriteByPlacement]
     # permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
@@ -47,7 +47,7 @@ class PastPlacementRecords(ModelViewSet):
 class ActivePlacementRecords(ModelViewSet):
     # authentication_classes = [BasicAuthentication]
     permission_classes = [ WriteByPlacement]
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     # permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
-    queryset = Placements.objects.filter(date__gt=timezone.now()) 
+    queryset = Placements.objects.filter(date__gt=timezone.now())
