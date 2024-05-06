@@ -4,7 +4,7 @@ from .permissions import WriteByPlacement
 from .serializers  import *
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-# from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication
 # from rest_framework.authentication import BasicAuthentication
 from django.utils import timezone
 
