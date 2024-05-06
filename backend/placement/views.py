@@ -4,14 +4,14 @@ from .permissions import WriteByPlacement
 from .serializers  import *
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication
+# from rest_framework.authentication import SessionAuthentication
 from django.utils import timezone
 
 
 # Create your views here.
 
 class AllPlacementRecords(ModelViewSet):
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     permission_classes =[ WriteByPlacement ]
     # authentication_classes =[BasicAuthentication]
     # permission_classes =[IsAuthenticated, WriteByPlacement ]
@@ -36,7 +36,7 @@ class ViewAnnouncement(ModelViewSet):
 class PastPlacementRecords(ModelViewSet):
     # authentication_classes = [BasicAuthentication]
 
-    authentication_classes =[SessionAuthentication]
+    # authentication_classes =[SessionAuthentication]
     permission_classes = [WriteByPlacement]
     # permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
