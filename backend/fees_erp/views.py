@@ -315,23 +315,23 @@ class feesAdminPanel(viewsets.ModelViewSet):
 class studentFeesAdminPanel(viewsets.ModelViewSet):
     queryset=StudentFees.objects.all()
     serializer_class=StudentFeesSerializer
-    permission_classes = [IsAccount, IsAuthenticated]
+    permission_classes = [IsAccount]
     # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
     
 class splitpayment(viewsets.ModelViewSet):
     queryset=SplitPayment.objects.all()
     serializer_class=SplitPaymentSerializer
-    permission_classes = [IsAccount, IsAuthenticated]
+    permission_classes = [IsAccount]
     # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
         
 class BilldeskOrdersFunc(viewsets.ReadOnlyModelViewSet):
-  queryset=BilldeskOrders.objects.all()
-  serializer_class=billdeskorderSerializer
-  permission_classes = [IsAccount, IsAuthenticated]
-#   authentication_classes =[BasicAuthentication]         # only for testing remove when in production
+    queryset=BilldeskOrders.objects.all()
+    serializer_class=billdeskorderSerializer
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
     
 class BilldeskTransactionsFunc(viewsets.ReadOnlyModelViewSet):
     queryset=BilldeskTransactions.objects.all()
     serializer_class=billdesktransactionSerializer
-    permission_classes = [IsAccount, IsAuthenticated]
-    # authentication_classes =[BasicAuthentication]  # only for testing remove when in production
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
