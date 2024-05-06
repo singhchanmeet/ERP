@@ -4,11 +4,7 @@ from .permissions import WriteByPlacement
 from .serializers  import *
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
-# <<<<<<< HEAD
 from rest_framework.authentication import SessionAuthentication
-# =======
-# from rest_framework.authentication import BasicAuthentication
-# >>>>>>> e1a95461e4b99065c19c192056fad219777692d5
 from django.utils import timezone
 
 
@@ -16,13 +12,10 @@ from django.utils import timezone
 # Create your views here.
 
 class AllPlacementRecords(ModelViewSet):
-# <<<<<<< HEAD
     authentication_classes =[SessionAuthentication]
     permission_classes =[ WriteByPlacement ]
-# =======
     # authentication_classes =[BasicAuthentication]
     # permission_classes =[IsAuthenticated, WriteByPlacement ]
-# >>>>>>> e1a95461e4b99065c19c192056fad219777692d5
     serializer_class = PlacementSerializer
     queryset = Placements.objects.all()
 
@@ -48,7 +41,7 @@ class PastPlacementRecords(ModelViewSet):
     # authentication_classes = [BasicAuthentication]
 
     authentication_classes =[SessionAuthentication]
-    permission_classes = [ WriteByPlacement]
+    permission_classes = [WriteByPlacement]
     # permission_classes = [IsAuthenticated, WriteByPlacement]
     serializer_class = PlacementSerializer
     queryset = Placements.objects.filter(date__lte=timezone.now())  
