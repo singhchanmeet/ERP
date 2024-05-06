@@ -48,6 +48,7 @@ class User(AbstractUser):
         STUDENT = "STUDENT" , 'Student'
         EMPLOYEE = "EMPLOYEE" , 'Employee'
         PLACEMENTOFFICER="PLACEMENTOFFICER","placementofficer"
+        ACCOUNT = "ACCOUNT" , "account"
 
     # fields coming from parent class AbstractUSer that will be used as-it-is in our custom User model are :
     # email, groups, user_permissions, is_superuser, is_staff, is_active, last_login, date_joined

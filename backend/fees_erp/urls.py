@@ -10,11 +10,11 @@ environ.Env.read_env()
 
 router=DefaultRouter()
 
-router.register('studentfees/',views.studentFeesAdminPanel),
-router.register('fees/',views.feesAdminPanel),
-router.register('splitpayment/',views.splitpayment,basename='splitpayment'),
-router.register('billdeskorder/',views.BilldeskOrdersFunc,basename='billdeskorder'),
-router.register('billdesktransaction/',views.BilldeskTransactionsFunc,basename='billdesktransaction'),
+router.register('studentfees',views.studentFeesAdminPanel),
+router.register('fees',views.feesAdminPanel),
+router.register('splitpayment',views.splitpayment,basename='splitpayment'),
+router.register('billdeskorder',views.BilldeskOrdersFunc,basename='billdeskorder'),
+router.register('billdesktransaction',views.BilldeskTransactionsFunc,basename='billdesktransaction'),
 
 
 urlpatterns = [

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from authentication. permissions import accounts_department
+from .permissions import IsAccount
 from student.permissions import IsStudent
 from . models import Fees, SplitPayment, StudentFees, BilldeskOrders, BilldeskTransactions
 from . serializers import SplitPaymentSerializer, StudentFeesSerializer,FeesSerializer,billdeskorderSerializer,billdesktransactionSerializer
@@ -13,6 +13,7 @@ from authentication.models import User
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from django.template import loader
+from rest_framework.authentication import BasicAuthentication
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -250,6 +251,7 @@ def billdesk_order_callback(request):
 
 
 class StudentFeesView(APIView):
+
     
     permission_classes = (IsAuthenticated,)
     
@@ -307,25 +309,29 @@ class FeesPaid(APIView) :
 class feesAdminPanel(viewsets.ModelViewSet):
     queryset=Fees.objects.all()
     serializer_class=FeesSerializer
-    permission_classes = [IsAuthenticated,accounts_department]
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
     
 class studentFeesAdminPanel(viewsets.ModelViewSet):
     queryset=StudentFees.objects.all()
     serializer_class=StudentFeesSerializer
-    permission_classes = [IsAuthenticated,accounts_department]
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
     
 class splitpayment(viewsets.ModelViewSet):
     queryset=SplitPayment.objects.all()
     serializer_class=SplitPaymentSerializer
-    permission_classes = (IsAuthenticated,accounts_department,)
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
         
 class BilldeskOrdersFunc(viewsets.ReadOnlyModelViewSet):
-  queryset=BilldeskOrders.objects.all()
-  serializer_class=billdeskorderSerializer
-  permission_classes = [IsAuthenticated,accounts_department]
+    queryset=BilldeskOrders.objects.all()
+    serializer_class=billdeskorderSerializer
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
     
 class BilldeskTransactionsFunc(viewsets.ReadOnlyModelViewSet):
     queryset=BilldeskTransactions.objects.all()
     serializer_class=billdesktransactionSerializer
-    permission_classes = [IsAuthenticated,accounts_department]
-    
+    permission_classes = [IsAccount]
+    # authentication_classes =[BasicAuthentication]           # only for testing remove when in production
