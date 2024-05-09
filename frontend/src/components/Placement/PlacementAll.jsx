@@ -39,7 +39,7 @@ function PlacementAll() {
                 href={placement.docs}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 underline hover:text-blue-700"
+                className="text-blue-500 hover:underline"
               >
                 {getFileNameFromPath(placement.docs)}
               </a>

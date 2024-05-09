@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useDropzone } from 'react-dropzone';
 
 function AllPlacements() {
   const [placements, setPlacements] = useState([]);
   const [loggedInUserRole, setLoggedInUserRole] = useState('');
   const [editingPlacement, setEditingPlacement] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({ company_name: '', pkg_offered: '', role: '', description: '' });
+  const [formData, setFormData] = useState({
+    company_name: '',
+    pkg_offered: '',
+    role: '',
+    description: '',
+    docs: null,
+    date: new Date(),
+    archive: false,
+  });
   const host = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -43,15 +54,32 @@ function AllPlacements() {
       const accessToken = localStorage.getItem('accessToken');
       const headers = { Authorization: `Bearer ${accessToken}` };
 
+      const formDataToSend = new FormData();
+      formDataToSend.append('company_name', formData.company_name);
+      formDataToSend.append('pkg_offered', formData.pkg_offered);
+      formDataToSend.append('role', formData.role);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('docs', formData.docs);
+      formDataToSend.append('date', formData.date);
+      formDataToSend.append('archive', formData.archive);
+
       if (editingPlacement) {
-        await axios.patch(`${host}/placements/all-placements/${editingPlacement.id}/`, formData, { headers });
+        await axios.patch(`${host}/placements/all-placements/${editingPlacement.id}/`, formDataToSend, { headers });
         setEditingPlacement(null);
       } else {
-        await axios.post(`${host}/placements/all-placements/`, formData, { headers });
+        await axios.post(`${host}/placements/all-placements/`, formDataToSend, { headers });
       }
 
       setModalIsOpen(false);
-      setFormData({ company_name: '', pkg_offered: '', role: '', description: '' });
+      setFormData({
+        company_name: '',
+        pkg_offered: '',
+        role: '',
+        description: '',
+        docs: null,
+        date: new Date(),
+        archive: false,
+      });
       const updatedPlacements = await axios.get(`${host}/placements/all-placements/`, { headers });
       setPlacements(updatedPlacements.data);
     } catch (error) {
@@ -69,6 +97,17 @@ function AllPlacements() {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+
+  const handleDateChange = (date) => {
+    setFormData((prevFormData) => ({ ...prevFormData, date }));
+  };
+
+  const handleDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    setFormData((prevFormData) => ({ ...prevFormData, docs: file }));
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop: handleDrop });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,6 +129,8 @@ function AllPlacements() {
             <p>Pkg Offered: {placement.pkg_offered}</p>
             <p>Role: {placement.role}</p>
             <p>Description: {placement.description}</p>
+            <p>Date: {new Date(placement.date).toLocaleDateString()}</p>
+            <p>Archived: {placement.archive ? 'Yes' : 'No'}</p>
             {loggedInUserRole === 'PLACEMENTOFFICER' && (
               <div className="mt-2">
                 <button
@@ -164,11 +205,33 @@ function AllPlacements() {
                 placeholder="Description"
                 className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
               />
+              <DatePicker
+                selected={formData.date}
+                onChange={handleDateChange}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Select Date"
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+              />
+              <div {...getRootProps()} className="dropzone cursor-pointer border border-gray-300 rounded-md mb-4 py-2">
+                <input {...getInputProps()} />
+                {formData.docs ? (
+                  <p>{formData.docs.name}</p>
+                ) : (
+                  <p className='text-blue-500 underline'>Select to upload files</p>
+                )}
+              </div>
+              <input
+                type="checkbox"
+                name="archive"
+                checked={formData.archive}
+                onChange={handleInputChange}
+                className="mr-2"
+              />
+              <label htmlFor="archive">Archive</label>
               <div className="flex justify-end">
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
                   {editingPlacement ? 'Update' : 'Add'}
                 </button>
-                
               </div>
             </form>
           </div>
