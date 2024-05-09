@@ -231,9 +231,9 @@ def billdesk_order_callback(request):
     
     
     context = {
-        "TransactionID " : decoded_response.get('transactionid', ''),
+        "TransactionID" : decoded_response.get('transactionid', ''),
         "OrderID" : decoded_response.get('orderid', ''),
-        "TransactionStatus" : decoded_response.get('transaction_error_type', '').upper(),
+        "TransactionStatus" : decoded_response.get('transaction_error_type', ''),
         "TransactionTime" : decoded_response.get('transaction_date', ''),
         "TransactionAmount" : decoded_response.get('amount', ''),
         "PaymentMethod" : decoded_response.get('payment_method_type', '')

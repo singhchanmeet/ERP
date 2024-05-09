@@ -1,0 +1,106 @@
+<!-- bill_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+
+    <style>
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .bill-details {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .transaction-status {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .transaction-status.pending {
+            background-color: #f39c12; /* Orange for pending */
+        }
+
+        .transaction-status.success {
+            background-color: #2ecc71; /* Green for success */
+        }
+
+        .transaction-status.failed {
+            background-color: #e74c3c; /* Red for failed */
+        }
+
+        .print-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+    <h1>Invoice</h1>
+    <div class="bill-details">
+        <p><strong>Order ID:</strong> {{ OrderID }}</p>
+        <p><strong>Transaction ID:</strong> {{ TransactionID }}</p>
+        <p><strong>Payment Method:</strong> {{ PaymentMethod }}</p>
+        <p><strong>Transaction Status:</strong> <span>{{ TransactionStatus }}</span></p>
+        <p><strong>Transaction Time:</strong> {{ TransactionTime }}</p>
+        <p><strong>Transaction Amount:</strong> {{ TransactionAmount }}</p>
+    </div>
+    
+    <div class="print-button">
+        <button onclick="printBill()">Print Invoice</button>
+    </div>
+
+    <script>
+        function printBill() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
