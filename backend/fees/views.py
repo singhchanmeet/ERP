@@ -215,8 +215,8 @@ def billdesk_order_callback(request):
         
         enrollment_number =  decoded_response.get('orderid', '')[:11]
         student_name = decoded_response['additional_info']['additional_info2']
-        batch = decoded_response['additional_info']['additional_info2']
-        branch = decoded_response['additional_info']['additional_info2']
+        batch = decoded_response['additional_info']['additional_info3']
+        branch = decoded_response['additional_info']['additional_info4']
 
         
         new_fee = StudentFees.objects.create(student_name=student_name, enrollment_number=enrollment_number,

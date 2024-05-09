@@ -71,7 +71,7 @@ class Fees(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        db_table = 'old_fees'  
+        db_table = 'fees'  
         verbose_name_plural = "Fees"
 
 
