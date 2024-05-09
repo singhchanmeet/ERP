@@ -89,8 +89,7 @@
     <form action="/fee/create_billdesk_order/" method="post">
         {% csrf_token %}
         <input type="text" id="total_amount" name="total_amount" style="display: none;">
-        <label for="enrollment_no">Your 11 Digit Enrollment Number</label>
-        <input type="text" id="enrollment_no" name="enrollment_no" placeholder="Enrollment No." required>
+        
         <button type="submit">Proceed to Pay</button>
     </form>
 

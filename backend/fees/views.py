@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
-from . models import Fees, BilldeskOrders, BilldeskTransactions
+from . models import Fees, BilldeskOrders, BilldeskTransactions, StudentFees
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -23,7 +23,18 @@ environ.Env.read_env()
 def fees_login(request):
     
     if request.method == 'POST':
+        
         batch = request.POST.get('batch')
+        enrollment_no = request.POST.get('enrollment_no')
+        branch = request.POST.get('branch')
+        student_name = request.POST.get('student_name')
+        
+        request.session['batch'] = batch
+        request.session['enrollment_no'] = enrollment_no
+        request.session['branch'] = branch
+        request.session['student_name'] = student_name
+        request.session.modified = True
+        
         return redirect('fees_display', batch)
         
     # GET REQUEST
@@ -71,7 +82,11 @@ def create_billdesk_order(request):
     if request.method == 'POST':
         
         total_amount = request.POST.get('total_amount')
-        enrollment_no = request.POST.get('enrollment_no')
+        
+        enrollment_no = request.session.get('enrollment_no')
+        student_name = request.session.get('student_name')
+        batch = request.session.get('batch')
+        branch = request.session.get('branch')
                 
         current_datetime_utc = timezone.now()
         # Convert the datetime to IST
@@ -91,6 +106,15 @@ def create_billdesk_order(request):
             json_data['order_date'] = formatted_datetime
             json_data['device']['ip'] = get_client_ip(request)
             json_data['device']['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
+            
+            json_data['additional_info']['additional_info1'] = enrollment_no
+            json_data['additional_info']['additional_info2'] = student_name
+            json_data['additional_info']['additional_info3'] = batch
+            json_data['additional_info']['additional_info4'] = branch
+            
+            # Clear the session storage
+            request.session.flush()
+            request.session.modified = True
             
             current_timestamp = int(time.time())
             
@@ -152,6 +176,28 @@ def create_billdesk_order(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
 
+# @csrf_exempt
+# def billdesk_order_callback(request):
+    
+#     decoded_response = jwt.decode(request.POST.get('transaction_response'), key=env('BD_SECRET_KEY'), algorithms=[env('ALG')])
+    
+#     new_transaction = BilldeskTransactions.objects.create(order_id=decoded_response.get('orderid', ''), transaction_id=decoded_response.get('transactionid', ''),
+#                             transaction_amount=decoded_response.get('amount', ''), transaction_status=decoded_response.get('transaction_error_type', ''),
+#                             payment_method=decoded_response.get('payment_method_type', ''), transaction_response=decoded_response)
+    
+#     new_transaction.save()
+    
+#     response = {
+#         "Transaction ID " : decoded_response.get('transactionid', ''),
+#         "Order ID" : decoded_response.get('orderid', ''),
+#         "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
+#         "Transaction Time" : decoded_response.get('transaction_date', '')
+#     }
+
+#     return JsonResponse(response)
+
+
+# billdesk order callback, after successful payment
 @csrf_exempt
 def billdesk_order_callback(request):
     
@@ -163,11 +209,34 @@ def billdesk_order_callback(request):
     
     new_transaction.save()
     
-    response = {
-        "Transaction ID " : decoded_response.get('transactionid', ''),
-        "Order ID" : decoded_response.get('orderid', ''),
-        "Transaction Status" : decoded_response.get('transaction_error_type', '').upper(),
-        "Transaction Time" : decoded_response.get('transaction_date', '')
+    
+    # saving final student fee record if the transaction is successful
+    if (decoded_response.get('transaction_error_type', '') == 'success'):
+        
+        enrollment_number =  decoded_response.get('orderid', '')[:11]
+        student_name = decoded_response['additional_info']['additional_info2']
+        batch = decoded_response['additional_info']['additional_info2']
+        branch = decoded_response['additional_info']['additional_info2']
+
+        
+        new_fee = StudentFees.objects.create(student_name=student_name, enrollment_number=enrollment_number,
+                                             batch=batch, branch=branch, order_id=decoded_response.get('orderid', ''),
+                                             transaction_id=decoded_response.get('transactionid', ''),
+                                            transaction_amount=decoded_response.get('amount', ''), 
+                                            transaction_status=decoded_response.get('transaction_error_type', ''),
+                                            payment_method=decoded_response.get('payment_method_type', ''))
+        
+        new_fee.save()       
+    
+    
+    
+    context = {
+        "TransactionID " : decoded_response.get('transactionid', ''),
+        "OrderID" : decoded_response.get('orderid', ''),
+        "TransactionStatus" : decoded_response.get('transaction_error_type', '').upper(),
+        "TransactionTime" : decoded_response.get('transaction_date', ''),
+        "TransactionAmount" : decoded_response.get('amount', ''),
+        "PaymentMethod" : decoded_response.get('payment_method_type', '')
     }
 
-    return JsonResponse(response)
+    return render(request, 'fees_erp/bill.html', context)

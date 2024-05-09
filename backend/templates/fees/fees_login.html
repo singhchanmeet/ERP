@@ -10,6 +10,16 @@
     <form action="/fee/" method="post">
         {% csrf_token %}
         {% comment %} <input type="text" name="user_id" placeholder="user_id" required/> {% endcomment %}
+        <label for="enrollment_no">Your 11 Digit Enrollment Number</label>
+        <input type="text" id="enrollment_no" name="enrollment_no" placeholder="Enrollment No." required>
+
+        <label for="branch">Your Branch</label>
+        <input type="text" id="branch" name="branch" placeholder="Branch" required>
+
+        <label for="student_name">Student Name</label>
+        <input type="text" id="student_name" name="student_name" placeholder="Student Name" required>
+
+
         <select name="batch" id="batch" required>Select Batch (Passing Year)
             <option value="2026">2026</option>
         </select>

@@ -1,6 +1,26 @@
 from django.db import models
 
 
+# for mapping fees with student,  his batch,group,branch etc.
+class StudentFees(models.Model):
+    student_name = models.CharField(max_length=100)
+    
+    enrollment_number = models.CharField(max_length=25)
+    batch = models.CharField(max_length=10)
+    branch = models.CharField(max_length=100)
+    
+    order_id = models.CharField(max_length=25)
+    transaction_id = models.CharField(max_length=25)
+    transaction_amount = models.CharField(max_length=12)
+    transaction_status = models.CharField(max_length=25)
+    payment_method = models.CharField(max_length=25)
+    transaction_time = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'student_fees'  
+        verbose_name_plural = "Student Fees"
+
+
 class Fees(models.Model):
 
     batch = models.CharField(max_length=10)
@@ -65,7 +85,7 @@ class BilldeskOrders(models.Model):
     order_response = models.TextField()
     
     class Meta:
-        db_table = 'old_billdesk_orders'
+        db_table = 'billdesk_orders'
         verbose_name_plural = 'Billdesk Orders'
 
 
@@ -80,5 +100,5 @@ class BilldeskTransactions(models.Model):
     transaction_response = models.TextField()
     
     class Meta:
-        db_table = 'old_billdesk_transactions'
+        db_table = 'billdesk_transactions'
         verbose_name_plural = 'Billdesk Transactions'

@@ -1,11 +1,9 @@
-from django.urls import path,include
+from django.urls import path
 from . import views
 
-from rest_framework import routers
+
 from rest_framework_simplejwt.views import TokenRefreshView
 
-# router=routers.DefaultRouter()
-# router.register(r'account_details', accountsviewsets, basename='accounts')
 
 urlpatterns = [
     path('index/', views.handle_ms_login, name='index'),     # ms azure will redirect to /index after successful sign in/out
